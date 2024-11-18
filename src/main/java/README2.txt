@@ -11,3 +11,11 @@ Game:
     "moveBlockDown()": como é que a função sabe qual é o bloco a que me estou a referir se apenas é passado uma posição como argumento?
 
 
+Arena:
+    Criar uma matrix para simular o background da arena
+        ->A matriz é composta tem como valor uma string que define a cor a ser usada no background
+        ->Cada quadrado que atinge o limite, o seu shape é adicionado ao vetor com a cor correspondente
+        ->para pintar a tela, corre a matrix toda e pintar cada quadradinho com a cor correspondente
+
+
+

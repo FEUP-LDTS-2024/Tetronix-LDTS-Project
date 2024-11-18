@@ -10,21 +10,25 @@ import java.io.IOException;
 
 public class GameThread extends Thread {
     private Game game;
+    TetrisBlock block;
 
     public GameThread(Game game_) {
         this.game = game_;
     }
 
-    public void run() {
-        try {
-            TetrisBlock block = game.spawnBlocks(); // Cria o bloco uma vez
-            while (true) {
-                game.moveBlockDown(block.moveDown());
-                game.draw();
-                Thread.sleep(125); // Aguarda 1 segundo
+    public void run(){
+
+        while(true){
+            block = game.spawnBlocks();
+
+            while(game.moveBlockDown(block.moveDown())){
+                try {
+                    game.draw();
+                    Thread.sleep(125); // Aguarda 1 segundo
+                } catch (InterruptedException | IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
-        } catch (InterruptedException | IOException e) {
-            e.printStackTrace();
         }
     }
 }

@@ -9,12 +9,16 @@ public class TetrisBlock {
     private String color;
     private Position position;
     private int gridCellsize;
+    private int rows;
+    private int columns;
 
     public TetrisBlock(int [][] shape_, String color_,Position position_,int columns_,int rows_){
         this.shape = shape_;
         this.color = color_;
         this.position = position_;
         this.gridCellsize = rows_ / columns_;
+        this.rows = rows_;
+        this.columns = columns_;
     }
 
     public void setPosition(Position position) {
@@ -23,6 +27,14 @@ public class TetrisBlock {
 
     public Position getPosition() {
         return position;
+    }
+
+    public String getColor(){
+        return this.color;
+    }
+
+    public int[][] getShape(){
+        return this.shape;
     }
 
     // Métodos de movimentação
@@ -46,12 +58,9 @@ public class TetrisBlock {
         // Ir para a direita (aumentar x)
     }
 
-    public int getBottomEdge(){
-        return (shape.length + position.getY()); //função para verificar se o bloco pode continuar a descer
+    public boolean isAtBottomEdge(){
+        return ((shape.length + position.getY()) == rows); //função para verificar se o bloco pode continuar a descer
     }
-
-
-
 
     public void draw(TextGraphics graphics){
         graphics.setBackgroundColor(TextColor.Factory.fromString(color)); //escolher a cor para desenhar o bloco
@@ -66,8 +75,6 @@ public class TetrisBlock {
                 }
             }
         }
-
-
     }
 }
 

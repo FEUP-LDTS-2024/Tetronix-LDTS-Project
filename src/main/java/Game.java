@@ -27,6 +27,8 @@ public class Game {
             screen.setCursorPosition(null); // Desabilitar o cursor
             screen.startScreen(); // Iniciar a tela
 
+            arena = new Arena(columns,rows);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -45,26 +47,23 @@ public class Game {
 
 
 
-    public void moveBlockDown(Position position){ //(para a thread)
-        if(tetris_block.getBottomEdge() != rows){
+    public boolean moveBlockDown(Position position){ //(para a thread)
+        if(!tetris_block.isAtBottomEdge()){
             tetris_block.setPosition(position);
+            return true;
         } else {
-            return;
+            arena.MoveBlocktoBackground(tetris_block);
+            return false;
         }
-
-
     }
-
 
 
     //Desnhar na tela
     public void draw() throws IOException{
-        arena = new Arena(columns,rows);
         screen.clear();
         arena.draw(screen.newTextGraphics());
         tetris_block.draw(screen.newTextGraphics());
         screen.refresh();
-
     }
 
 
