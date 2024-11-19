@@ -2,23 +2,27 @@ import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
+import com.googlecode.lanterna.input.KeyStroke;
 
 
 public class Arena {
     private int columns;
     private int rows;
-    private String[][] background_painted_cells;
+    private String[][] background;
     private int gridCellsize;
 
     public Arena(int columns_, int rows_){
         this.columns = columns_;
         this.rows = rows_;
         this.gridCellsize = rows_ / columns_;
-        background_painted_cells = new String[rows_][columns_];
+        background = new String[rows_][columns_];
     }
 
+    public String[][] getBackground(){
+        return this.background;
+    }
 
-    public void MoveBlocktoBackground(TetrisBlock block){
+    public void moveBlocktoBackground(TetrisBlock block){
         int [][]shape = block.getShape();
         int height = block.getShape().length;
         int widht = block.getShape()[0].length;
@@ -29,7 +33,7 @@ public class Arena {
         for (int x = 0; x < height ; x++) {
             for (int y = 0; y < widht; y++) {
                 if(shape[x][y] == 1){
-                    background_painted_cells[xPos + y][yPos + x] = color;
+                    background[xPos + y][yPos + x] = color;
                 }
             }
         }
@@ -39,16 +43,15 @@ public class Arena {
         //Meter cor no fundo da tela
         for(int x = 0; x < rows; x++){
             for(int y = 0; y < columns; y++){
-                if(background_painted_cells[x][y] == null){
-                    graphics.setBackgroundColor(TextColor.Factory.fromString("#336699"));
+                if(background[x][y] == null){
+                    graphics.setBackgroundColor(TextColor.Factory.fromString("white"));
                     graphics.fillRectangle(new TerminalPosition(x, y), new TerminalSize(gridCellsize, gridCellsize), ' ');
                 } else {
-                    graphics.setBackgroundColor(TextColor.Factory.fromString(background_painted_cells[x][y]));
+                    graphics.setBackgroundColor(TextColor.Factory.fromString(background[x][y]));
                     graphics.fillRectangle(new TerminalPosition(x, y), new TerminalSize(gridCellsize, gridCellsize), ' ');
                 }
             }
         }
-
     }
 }
 

@@ -17,5 +17,8 @@ Arena:
         ->Cada quadrado que atinge o limite, o seu shape é adicionado ao vetor com a cor correspondente
         ->para pintar a tela, corre a matrix toda e pintar cada quadradinho com a cor correspondente
 
+TetriBlock:
+    ->na posição à direita da tela, quando X tem uma certa forma, ele sai da tela, como resolver?
+        Será que é porque ao mudar de forma ele ultrpassa o limite 40? mas isso do lado esquerdo com a condição x == 0 não acontece
 
 

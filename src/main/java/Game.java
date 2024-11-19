@@ -1,10 +1,14 @@
 import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
 import java.io.IOException;
+
+import static com.googlecode.lanterna.input.KeyType.*;
 
 public class Game {
     private Screen screen;
@@ -47,14 +51,49 @@ public class Game {
 
 
 
-    public boolean moveBlockDown(Position position){ //(para a thread)
+
+    public boolean continuousBlockFall(Position position){ //(para a thread)
         if(!tetris_block.isAtBottomEdge()){
             tetris_block.setPosition(position);
             return true;
         } else {
-            arena.MoveBlocktoBackground(tetris_block);
+            arena.moveBlocktoBackground(tetris_block);
             return false;
         }
+    }
+
+
+    public void moveBlock(Position position,KeyType key){
+        if(tetris_block.isAtRightEdge() && key == ArrowRight){
+            return;
+        }
+        if(tetris_block.isAtLeftEdge() && key == ArrowLeft){
+            return;
+        }
+
+        tetris_block.setPosition(position);
+
+    }
+
+
+    public void inputMoveBlock(KeyStroke key) throws IOException {
+            switch(key.getKeyType()){
+                case ArrowUp:
+                    tetris_block.rotateBlock();
+                    break;
+                case ArrowDown:
+                    moveBlock(tetris_block.dropBlock(),ArrowDown);
+                    break;
+                case ArrowLeft:
+                    moveBlock(tetris_block.moveLeft(),ArrowLeft);
+                    break;
+                case ArrowRight:
+                    moveBlock(tetris_block.moveRight(),ArrowRight);
+                    break;
+                default:
+                    break;
+            }
+            draw();
     }
 
 
@@ -71,6 +110,16 @@ public class Game {
     public void run() throws IOException {
         GameThread gameThread = new GameThread(this); // Passa a instância atual de Game
         gameThread.start(); // Inicia a thread
+
+        while(true){
+            KeyStroke key = screen.readInput();
+            if(key.getKeyType() == KeyType.Character && key.getCharacter() == 'q'){
+                screen.close();
+                break;
+            } else {
+                inputMoveBlock(key);
+            }
+        }
 
     }
 }
