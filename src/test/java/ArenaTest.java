@@ -4,6 +4,9 @@ import com.googlecode.lanterna.graphics.TextGraphics;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import tetronix.Arena;
+import tetronix.Position;
+import tetronix.TetrisBlock;
 
 
 public class ArenaTest {

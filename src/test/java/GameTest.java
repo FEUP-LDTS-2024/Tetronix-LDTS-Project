@@ -3,6 +3,10 @@ import com.googlecode.lanterna.input.KeyType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import tetronix.Arena;
+import tetronix.Game;
+import tetronix.Position;
+import tetronix.TetrisBlock;
 
 import java.io.IOException;
 

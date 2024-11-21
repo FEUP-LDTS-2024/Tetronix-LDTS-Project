@@ -1,3 +1,5 @@
+package tetronix;
+
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
@@ -42,7 +44,7 @@ public class Game {
         int[][] shape = {{1, 0},
                          {1, 0},
                          {1, 1}};
-        int spawn_y = -shape.length;    //no GameThread, começa a cair de uma posição acima do limite da tela
+        int spawn_y = -shape.length;    //no tetronix.GameThread, começa a cair de uma posição acima do limite da tela
         int spawn_x = (rows - shape[0].length) / 2;     //posicionado no meio da tela
 
         position = new Position(spawn_x,spawn_y);
@@ -108,7 +110,7 @@ public class Game {
 
 
     public void run() throws IOException {
-        GameThread gameThread = new GameThread(this); // Passa a instância atual de Game
+        GameThread gameThread = new GameThread(this); // Passa a instância atual de tetronix.Game
         gameThread.start(); // Inicia a thread
 
         while(true){

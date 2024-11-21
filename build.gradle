@@ -7,7 +7,7 @@ application {
     mainClass.set("Application")
 }
 
-group = 'ArturM.hero'
+group = 'tetronix'
 version = '1.0-SNAPSHOT'
 
 repositories {
