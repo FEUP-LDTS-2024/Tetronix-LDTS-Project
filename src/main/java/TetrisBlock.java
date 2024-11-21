@@ -23,6 +23,7 @@ public class TetrisBlock {
         this.columns = columns_;
         initShapes();
         current_rotation = 0;
+
     }
 
     private void initShapes(){
@@ -88,14 +89,16 @@ public class TetrisBlock {
         current_rotation++;
         if(current_rotation > 3) current_rotation = 0;
         shape = possible_shapes[current_rotation];
+        //problema aqui
     }
 
     public boolean isAtBottomEdge(){
+
         return ((shape.length + position.getY()) == rows); //função para verificar se o bloco pode continuar a descer
     }
 
     public boolean isAtRightEdge(){
-        return ((position.getX() + shape[0].length) == (columns)); //Erro aqui
+        return ((position.getX() + (shape[0].length)) == (columns)); //Erro aqui
     }
 
     public boolean isAtLeftEdge(){

@@ -12,8 +12,8 @@ import static com.googlecode.lanterna.input.KeyType.*;
 
 public class Game {
     private Screen screen;
-    private Arena arena;
-    private TetrisBlock tetris_block;
+    public Arena arena; //modified to public for test use
+    public TetrisBlock tetris_block; //modified to public for test use
     private Position position;
     private int rows = 40;
     private int columns = 40;
@@ -39,7 +39,9 @@ public class Game {
     }
 
     public TetrisBlock spawnBlocks(){
-        int[][] shape = {{1, 0}, {1, 0}, {1, 1}};
+        int[][] shape = {{1, 0},
+                         {1, 0},
+                         {1, 1}};
         int spawn_y = -shape.length;    //no GameThread, começa a cair de uma posição acima do limite da tela
         int spawn_x = (rows - shape[0].length) / 2;     //posicionado no meio da tela
 
@@ -62,7 +64,6 @@ public class Game {
         }
     }
 
-
     public void moveBlock(Position position,KeyType key){
         if(tetris_block.isAtRightEdge() && key == ArrowRight){
             return;
@@ -72,7 +73,6 @@ public class Game {
         }
 
         tetris_block.setPosition(position);
-
     }
 
 
@@ -115,7 +115,7 @@ public class Game {
             KeyStroke key = screen.readInput();
             if(key.getKeyType() == KeyType.Character && key.getCharacter() == 'q'){
                 screen.close();
-                break;
+                System.exit(0);
             } else {
                 inputMoveBlock(key);
             }
