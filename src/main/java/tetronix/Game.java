@@ -19,8 +19,8 @@ public class Game {
     public Arena arena; //modified to public for test use
     public TetrisBlock tetris_block; //modified to public for test use
     private Position position;
-    private int rows = 10;
-    private int columns = 20;
+    private int rows = 40;
+    private int columns = 40;
 
 
     public Game(){
