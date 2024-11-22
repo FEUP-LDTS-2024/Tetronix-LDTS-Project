@@ -67,13 +67,12 @@ public class TetrisBlock {
         // Descer (aumentar y)
     }
 
-    public Position dropBlock() {
-        System.out.println("Arrow Down pressed, entering loop...\n");
-        while(!isAtBottomEdge()){
+   /* public Position dropBlock() {
+        while(!isAtBottomEdge() && !isNextDownPositonOccupied(this)){
             position = moveDown();
         }
         return  position;
-    }
+    }*/
 
     public Position moveLeft() {
         return new Position(position.getColumn_identifier() - 1, position.getRow_identifier());

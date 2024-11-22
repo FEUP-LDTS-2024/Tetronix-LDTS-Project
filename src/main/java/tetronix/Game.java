@@ -19,8 +19,8 @@ public class Game {
     public Arena arena; //modified to public for test use
     public TetrisBlock tetris_block; //modified to public for test use
     private Position position;
-    private int rows = 40;
-    private int columns = 40;
+    private int rows = 10;
+    private int columns = 20;
 
 
     public Game(){
@@ -85,7 +85,10 @@ public class Game {
                     tetris_block.rotateBlock();
                     break;
                 case ArrowDown:
-                    moveBlock(tetris_block.dropBlock(),ArrowDown);
+                    do{
+                        moveBlock(tetris_block.moveDown(),ArrowDown);
+                } while (continuousBlockFall(tetris_block.getPosition()));
+
                     break;
                 case ArrowLeft:
                     moveBlock(tetris_block.moveLeft(),ArrowLeft);
