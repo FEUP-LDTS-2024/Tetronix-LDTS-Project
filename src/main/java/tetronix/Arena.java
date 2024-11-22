@@ -25,16 +25,16 @@ public class Arena {
 
     public void moveBlocktoBackground(TetrisBlock block){
         int [][]shape = block.getShape();
-        int height = block.getShape().length;
-        int widht = block.getShape()[0].length;
-        int xPos = block.getPosition().getX();
-        int yPos = block.getPosition().getY();
+        int number_of_rows = block.getShape().length;
+        int number_of_columns = block.getShape()[0].length;
+        int column_pos = block.getPosition().getColumn_identifier();
+        int row_pos = block.getPosition().getRow_identifier();
         String color = block.getColor();
 
-        for (int x = 0; x < height ; x++) {
-            for (int y = 0; y < widht; y++) {
-                if(shape[x][y] == 1){
-                    background[xPos + y][yPos + x] = color;
+        for (int r = 0; r < number_of_rows ; r++) {
+            for (int c = 0; c < number_of_columns; c++) {
+                if(shape[r][c] == 1){
+                    background[row_pos + r][column_pos + c] = color;
                 }
             }
         }
@@ -42,14 +42,14 @@ public class Arena {
 
     public void draw(TextGraphics graphics){
         //Meter cor no fundo da tela
-        for(int x = 0; x < rows; x++){
-            for(int y = 0; y < columns; y++){
-                if(background[x][y] == null){
+        for(int r = 0; r < rows; r++){
+            for(int c = 0; c < columns; c++){
+                if(background[r][c] == null){
                     graphics.setBackgroundColor(TextColor.Factory.fromString("white"));
-                    graphics.fillRectangle(new TerminalPosition(x, y), new TerminalSize(gridCellsize, gridCellsize), ' ');
+                    graphics.fillRectangle(new TerminalPosition(c,r ), new TerminalSize(gridCellsize, gridCellsize), ' ');
                 } else {
-                    graphics.setBackgroundColor(TextColor.Factory.fromString(background[x][y]));
-                    graphics.fillRectangle(new TerminalPosition(x, y), new TerminalSize(gridCellsize, gridCellsize), ' ');
+                    graphics.setBackgroundColor(TextColor.Factory.fromString(background[r][c]));
+                    graphics.fillRectangle(new TerminalPosition(c, r), new TerminalSize(gridCellsize, gridCellsize), ' ');
                 }
             }
         }

@@ -25,7 +25,6 @@ public class TetrisBlock {
         this.columns = columns_;
         initShapes();
         current_rotation = 0;
-
     }
 
     private void initShapes(){
@@ -46,7 +45,6 @@ public class TetrisBlock {
         }
     }
 
-
     public int[][] getShape() {
         return shape;
     }
@@ -65,7 +63,7 @@ public class TetrisBlock {
 
     // Métodos de movimentação e rotação
     public Position moveDown() {
-        return new Position(position.getX(), position.getY() + 1);
+        return new Position(position.getColumn_identifier(), position.getRow_identifier() + 1);
         // Descer (aumentar y)
     }
 
@@ -78,13 +76,11 @@ public class TetrisBlock {
     }
 
     public Position moveLeft() {
-        return new Position(position.getX() - 1, position.getY());
-        // Ir para a esquerda (diminuir x)
-    }
+        return new Position(position.getColumn_identifier() - 1, position.getRow_identifier());
 
+    }
     public Position moveRight() {
-        return new Position(position.getX() + 1, position.getY());
-        // Ir para a direita (aumentar x)
+        return new Position(position.getColumn_identifier() + 1, position.getRow_identifier());
     }
 
     public void rotateBlock() {
@@ -96,27 +92,56 @@ public class TetrisBlock {
 
     public boolean isAtBottomEdge(){
 
-        return ((shape.length + position.getY()) == rows); //função para verificar se o bloco pode continuar a descer
+        return ((shape.length + position.getRow_identifier()) >= rows); //função para verificar se o bloco pode continuar a descer
     }
 
     public boolean isAtRightEdge(){
-        return ((position.getX() + (shape[0].length)) == (columns)); //Erro aqui
+        return ((position.getColumn_identifier() + (shape[0].length)) == (columns)); //Erro aqui
     }
 
     public boolean isAtLeftEdge(){
-        return (position.getX() == 0);
+        return (position.getColumn_identifier() == 0);
+    }
+
+
+    public boolean isNextDownPositonOccupied(TetrisBlock block,Arena arena){
+        String[][] background = arena.getBackground();
+
+        int blockHeight = shape.length;
+        int blockWidth = shape[0].length;
+        int blockRow = position.getRow_identifier();
+        int blockColumn = position.getColumn_identifier();
+
+        // Verificar todas as células do bloco
+        for (int c = 0; c < blockWidth; c++) {
+            for (int r = blockHeight - 1; r >= 0; r--) { // Começa da parte inferior do bloco
+                if (shape[r][c] == 1) { // Apenas verifica células ocupadas
+                    int nextRow = blockRow + r + 1;
+                    int sameColumn = blockColumn + c;
+
+                    // Verificar limites da matriz
+                    if (nextRow >= rows || (nextRow >= 0 && background[nextRow][sameColumn] != null)) {
+                        // Colisão detectada
+                        return true;
+                    }
+                    break; // Verifica apenas a célula inferior mais relevante na coluna
+                }
+            }
+        }
+
+        return false;
     }
 
     public void draw(TextGraphics graphics){
         graphics.setBackgroundColor(TextColor.Factory.fromString(color)); //escolher a cor para desenhar o bloco
 
-        for(int row = 0; row < shape.length; row ++){
-            for(int col = 0; col < shape[0].length; col++){
-                if(shape[row][col] == 1 ){
-                    int x = (position.getX() + col) * gridCellsize;
-                    int y = (position.getY() + row) * gridCellsize;
+        for(int r = 0; r < shape.length; r ++){
+            for(int c = 0; c < shape[0].length; c++){
+                if(shape[r][c] == 1 ){
+                    int correspondent_column = (position.getColumn_identifier() + c) * gridCellsize; //no último ponto(row=2,col=1) getX = 2, col = 1 : x = 3
+                    int correspondent_row = (position.getRow_identifier() + r) * gridCellsize;
 
-                    graphics.fillRectangle(new TerminalPosition(x, y), new TerminalSize(gridCellsize, gridCellsize), ' ');
+                    graphics.fillRectangle(new TerminalPosition(correspondent_column, correspondent_row), new TerminalSize(gridCellsize, gridCellsize), ' ');
                 }
             }
         }

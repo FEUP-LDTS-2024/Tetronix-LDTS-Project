@@ -1,27 +1,25 @@
 package tetronix;
 
 public class Position {
-    private int x;
-    private int y;
+    private int row_identifier;
+    private int column_identifier;
 
-    public Position(int x_,int y_){
-        this.x = x_;
-        this.y = y_;
+    public Position(int column_identifier_,int row_identifier_){
+        this.column_identifier = column_identifier_;
+        this.row_identifier = row_identifier_;
     }
 
-    public int getX(){
-        return this.x;
+    public int getColumn_identifier(){
+        return this.column_identifier;
     }
 
-    public void setX(int x_){
-        this.x = x_;
+    public void setColumn_identifier(int column_identifier_){
+        this.column_identifier = column_identifier_;
     }
 
-    public int getY(){
-        return this.y;
+    public int getRow_identifier(){
+        return this.row_identifier;
     }
 
-    public void setY(){
-        this.y = y;
-    }
+    public void setRow_identifier(int row_identifier_){this.row_identifier = row_identifier_;}
 }

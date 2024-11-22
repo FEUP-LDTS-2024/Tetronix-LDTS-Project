@@ -33,7 +33,9 @@ class TetrisBlockTest {
     @Test
     public void testisAtBottomEdge() {
         // Setup
-        int[][] shape = {{1, 0}, {1, 0}, {1, 1}};
+        int[][] shape = {{1, 0},
+                         {1, 0},
+                         {1, 1}};
         Position position = new Position(0, 37);
         TetrisBlock block = new TetrisBlock(shape, "blue", position, 10, 40);
 
@@ -55,7 +57,7 @@ class TetrisBlockTest {
         Position finalPosition = block.dropBlock();
 
         // Verificações
-        Assertions.assertEquals(5, finalPosition.getX()); // X deve permanecer o mesmo
-        Assertions.assertEquals(40 - shape.length, finalPosition.getY());
+        Assertions.assertEquals(5, finalPosition.getColumn_identifier()); // X deve permanecer o mesmo
+        Assertions.assertEquals(40 - shape.length, finalPosition.getRow_identifier());
     }
 }

@@ -20,7 +20,7 @@ public class GameThread extends Thread {
             while(game.continuousBlockFall(block.moveDown())){
                 try {
                     game.draw();
-                    Thread.sleep(1000); // Aguarda 1 segundo
+                    Thread.sleep(125); // Aguarda 1 segundo
                 } catch (InterruptedException | IOException e) {
                     throw new RuntimeException(e);
                 }

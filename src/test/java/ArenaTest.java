@@ -34,7 +34,7 @@ public class ArenaTest {
                 {1, 0},
                 {1, 1}
         };
-        Position position = new Position(4, 5); // Bloco começa em (4, 5)
+        Position position = new Position(4, 5); // Bloco começa em (5, 4)
         TetrisBlock block = new TetrisBlock(shape, "#FF0000", position, 10, 20);
 
         // Action
@@ -42,11 +42,11 @@ public class ArenaTest {
 
         // Assertions
         String[][] background = arena.getBackground();
-        Assertions.assertNotNull(background[4][5]); // Parte superior esquerda do bloco
-        Assertions.assertNotNull(background[5][5]); // Parte inferior esquerda do bloco
-        Assertions.assertNotNull(background[5][6]); // Parte inferior direita do bloco
+        Assertions.assertNotNull(background[5][4]); // Parte superior esquerda do bloco
+        Assertions.assertNotNull(background[6][4]); // Parte inferior esquerda do bloco
+        Assertions.assertNotNull(background[6][5]); // Parte inferior direita do bloco
 
-        Assertions.assertNull(background[4][6]); // Parte superior direita (vazia no bloco)
+        Assertions.assertNull(background[5][5]); // Parte superior direita (vazia no bloco)
     }
 
     @Test

@@ -1,6 +1,8 @@
 package tetronix;
 
+import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
@@ -44,20 +46,19 @@ public class Game {
         int[][] shape = {{1, 0},
                          {1, 0},
                          {1, 1}};
-        int spawn_y = -shape.length;    //no tetronix.GameThread, começa a cair de uma posição acima do limite da tela
-        int spawn_x = (rows - shape[0].length) / 2;     //posicionado no meio da tela
+        int spawn_row = -shape.length;    //no tetronix.GameThread, começa a cair de uma posição acima do limite da tela
+        int spawn_column = (columns - shape[0].length) / 2;     //posicionado no meio da tela
 
-        position = new Position(spawn_x,spawn_y);
+        position = new Position(spawn_column,spawn_row);
         tetris_block = new TetrisBlock(shape,"#990000",position, columns,rows);
 
         return tetris_block;
     }
 
 
-
-
     public boolean continuousBlockFall(Position position){ //(para a thread)
-        if(!tetris_block.isAtBottomEdge()){
+
+        if(!tetris_block.isAtBottomEdge() && !tetris_block.isNextDownPositonOccupied(tetris_block,arena)){
             tetris_block.setPosition(position);
             return true;
         } else {

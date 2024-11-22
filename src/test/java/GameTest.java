@@ -21,8 +21,8 @@ public class GameTest {
 
         // Verifica se o bloco foi gerado corretamente
         Assertions.assertNotNull(block);
-        Assertions.assertEquals(-3, block.getPosition().getY()); // A altura do shape é 3
-        Assertions.assertEquals(19, block.getPosition().getX()); // Centralizado na arena de 40 colunas
+        Assertions.assertEquals(-3, block.getPosition().getRow_identifier()); // A altura do shape é 3
+        Assertions.assertEquals(19, block.getPosition().getColumn_identifier()); // Centralizado na arena de 40 colunas
         Assertions.assertArrayEquals(new int[][]{
                 {1, 0},
                 {1, 0},
