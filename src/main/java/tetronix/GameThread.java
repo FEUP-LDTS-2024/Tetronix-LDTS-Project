@@ -15,11 +15,11 @@ public class GameThread extends Thread {
     public void run(){
 
         while(true){
-            block = game.spawnBlocks();
-
+            block = TetrisBlockFactory.createBlock(game.getColumns(),game.getRows()); //meter gets no game
+            game.setTetris_block(block);
             while(game.continuousBlockFall(block.moveDown())){
                 try {
-                    game.draw();
+                    game.renderImage();
                     Thread.sleep(125); // Aguarda 1 segundo
                 } catch (InterruptedException | IOException e) {
                     throw new RuntimeException(e);

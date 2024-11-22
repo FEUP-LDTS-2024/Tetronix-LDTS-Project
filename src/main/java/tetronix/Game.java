@@ -15,50 +15,53 @@ import java.io.IOException;
 import static com.googlecode.lanterna.input.KeyType.*;
 
 public class Game {
-    private Screen screen;
-    public Arena arena; //modified to public for test use
-    public TetrisBlock tetris_block; //modified to public for test use
+    private ScreenManager screenManager;
+    private Arena arena; //modified to public for test use
+    private TetrisBlock tetris_block; //modified to public for test use
+    private InputHandler inputHandler;
     private Position position;
     private int rows = 40;
     private int columns = 40;
 
 
-    public Game(){
+    public Game() {
         try {
-            // Criação do terminal
-            TerminalSize terminalSize = new TerminalSize(columns, rows);
-            DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
-            Terminal terminal = terminalFactory.createTerminal();
-
-            // Criação da tela
-            screen = new TerminalScreen(terminal);
-            screen.setCursorPosition(null); // Desabilitar o cursor
-            screen.startScreen(); // Iniciar a tela
-
-            arena = new Arena(columns,rows);
-
+            screenManager = new ScreenManager(this); // Gerencia a tela
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
+
+        inputHandler = new InputHandler(this); // Gerencia entradas
+        arena = new Arena(columns, rows); // Inicializa a arena
     }
 
-    public TetrisBlock spawnBlocks(){
-        int[][] shape = {{1, 0},
-                         {1, 0},
-                         {1, 1}};
-        int spawn_row = -shape.length;    //no tetronix.GameThread, começa a cair de uma posição acima do limite da tela
-        int spawn_column = (columns - shape[0].length) / 2;     //posicionado no meio da tela
-
-        position = new Position(spawn_column,spawn_row);
-        tetris_block = new TetrisBlock(shape,"#990000",position, columns,rows);
-
+    public TetrisBlock getTetris_block() {
         return tetris_block;
     }
 
+    public void setTetris_block(TetrisBlock tetris_block) {
+        this.tetris_block = tetris_block;
+    }
+
+    public int getColumns() {
+        return columns;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public Arena getArena() {
+        return arena;
+    }
+
+    public void setArena(Arena arena) {
+        this.arena = arena;
+    }
 
     public boolean continuousBlockFall(Position position){ //(para a thread)
 
-        if(!tetris_block.isAtBottomEdge() && !tetris_block.isNextDownPositonOccupied(tetris_block,arena)){
+        if(tetris_block.canMoveDown(arena)){
             tetris_block.setPosition(position);
             return true;
         } else {
@@ -79,38 +82,34 @@ public class Game {
     }
 
 
-    public void inputMoveBlock(KeyStroke key) throws IOException {
-            switch(key.getKeyType()){
-                case ArrowUp:
-                    tetris_block.rotateBlock();
-                    break;
-                case ArrowDown:
-                    do{
-                        moveBlock(tetris_block.moveDown(),ArrowDown);
-                } while (continuousBlockFall(tetris_block.getPosition()));
+    public void dropBlock() {
+        // Enquanto o bloco não atingir o fundo ou não houver espaço ocupado abaixo dele
+        while (tetris_block.canMoveDown(arena)) {
+            // Mover o bloco para baixo
+            tetris_block.setPosition(tetris_block.moveDown());
+        }
 
-                    break;
-                case ArrowLeft:
-                    moveBlock(tetris_block.moveLeft(),ArrowLeft);
-                    break;
-                case ArrowRight:
-                    moveBlock(tetris_block.moveRight(),ArrowRight);
-                    break;
-                default:
-                    break;
-            }
-            draw();
-    }
+        // Após o bloco chegar ao fundo ou ser bloqueado, movê-lo para a arena
+        arena.moveBlocktoBackground(tetris_block);
+    } //AQUI OU NA CLASSE TETRIS?
 
-
+    
     //Desnhar na tela
-    public void draw() throws IOException{
-        screen.clear();
-        arena.draw(screen.newTextGraphics());
-        tetris_block.draw(screen.newTextGraphics());
-        screen.refresh();
+    public void renderImage() throws IOException {
+        screenManager.clear();
+
+        Drawable[] drawableElements = {arena, tetris_block};
+        for (Drawable drawable : drawableElements) {
+            drawable.draw(screenManager.getTextGraphics());
+        }
+
+        screenManager.refresh();
     }
 
+    public void handleInput() throws IOException {
+        KeyStroke key = screenManager.readInput();
+        inputHandler.processInput(key);
+    }
 
 
     public void run() throws IOException {
@@ -118,13 +117,8 @@ public class Game {
         gameThread.start(); // Inicia a thread
 
         while(true){
-            KeyStroke key = screen.readInput();
-            if(key.getKeyType() == KeyType.Character && key.getCharacter() == 'q'){
-                screen.close();
-                System.exit(0);
-            } else {
-                inputMoveBlock(key);
-            }
+            handleInput();
+            renderImage();
         }
 
     }

@@ -6,7 +6,7 @@ import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 
 
-public class TetrisBlock {
+public class TetrisBlock implements  Drawable{
     private int [][]shape;
     private int [][][] possible_shapes;
     private int current_rotation;
@@ -67,12 +67,6 @@ public class TetrisBlock {
         // Descer (aumentar y)
     }
 
-   /* public Position dropBlock() {
-        while(!isAtBottomEdge() && !isNextDownPositonOccupied(this)){
-            position = moveDown();
-        }
-        return  position;
-    }*/
 
     public Position moveLeft() {
         return new Position(position.getColumn_identifier() - 1, position.getRow_identifier());
@@ -86,13 +80,9 @@ public class TetrisBlock {
         current_rotation++;
         if(current_rotation > 3) current_rotation = 0;
         shape = possible_shapes[current_rotation];
-        //problema aqui
+
     }
 
-    public boolean isAtBottomEdge(){
-
-        return ((shape.length + position.getRow_identifier()) >= rows); //função para verificar se o bloco pode continuar a descer
-    }
 
     public boolean isAtRightEdge(){
         return ((position.getColumn_identifier() + (shape[0].length)) == (columns)); //Erro aqui
@@ -102,8 +92,12 @@ public class TetrisBlock {
         return (position.getColumn_identifier() == 0);
     }
 
+    public boolean isAtBottomEdge(){
 
-    public boolean isNextDownPositonOccupied(TetrisBlock block,Arena arena){
+        return ((shape.length + position.getRow_identifier()) >= rows); //função para verificar se o bloco pode continuar a descer
+    }
+
+    public boolean isNextDownPositonOccupied(Arena arena){
         String[][] background = arena.getBackground();
 
         int blockHeight = shape.length;
@@ -131,6 +125,12 @@ public class TetrisBlock {
         return false;
     }
 
+    public boolean canMoveDown(Arena arena){
+        return (!isAtBottomEdge() && !isNextDownPositonOccupied(arena));
+    }
+
+
+    @Override
     public void draw(TextGraphics graphics){
         graphics.setBackgroundColor(TextColor.Factory.fromString(color)); //escolher a cor para desenhar o bloco
 

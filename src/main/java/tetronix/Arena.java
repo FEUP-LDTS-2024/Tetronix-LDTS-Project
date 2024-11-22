@@ -6,7 +6,7 @@ import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 
 
-public class Arena {
+public class Arena implements Drawable {
     private int columns;
     private int rows;
     private String[][] background;
@@ -40,6 +40,7 @@ public class Arena {
         }
     }
 
+    @Override
     public void draw(TextGraphics graphics){
         //Meter cor no fundo da tela
         for(int r = 0; r < rows; r++){
