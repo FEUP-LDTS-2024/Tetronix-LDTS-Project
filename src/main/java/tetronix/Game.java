@@ -59,6 +59,18 @@ public class Game {
         this.arena = arena;
     }
 
+    public InputHandler getInputHandler() {
+        return inputHandler;
+    }
+
+    public void setInputHandler(InputHandler inputHandler) {
+        this.inputHandler = inputHandler;
+    }
+
+    public ScreenManager getScreenManager() {
+        return screenManager;
+    }
+
     public boolean continuousBlockFall(Position position){ //(para a thread)
 
         if(tetris_block.canMoveDown(arena)){

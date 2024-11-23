@@ -1,6 +1,11 @@
 plugins {
     id 'java'
     id 'application'
+    id 'info.solidsoft.pitest' version '1.15.0' //for mutation tests
+}
+
+pitest {
+    junit5PluginVersion = '1.0.0'
 }
 
 application {

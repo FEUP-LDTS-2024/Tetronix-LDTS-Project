@@ -1,78 +1,112 @@
 import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.input.KeyType;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import tetronix.*;
 
+import static org.mockito.Mockito.*;
+
+import com.googlecode.lanterna.input.KeyType;
 import java.io.IOException;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class GameTest {
-    @Test
-    public void testSpawnBlocks() { //to be modified
-        Game game = new Game();
-        TetrisBlock block = TetrisBlockFactory.createBlock(game.getColumns(), game.getRows());
+class GameTest {
+    private Game game;
+    private TetrisBlock mockBlock;
+    private Arena mockArena;
 
-        // Verifica se o bloco foi gerado corretamente
-        Assertions.assertNotNull(block);
-        Assertions.assertEquals(-3, block.getPosition().getRow_identifier()); // A altura do shape é 3
-        Assertions.assertEquals(19, block.getPosition().getColumn_identifier()); // Centralizado na arena de 40 colunas
-        Assertions.assertArrayEquals(new int[][]{
-                {1, 0},
-                {1, 0},
-                {1, 1}
-        }, block.getShape());
-        Assertions.assertEquals("#990000", block.getColor());
-    }
+    @BeforeEach
+    void setUp() {
+        // Mockando Arena e TetrisBlock
+        mockBlock = mock(TetrisBlock.class);
+        mockArena = mock(Arena.class);
 
-    @Test
-    public void testContinuousBlockFall() {
-        Game game = new Game();
-        TetrisBlockFactory.createBlock(game.getColumns(), game.getRows());
-        TetrisBlock mockBlock = Mockito.mock(TetrisBlock.class);
-
-        // Configuração do mock
-        when(mockBlock.isAtBottomEdge()).thenReturn(false).thenReturn(false).thenReturn(true);
-
-        // Simula o comportamento do bloco
+        // Inicializando a classe Game com as dependências reais/mocks
+        game = new Game();
         game.setTetris_block(mockBlock);
-        Arena mockArena = Mockito.mock(Arena.class);
         game.setArena(mockArena);
-
-        // Simula as quedas do bloco
-        boolean firstFall = game.continuousBlockFall(new Position(5, 10));
-        boolean secondFall = game.continuousBlockFall(new Position(5, 11));
-        boolean thirdFall = game.continuousBlockFall(new Position(5, 12));
-
-        // Verificações
-        Assertions.assertTrue(firstFall);
-        Assertions.assertTrue(secondFall);
-        Assertions.assertFalse(thirdFall);
-
-        // Verifica se o bloco foi movido para o fundo
-        verify(mockArena).moveBlocktoBackground(mockBlock);
     }
 
-   /* @Test
-    public void testInputMoveBlock() throws IOException {
-        Game game = new Game();
-        TetrisBlock mockBlock = Mockito.mock(TetrisBlock.class);
-        game.tetris_block = mockBlock;
+    @Test
+    void testContinuousBlockFall_WhenBlockCanMoveDown() {
+        // Arrange
+        Position nextPosition = new Position(5, 10); // Posição hipotética
+        when(mockBlock.canMoveDown(mockArena)).thenReturn(true);
 
-        // Simula as teclas pressionadas
-        game.inputMoveBlock(new KeyStroke(KeyType.ArrowUp));
-        verify(mockBlock).rotateBlock();
+        // Act
+        boolean result = game.continuousBlockFall(nextPosition);
 
-        game.inputMoveBlock(new KeyStroke(KeyType.ArrowDown));
-        verify(mockBlock).dropBlock();
+        // Assert
+        assertTrue(result, "The block should continue falling");
+        verify(mockBlock, times(1)).setPosition(nextPosition); // Verifica se moveu o bloco
+        verify(mockBlock, times(1)).canMoveDown(mockArena);   // Verifica se checou se o bloco pode descer
+        verify(mockArena, never()).moveBlocktoBackground(any()); // Certifica-se de que o bloco NÃO foi movido para o background
+    }
 
-        game.inputMoveBlock(new KeyStroke(KeyType.ArrowLeft));
-        verify(mockBlock).moveLeft();
+    @Test
+    void testContinuousBlockFall_WhenBlockCannotMoveDown() {
+        // Arrange
+        Position nextPosition = new Position(5, 10); // Posição hipotética
+        when(mockBlock.canMoveDown(mockArena)).thenReturn(false);
 
-        game.inputMoveBlock(new KeyStroke(KeyType.ArrowRight));
-        verify(mockBlock).moveRight();
-    }*/
+        // Act
+        boolean result = game.continuousBlockFall(nextPosition);
+
+        // Assert
+        assertFalse(result, "The block should stop falling");
+        verify(mockBlock, never()).setPosition(any()); // Certifica-se de que o bloco NÃO mudou de posição
+        verify(mockArena, times(1)).moveBlocktoBackground(mockBlock); // Verifica se o bloco foi adicionado ao background
+    }
+
+    @Test
+    void testMoveBlock_RightMovement() {
+        // Arrange
+        Position nextPosition = new Position(5, 10);
+        when(mockBlock.isAtRightEdge()).thenReturn(false); // Certifique-se de que o bloco não está na borda direita
+
+        // Act
+        game.moveBlock(nextPosition, KeyType.ArrowRight);
+
+        // Assert
+        verify(mockBlock, times(1)).setPosition(nextPosition);
+    }
+
+    @Test
+    void testMoveBlock_LeftEdgeDoesNotMove() {
+        // Arrange
+        Position nextPosition = new Position(5, 10);
+        when(mockBlock.isAtLeftEdge()).thenReturn(true); // Simula que o bloco está na borda esquerda
+
+        // Act
+        game.moveBlock(nextPosition, KeyType.ArrowLeft);
+
+        // Assert
+        verify(mockBlock, never()).setPosition(nextPosition); // O bloco não deve se mover
+    }
+
+    @Test
+    void testDropBlock() {
+        // Arrange
+        when(mockBlock.canMoveDown(mockArena)).thenReturn(true, true, false); // Pode descer 2 vezes, depois não
+
+        // Act
+        game.dropBlock();
+
+        // Assert
+        verify(mockBlock, times(2)).moveDown(); // Deve descer 2 vezes
+        verify(mockBlock, times(2)).setPosition(any()); // Deve ajustar a posição 2 vezes
+        verify(mockArena, times(1)).moveBlocktoBackground(mockBlock); // Deve adicionar o bloco ao background ao final
+    }
+
+    @Test
+    void testRenderImage() throws IOException {
+        // Act
+        game.renderImage();
+
+        // Assert
+        verify(mockArena, times(1)).draw(any()); // Arena deve ser desenhada
+        verify(mockBlock, times(1)).draw(any()); // Bloco deve ser desenhado
+    }
+
 }
