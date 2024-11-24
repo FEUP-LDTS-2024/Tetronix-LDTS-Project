@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class TetrisBlockFactory {
 
+    // Array of specific block colors
     private static final String[] COLORS = {
             "#FF0000", // Red
             "#00008B", // Dark Blue
@@ -14,6 +15,7 @@ public class TetrisBlockFactory {
             "#00FF00"  // Green
     };
 
+    // Define all Tetris shapes
     private static final int[][][] SHAPES = {
             // I Shape
             {
@@ -53,14 +55,17 @@ public class TetrisBlockFactory {
             }
     };
 
-    public static TetrisBlock createBlock(int columns, int rows) {
+    public static TetrisBlock createBlock(int columns, int rows) {  // Factory pattern
+        // Get a random shape and color
         int[][] randomShape = getRandomShape();
         String randomColor = getRandomColor();
 
+        // Calculate the spawn position
         int spawnRow = -randomShape.length;
         int spawnColumn = (columns - randomShape[0].length) / 2;
         Position position = new Position(spawnColumn, spawnRow);
 
+        // Create and return the Tetris block with the random shape and color
         return new TetrisBlock(randomShape, randomColor, position, columns, rows);
     }
 
