@@ -58,7 +58,7 @@ public class TetrisBlockFactory {
         String randomColor = getRandomColor();
 
         int spawnRow = -randomShape.length;
-        int spawnColumn = (columns - randomShape[0].length) / 2;
+        int spawnColumn = new Random().nextInt(columns - randomShape[0].length + 1);
         Position position = new Position(spawnColumn, spawnRow);
 
         return new TetrisBlock(randomShape, randomColor, position, columns, rows);
