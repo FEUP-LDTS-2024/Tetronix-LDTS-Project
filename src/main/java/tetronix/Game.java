@@ -106,7 +106,7 @@ public class Game {
     } //AQUI OU NA CLASSE TETRIS?
 
     
-    //Desnhar na tela
+    //Desenhar na tela
     public void renderImage() throws IOException {
         screenManager.clear();
 

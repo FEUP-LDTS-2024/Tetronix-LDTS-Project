@@ -10,13 +10,13 @@ This project was developed by Artur Moreira (up202208189@edu.fe.up.pt), Daunísi
 ### Controls:
 
 #### Movement
-- Rotate - 'R' key
+- Rotate - Up arrow
+- Drop block - Down arrow
 - Move left - Left arrow
 - Move right - Right arrow
-- Move down - Down arrow
 
 #### Others
-- Pause - 'P' key
+- Quit - 'Q' key
 
 ### Features:
 - Classic Mode: Traditional gameplay for a classic experience
