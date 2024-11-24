@@ -64,7 +64,7 @@ public class TetrisBlock implements  Drawable{
     // Métodos de movimentação e rotação
     public Position moveDown() {
         return new Position(position.getColumn_identifier(), position.getRow_identifier() + 1);
-        // Descer (aumentar y)
+
     }
 
 
@@ -117,7 +117,7 @@ public class TetrisBlock implements  Drawable{
                         // Colisão detectada
                         return true;
                     }
-                    break; // Verifica apenas a célula inferior mais relevante na coluna
+                    break;
                 }
             }
         }
@@ -137,7 +137,7 @@ public class TetrisBlock implements  Drawable{
         for(int r = 0; r < shape.length; r ++){
             for(int c = 0; c < shape[0].length; c++){
                 if(shape[r][c] == 1 ){
-                    int correspondent_column = (position.getColumn_identifier() + c) * gridCellsize; //no último ponto(row=2,col=1) getX = 2, col = 1 : x = 3
+                    int correspondent_column = (position.getColumn_identifier() + c) * gridCellsize;
                     int correspondent_row = (position.getRow_identifier() + r) * gridCellsize;
 
                     graphics.fillRectangle(new TerminalPosition(correspondent_column, correspondent_row), new TerminalSize(gridCellsize, gridCellsize), ' ');

@@ -16,8 +16,8 @@ import static com.googlecode.lanterna.input.KeyType.*;
 
 public class Game {
     private ScreenManager screenManager;
-    private Arena arena; //modified to public for test use
-    private TetrisBlock tetris_block; //modified to public for test use
+    private Arena arena;
+    private TetrisBlock tetris_block;
     private InputHandler inputHandler;
     private Position position;
     private int rows = 40;
@@ -39,8 +39,8 @@ public class Game {
         return tetris_block;
     }
 
-    public void setTetris_block(TetrisBlock tetris_block) {
-        this.tetris_block = tetris_block;
+    public void setTetris_block(TetrisBlock tetrisblock_) {
+        this.tetris_block = tetrisblock_;
     }
 
     public int getColumns() {
@@ -103,7 +103,7 @@ public class Game {
 
         // Após o bloco chegar ao fundo ou ser bloqueado, movê-lo para a arena
         arena.moveBlocktoBackground(tetris_block);
-    } //AQUI OU NA CLASSE TETRIS?
+    }
 
     
     //Desnhar na tela
@@ -132,6 +132,6 @@ public class Game {
             handleInput();
             renderImage();
         }
-
     }
+
 }

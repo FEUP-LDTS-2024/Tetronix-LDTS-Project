@@ -2,24 +2,28 @@ import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import tetronix.Arena;
 import tetronix.Position;
 import tetronix.TetrisBlock;
 
-
 public class ArenaTest {
+
+    private Arena arena;
+    private int columns;
+    private int rows;
+
+    @BeforeEach
+    public void setUp() {
+        columns = 10;
+        rows = 20;
+        arena = new Arena(columns, rows); // Inicializa a arena com os valores padrão
+    }
 
     @Test
     public void testConstructorInitialization() {
-        // Setup
-        int columns = 10;
-        int rows = 20;
-
-        // Test
-        Arena arena = new Arena(columns, rows);
-
         // Assertions
         Assertions.assertEquals(columns, arena.getBackground()[0].length); // Colunas
         Assertions.assertEquals(rows, arena.getBackground().length); // Linhas
@@ -29,13 +33,12 @@ public class ArenaTest {
     @Test
     public void testMoveBlockToBackground() {
         // Setup
-        Arena arena = new Arena(10, 20);
         int[][] shape = {
                 {1, 0},
                 {1, 1}
         };
         Position position = new Position(4, 5); // Bloco começa em (5, 4)
-        TetrisBlock block = new TetrisBlock(shape, "#FF0000", position, 10, 20);
+        TetrisBlock block = new TetrisBlock(shape, "#FF0000", position, columns, rows);
 
         // Action
         arena.moveBlocktoBackground(block);
@@ -52,14 +55,13 @@ public class ArenaTest {
     @Test
     public void testDraw() {
         // Setup
-        Arena arena = new Arena(10, 20);
         TextGraphics graphics = Mockito.mock(TextGraphics.class);
 
         // Action
         arena.draw(graphics);
 
         // Verification
-        Mockito.verify(graphics, Mockito.times(200)).fillRectangle(
+        Mockito.verify(graphics, Mockito.times(rows * columns)).fillRectangle(
                 Mockito.any(TerminalPosition.class),
                 Mockito.any(TerminalSize.class),
                 Mockito.eq(' ')
