@@ -83,10 +83,10 @@ public class Game {
     }
 
     public void moveBlock(Position position,KeyType key){
-        if(tetris_block.isAtRightEdge() && key == ArrowRight){
+        if(key == ArrowRight && !tetris_block.canMoveRight(arena)){
             return;
         }
-        if(tetris_block.isAtLeftEdge() && key == ArrowLeft){
+        if(key == ArrowLeft && !tetris_block.canMoveLeft(arena)){
             return;
         }
 

@@ -97,13 +97,17 @@ public class TetrisBlock implements  Drawable{
         return ((shape.length + position.getRow_identifier()) >= rows); //função para verificar se o bloco pode continuar a descer
     }
 
-    public boolean isNextDownPositonOccupied(Arena arena){
+    public boolean canMoveDown(Arena arena){
         String[][] background = arena.getBackground();
 
         int blockHeight = shape.length;
         int blockWidth = shape[0].length;
         int blockRow = position.getRow_identifier();
         int blockColumn = position.getColumn_identifier();
+
+        if(isAtBottomEdge()){
+            return false;
+        }
 
         // Verificar todas as células do bloco
         for (int c = 0; c < blockWidth; c++) {
@@ -112,21 +116,93 @@ public class TetrisBlock implements  Drawable{
                     int nextRow = blockRow + r + 1;
                     int sameColumn = blockColumn + c;
 
-                    // Verificar limites da matriz
-                    if (nextRow >= rows || (nextRow >= 0 && background[nextRow][sameColumn] != null)) {
+                    if(blockRow < 0){
+                        break;
+                    }
+                    if (background[nextRow][sameColumn] != null) {
                         // Colisão detectada
-                        return true;
+                        return false;
                     }
                     break;
                 }
             }
         }
 
-        return false;
+        return true;
     }
 
-    public boolean canMoveDown(Arena arena){
-        return (!isAtBottomEdge() && !isNextDownPositonOccupied(arena));
+
+
+
+    public boolean canMoveLeft(Arena arena) {
+        String[][] background = arena.getBackground();
+
+        int blockHeight = shape.length;
+        int blockWidth = shape[0].length;
+        int blockRow = position.getRow_identifier();
+        int blockColumn = position.getColumn_identifier();
+
+        // Verificar se o bloco inteiro está na borda esquerda
+        if (isAtLeftEdge()) {
+            return false; // Não pode se mover para a esquerda
+        }
+
+        // Verificar todas as células do bloco para colisões
+        for (int r = 0; r < blockHeight; r++) { // Para cada linha
+            for (int c = 0; c < blockWidth; c++) { // Para cada coluna
+                if (shape[r][c] == 1) { // Encontrar uma célula ocupada
+                    int sameRow = blockRow + r;
+                    int leftColumn = blockColumn + c - 1;
+
+                    if(blockRow < 0){
+                        break;
+                    }
+                    if (background[sameRow][leftColumn] != null) {
+                        return false; // Movimento bloqueado
+                    }
+
+                    break; // Verificar apenas a célula mais à esquerda da linha atual
+                }
+            }
+        }
+
+        return true; // Nenhuma colisão detectada, pode mover
+    }
+
+
+
+    public boolean canMoveRight(Arena arena) {
+        String[][] background = arena.getBackground();
+
+        int blockHeight = shape.length;
+        int blockWidth = shape[0].length;
+        int blockRow = position.getRow_identifier();
+        int blockColumn = position.getColumn_identifier();
+
+        if(isAtRightEdge()){
+            return false;
+        }
+
+
+        // Verificar todas as linhas
+        for (int r = 0; r < blockHeight; r++) {
+            for (int c = blockWidth - 1; c >= 0; c--) {
+                if (shape[r][c] == 1) {
+                    int sameRow = blockRow + r;
+                    int rightColumn = blockColumn + c + 1;
+
+                    if(blockRow < 0){
+                        break;
+                    }
+                    if (background[sameRow][rightColumn] != null) {
+                        return false; // Colisão detectada
+                    }
+                    break; // Sai do loop após verificar a célula mais à direita*/
+                }
+            }
+        }
+
+        return true; // Nenhuma colisão detectada
     }
 
 

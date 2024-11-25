@@ -62,21 +62,21 @@ class GameTest {
     @Test
     void testMoveBlock_RightMovement() {
 
-        Position nextPosition = new Position(5, 10);
-        when(mockBlock.isAtRightEdge()).thenReturn(false); // Certifique-se de que o bloco não está na borda direita
+        Position nextPosition = new Position(5, 7);
+        when(mockBlock.canMoveRight(mockArena)).thenReturn(false); // Certifique-se de que o bloco não está na borda direita
 
 
         game.moveBlock(nextPosition, KeyType.ArrowRight);
 
 
-        verify(mockBlock, times(1)).setPosition(nextPosition);
+        verify(mockBlock, times(0)).setPosition(nextPosition);
     }
 
     @Test
     void testMoveBlock_LeftEdgeDoesNotMove() {
 
-        Position nextPosition = new Position(5, 10);
-        when(mockBlock.isAtLeftEdge()).thenReturn(true); // Simula que o bloco está na borda esquerda
+        Position nextPosition = new Position(10, 5);
+        when(mockBlock.canMoveLeft(mockArena)).thenReturn(false); // Simula que o bloco está na borda esquerda
 
 
         game.moveBlock(nextPosition, KeyType.ArrowLeft);

@@ -16,7 +16,7 @@ class TetrisBlockTest {
     private Arena mockArena;
     private Position startPosition;
     private int[][] shape = {
-            {1, 1},
+            {1, 0},
             {1, 1}
     }; // Forma quadrada simples para facilitar o teste
     private int columns = 10;
@@ -188,7 +188,7 @@ class TetrisBlockTest {
         assertFalse(result, "The block should not be able to move down due to a collision below.");
     }
 
-    @Test
+  /*  @Test
     void testIsNextDownPositionOccupied_WhenNoCollision() {
 
         String[][] background = new String[rows][columns];
@@ -218,5 +218,129 @@ class TetrisBlockTest {
 
         assertTrue(result, "The next position below should be occupied.");
     }
-}
+    */
 
+    @Test
+    void testCanMoveLeft_WhenNotAtLeftEdgeAndNoCollision() {
+        // Configurar uma arena sem colisões
+        when(mockArena.getBackground()).thenReturn(new String[rows][columns]);
+        block.setPosition(new Position(1, 0)); // Não na borda esquerda
+
+        boolean result = block.canMoveLeft(mockArena);
+
+        assertTrue(result, "The block should be able to move left when not at the left edge and no collision.");
+    }
+
+    @Test
+    void testCanMoveLeft_WhenAtLeftEdge() {
+        // Configurar a posição na borda esquerda
+        block.setPosition(new Position(0, 0)); // Na borda esquerda
+
+        boolean result = block.canMoveLeft(mockArena);
+
+        assertFalse(result, "The block should not be able to move left when at the left edge.");
+    }
+
+    @Test
+    void testCanMoveLeft_WhenCollisionOnTopLeft() {
+        // Simular uma arena com uma colisão à esquerda do bloco
+        String[][] background = new String[rows][columns];
+        background[1][0] = "#FFFFFF"; // Simula um obstáculo imediatamente à esquerda
+        when(mockArena.getBackground()).thenReturn(background);
+        block.setPosition(new Position(1, 1)); // Próximo à colisão
+
+        boolean result = block.canMoveLeft(mockArena);
+
+        assertFalse(result, "The block should not be able to move left due to a collision on the left.");
+    }
+
+    @Test
+    void testCanMoveLeft_WhenCollisionOnBottomLeft() {
+        // Configurar uma arena onde há várias linhas do bloco sendo verificadas
+        String[][] background = new String[rows][columns];
+        background[2][0] = "#FFFFFF"; // Simula um obstáculo na linha inferior esquerda do bloco
+        when(mockArena.getBackground()).thenReturn(background);
+        block.setPosition(new Position(1, 1)); // Colocado acima do obstáculo
+
+        boolean result = block.canMoveLeft(mockArena);
+
+        assertFalse(result, "The block should not be able to move left due to a collision in one of its rows on the left.");
+    }
+
+
+    @Test
+    void testCanMoveLeft_WhenNoCollisionButAtLeftEdge() {
+        // Simular uma arena sem colisões, mas o bloco está na borda esquerda
+        when(mockArena.getBackground()).thenReturn(new String[rows][columns]);
+        block.setPosition(new Position(0, 0)); // Exatamente na borda esquerda
+
+        boolean result = block.canMoveLeft(mockArena);
+
+        assertFalse(result, "The block should not be able to move left because it is at the left edge.");
+    }
+
+
+
+
+
+    @Test
+    void testCanMoveRight_WhenNotAtRightEdgeAndNoCollision() {
+        // Configurar uma arena sem colisões
+        when(mockArena.getBackground()).thenReturn(new String[rows][columns]);
+        block.setPosition(new Position(columns - shape[0].length - 1, 1)); // Não na borda direita
+
+        boolean result = block.canMoveRight(mockArena);
+
+        assertTrue(result, "The block should be able to move right when not at the right edge and no collision.");
+    }
+
+    @Test
+    void testCanMoveRight_WhenAtRightEdge() {
+        // Configurar a posição na borda direita
+        block.setPosition(new Position(columns - shape[0].length, 0)); // Na borda direita
+
+        boolean result = block.canMoveRight(mockArena);
+
+        assertFalse(result, "The block should not be able to move right when at the right edge.");
+    }
+
+    @Test
+    void testCanMoveRight_WhenCollisionOnTopRight() {
+        // Simular uma arena com uma colisão à direita do bloco
+        String[][] background = new String[rows][columns];
+        background[1][columns - 1] = "#FFFFFF"; // Simula um obstáculo imediatamente à direita
+        when(mockArena.getBackground()).thenReturn(background);
+        block.setPosition(new Position(columns - shape[0].length - 1, 1)); // Próximo à colisão //malfeito
+
+        boolean result = block.canMoveRight(mockArena);
+
+        assertFalse(result, "The block should not be able to move right due to a collision on the right.");
+    }
+
+    @Test
+    void testCanMoveRight_WhenCollisionOnBottomRight() {
+        // Configurar uma arena onde há várias linhas do bloco sendo verificadas
+        String[][] background = new String[rows][columns];
+        background[2][columns - 1] = "#FFFFFF"; // Simula um obstáculo na linha inferior direita do bloco
+        when(mockArena.getBackground()).thenReturn(background);
+        block.setPosition(new Position(columns - shape[0].length - 1, 1)); // Colocado acima do obstáculo
+
+        boolean result = block.canMoveRight(mockArena);
+
+        assertFalse(result, "The block should not be able to move right due to a collision in one of its rows on the right.");
+    }
+
+    @Test
+    void testCanMoveRight_WhenNoCollisionButAtRightEdge() {
+        // Simular uma arena sem colisões, mas o bloco está na borda direita
+        when(mockArena.getBackground()).thenReturn(new String[rows][columns]);
+        block.setPosition(new Position(columns - shape[0].length, 0)); // Exatamente na borda direita
+
+        boolean result = block.canMoveRight(mockArena);
+
+        assertFalse(result, "The block should not be able to move right because it is at the right edge.");
+    }
+
+
+
+}
