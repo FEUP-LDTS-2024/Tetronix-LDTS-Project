@@ -1,27 +1,34 @@
 package tetronix;
 
-import com.googlecode.lanterna.TerminalPosition;
-import com.googlecode.lanterna.TerminalSize;
-import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
-import com.googlecode.lanterna.screen.Screen;
-import com.googlecode.lanterna.screen.TerminalScreen;
-import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
-import com.googlecode.lanterna.terminal.Terminal;
+import tetronix.Control.GameThread;
+import tetronix.Control.InputHandler;
+import tetronix.Control.TetrisBlockController;
+import tetronix.Model.Arena;
+import tetronix.Model.Position;
+import tetronix.Model.TetrisBlock;
+import tetronix.Model.TetrisBlockFactory;
+import tetronix.View.*;
 
 import java.io.IOException;
 
 import static com.googlecode.lanterna.input.KeyType.*;
 
 public class Game {
-    private ScreenManager screenManager;
-    private Arena arena;
-    private TetrisBlock tetris_block;
-    private InputHandler inputHandler;
-    private Position position;
     private int rows = 40;
     private int columns = 40;
+
+    private Arena arena;
+    private TetrisBlock tetris_block;
+    private Position position;
+
+    private InputHandler inputHandler;
+    private TetrisBlockController tetrisBlockController;
+
+    private ScreenManager screenManager;
+    private GameView gameView;
+
 
 
     public Game() {
@@ -32,8 +39,18 @@ public class Game {
         }
 
         inputHandler = new InputHandler(this); // Gerencia entradas
+
         arena = new Arena(columns, rows); // Inicializa a arena
+
+        tetris_block = TetrisBlockFactory.createBlock(columns,rows);
+
+        gameView = new GameView();
+
+        tetrisBlockController = new TetrisBlockController();
+
     }
+
+    public TetrisBlockController getTetrisBlockController() {return tetrisBlockController;}
 
     public TetrisBlock getTetris_block() {
         return tetris_block;
@@ -71,9 +88,11 @@ public class Game {
         return screenManager;
     }
 
+
+
     public boolean continuousBlockFall(Position position){ //(para a thread)
 
-        if(tetris_block.canMoveDown(arena)){
+        if(arena.canMoveDown(tetris_block)){
             tetris_block.setPosition(position);
             return true;
         } else {
@@ -82,11 +101,26 @@ public class Game {
         }
     }
 
+    public void updateGameState() {
+        if (tetris_block == null || !continuousBlockFall(tetrisBlockController.moveDown(tetris_block))) {
+            tetris_block = TetrisBlockFactory.createBlock(columns, rows);
+
+        }
+
+        // Atualizar a renderização
+        try {
+            gameView.render(arena, tetris_block, screenManager);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     public void moveBlock(Position position,KeyType key){
-        if(key == ArrowRight && !tetris_block.canMoveRight(arena)){
+        if(key == ArrowRight && !arena.canMoveRight(tetris_block)){
             return;
         }
-        if(key == ArrowLeft && !tetris_block.canMoveLeft(arena)){
+        if(key == ArrowLeft && !arena.canMoveLeft(tetris_block)){
             return;
         }
 
@@ -94,29 +128,6 @@ public class Game {
     }
 
 
-    public void dropBlock() {
-        // Enquanto o bloco não atingir o fundo ou não houver espaço ocupado abaixo dele
-        while (tetris_block.canMoveDown(arena)) {
-            // Mover o bloco para baixo
-            tetris_block.setPosition(tetris_block.moveDown());
-        }
-
-        // Após o bloco chegar ao fundo ou ser bloqueado, movê-lo para a arena
-        arena.moveBlocktoBackground(tetris_block);
-    }
-
-    
-    //Desnhar na tela
-    public void renderImage() throws IOException {
-        screenManager.clear();
-
-        Drawable[] drawableElements = {arena, tetris_block};
-        for (Drawable drawable : drawableElements) {
-            drawable.draw(screenManager.getTextGraphics());
-        }
-
-        screenManager.refresh();
-    }
 
     public void handleInput() throws IOException {
         KeyStroke key = screenManager.readInput();
@@ -130,7 +141,7 @@ public class Game {
 
         while(true){
             handleInput();
-            renderImage();
+            gameView.render(arena,tetris_block,screenManager);
         }
     }
 

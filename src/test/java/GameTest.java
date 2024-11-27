@@ -1,12 +1,14 @@
-import com.googlecode.lanterna.input.KeyStroke;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import tetronix.*;
 
 import static org.mockito.Mockito.*;
 
 import com.googlecode.lanterna.input.KeyType;
+import tetronix.Model.Arena;
+import tetronix.Model.Position;
+import tetronix.Model.TetrisBlock;
+
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,4 +1,4 @@
-package tetronix;
+package tetronix.Model;
 
 public class TetrisBlockFactory {
     public static TetrisBlock createBlock(int columns, int rows) {  //Factory pattern
@@ -8,6 +8,6 @@ public class TetrisBlockFactory {
         int spawnRow = -shape.length;
         int spawnColumn = (columns - shape[0].length) / 2;
         Position position = new Position(spawnColumn, spawnRow);
-        return new TetrisBlock(shape, "#990000", position, columns, rows);
+        return new TetrisBlock(shape, "#990000", position);
     }
 }
