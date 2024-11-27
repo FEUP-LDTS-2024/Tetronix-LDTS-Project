@@ -11,6 +11,7 @@ public class TetrisBlockView implements ElementViewer<TetrisBlock> {
 
     @Override
     public void draw(TetrisBlock block, ScreenManager screenManager) {
+        if(block == null) return;
         TextGraphics graphics = screenManager.getTextGraphics();
         int[][] shape = block.getShape();
         Position position = block.getPosition();

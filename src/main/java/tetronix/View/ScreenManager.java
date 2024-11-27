@@ -16,7 +16,7 @@ public class ScreenManager {
 
     public ScreenManager(Game game) throws IOException {
         // Criação do terminal
-        TerminalSize terminalSize = new TerminalSize(game.getColumns(), game.getRows());
+        TerminalSize terminalSize = new TerminalSize(40, 20);
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
         Terminal terminal = terminalFactory.createTerminal();
 

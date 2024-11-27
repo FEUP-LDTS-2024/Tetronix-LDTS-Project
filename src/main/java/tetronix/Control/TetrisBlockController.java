@@ -18,6 +18,7 @@ public class TetrisBlockController {
 
 
     public Position moveDown(TetrisBlock block) {
+        if(block == null) return null;
         Position current_position = block.getPosition();
 
         Position new_position = new Position(current_position.getColumn_identifier(),current_position.getRow_identifier() + 1);
@@ -25,22 +26,25 @@ public class TetrisBlockController {
     }
 
     public Position moveLeft(TetrisBlock block) {
-            Position current_position = block.getPosition();
+        if(block == null) return null;
+        Position current_position = block.getPosition();
 
-            Position new_position = new Position(current_position.getColumn_identifier() - 1,current_position.getRow_identifier());
-            return new_position;
+        Position new_position = new Position(current_position.getColumn_identifier() - 1,current_position.getRow_identifier());
+        return new_position;
 
     }
 
     public Position moveRight(TetrisBlock block) {
-            Position current_position = block.getPosition();
+        if(block == null) return null;
+        Position current_position = block.getPosition();
 
-            Position new_position = new Position(current_position.getColumn_identifier() + 1,current_position.getRow_identifier());
-            return new_position;
+        Position new_position = new Position(current_position.getColumn_identifier() + 1,current_position.getRow_identifier());
+        return new_position;
 
     }
 
     public void rotateBlock(TetrisBlock block) {
+        if(block == null) return;
         int[][][] possible_shapes = block.getPossible_shapes();
         int new_rotation = block.getCurrent_rotation() + 1;
 

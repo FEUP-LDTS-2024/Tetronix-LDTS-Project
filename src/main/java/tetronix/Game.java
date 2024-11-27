@@ -16,8 +16,9 @@ import java.io.IOException;
 import static com.googlecode.lanterna.input.KeyType.*;
 
 public class Game {
-    private int rows = 40;
-    private int columns = 40;
+    private int rows = 20;
+    private int columns = 20;
+    private int score = 0;
 
     private Arena arena;
     private TetrisBlock tetris_block;
@@ -49,6 +50,8 @@ public class Game {
         tetrisBlockController = new TetrisBlockController();
 
     }
+
+    public int getScore() {return score;}
 
     public TetrisBlockController getTetrisBlockController() {return tetrisBlockController;}
 
@@ -96,12 +99,24 @@ public class Game {
             tetris_block.setPosition(position);
             return true;
         } else {
+
             arena.moveBlocktoBackground(tetris_block);
+            score += arena.clearLines(); //caso alguma linha esteja completa, é limpa
             return false;
         }
     }
 
-    public void updateGameState() {
+    public boolean updateGameState() {
+
+        if(!arena.canMoveDown(tetris_block)){
+            if(arena.isBlockOutBounds(tetris_block)){
+                System.out.println("Game Stopped!: Row: " + tetris_block.getPosition().getRow_identifier() + " ------ " + "Column: " + tetris_block.getPosition().getColumn_identifier());
+                arena.moveBlocktoBackground(tetris_block);
+                return false;
+            }
+        }
+
+
         if (tetris_block == null || !continuousBlockFall(tetrisBlockController.moveDown(tetris_block))) {
             tetris_block = TetrisBlockFactory.createBlock(columns, rows);
 
@@ -113,6 +128,8 @@ public class Game {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        return true;
     }
 
 

@@ -17,6 +17,8 @@ public class InputHandler {
     }
 
     public void processInput(KeyStroke key) throws IOException {
+        if(game.getTetris_block() == null) return;
+
         TetrisBlock block = game.getTetris_block();
         switch (key.getKeyType()) {
             case ArrowUp:

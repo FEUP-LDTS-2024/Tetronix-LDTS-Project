@@ -28,5 +28,12 @@ public class ArenaView<T extends Arena> implements ElementViewer<T> {
                 }
             }
         }
+
+        //Prototype
+        graphics.setBackgroundColor(TextColor.Factory.fromString("white")); // Fundo branco
+        graphics.setForegroundColor(TextColor.Factory.fromString("black")); // Texto preto
+
+        graphics.putString(25, 4, "Level: " + 2);
+        graphics.putString(25, 6, "Score: " + 20);
     }
 }

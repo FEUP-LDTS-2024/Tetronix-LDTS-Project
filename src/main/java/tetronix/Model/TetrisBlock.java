@@ -56,46 +56,13 @@ public class TetrisBlock {
         return this.color;
     }
 
-    public void setCurrent_rotation(int current_rotation) {this.current_rotation = current_rotation;}
+    public void setCurrent_rotation(int current_rotation_) {this.current_rotation = current_rotation_;}
 
     public int getCurrent_rotation() {return current_rotation;}
 
     public int[][][] getPossible_shapes() {return possible_shapes;}
 
     public void setShape(int[][] shape) {this.shape = shape;}
-
-    /*
-    // Métodos de movimentação e rotação
-    public Position moveDown() {
-        return new Position(position.getColumn_identifier(), position.getRow_identifier() + 1);
-
-    }
-
-    public Position moveLeft() {
-        return new Position(position.getColumn_identifier() - 1, position.getRow_identifier());
-
-    }
-    public Position moveRight() {
-        return new Position(position.getColumn_identifier() + 1, position.getRow_identifier());
-    }
-
-    public void dropBlock() {
-        // Enquanto o bloco não atingir o fundo ou não houver espaço ocupado abaixo dele
-        while (arena.canMoveDown(this)) {
-            // Mover o bloco para baixo
-            position = moveDown();
-        }
-
-        // Após o bloco chegar ao fundo ou ser bloqueado, movê-lo para a arena
-        arena.moveBlocktoBackground(this);
-    }
-
-    public void rotateBlock() {
-        current_rotation++;
-        if(current_rotation > 3) current_rotation = 0;
-        shape = possible_shapes[current_rotation];
-
-    } */
 
 }
 
