@@ -11,31 +11,30 @@ public class InputHandler {
     private Game game;
     private TetrisBlockController tetrisBlockController;
 
-    public InputHandler(Game game) {
-        this.game = game;
-        tetrisBlockController = new TetrisBlockController();
+    public InputHandler(Game game_) {
+        this.game = game_;
+        tetrisBlockController = new TetrisBlockController(game_);
     }
 
     public void processInput(KeyStroke key) throws IOException {
         if(game.getTetris_block() == null) return;
 
-        TetrisBlock block = game.getTetris_block();
         switch (key.getKeyType()) {
             case ArrowUp:
                 System.out.println("ArrowUp pressed!");
-                tetrisBlockController.rotateBlock(block);
+                tetrisBlockController.rotateBlock();
                 break;
             case ArrowDown:
                 System.out.println("ArrowDown pressed!");
-                tetrisBlockController.dropBlock(block,game.getArena());
+                tetrisBlockController.dropBlock(game.getArena()); // passo aqui para fazer dependey injection
                 break;
             case ArrowLeft:
                 System.out.println("ArrowLeft pressed!");
-                game.moveBlock(tetrisBlockController.moveLeft(block), KeyType.ArrowLeft);
+                game.moveBlock(tetrisBlockController.moveLeft(), KeyType.ArrowLeft);
                 break;
             case ArrowRight:
                 System.out.println("ArrowRight pressed!");
-                game.moveBlock(tetrisBlockController.moveRight(block), KeyType.ArrowRight);
+                game.moveBlock(tetrisBlockController.moveRight(), KeyType.ArrowRight);
                 break;
             case Character:
                 if (key.getCharacter() == 'q') {

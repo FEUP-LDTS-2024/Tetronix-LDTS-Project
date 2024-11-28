@@ -46,5 +46,4 @@ public class ScreenManager {
         return screen.readInput();
     }
 
-
 }

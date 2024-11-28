@@ -1,23 +1,32 @@
 package tetronix.Control;
 
+import tetronix.Game;
 import tetronix.Model.Arena;
 import tetronix.Model.Position;
 import tetronix.Model.TetrisBlock;
 
 public class TetrisBlockController {
+    private Game game;
+    private TetrisBlock block;
 
-    public void dropBlock(TetrisBlock block,Arena arena) {
+    public TetrisBlockController(Game game_){
+        this.game = game_;
+    }
+
+    public void dropBlock(Arena arena) {
+        block = game.getTetris_block();
         // Enquanto o bloco não atingir o fundo ou não houver espaço ocupado abaixo dele
         while(arena.canMoveDown(block)){
 
-            block.setPosition(moveDown(block));
+            block.setPosition(moveDown());
         }
         // Após o bloco chegar ao fundo ou ser bloqueado, movê-lo para a arena
         arena.moveBlocktoBackground(block);
     }
 
 
-    public Position moveDown(TetrisBlock block) {
+    public Position moveDown() {
+        block = game.getTetris_block();
         if(block == null) return null;
         Position current_position = block.getPosition();
 
@@ -25,7 +34,8 @@ public class TetrisBlockController {
         return new_position;
     }
 
-    public Position moveLeft(TetrisBlock block) {
+    public Position moveLeft() {
+        block = game.getTetris_block();
         if(block == null) return null;
         Position current_position = block.getPosition();
 
@@ -34,7 +44,8 @@ public class TetrisBlockController {
 
     }
 
-    public Position moveRight(TetrisBlock block) {
+    public Position moveRight() {
+        block = game.getTetris_block();
         if(block == null) return null;
         Position current_position = block.getPosition();
 
@@ -43,7 +54,8 @@ public class TetrisBlockController {
 
     }
 
-    public void rotateBlock(TetrisBlock block) {
+    public void rotateBlock() {
+        block = game.getTetris_block();
         if(block == null) return;
         int[][][] possible_shapes = block.getPossible_shapes();
         int new_rotation = block.getCurrent_rotation() + 1;

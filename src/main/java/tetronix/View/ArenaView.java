@@ -4,12 +4,25 @@ import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
+import tetronix.Game;
 import tetronix.Model.Arena;
 
 public class ArenaView<T extends Arena> implements ElementViewer<T> {
 
+
+    private Game game;
+    private final Arena arena;
+    private final ScreenManager screenManager;
+
+
+    public ArenaView(Game game_){
+        this.game = game_;
+        this.arena = game.getArena();
+        this.screenManager = game.getScreenManager();
+    }
+
     @Override
-    public void draw(T arena, ScreenManager screenManager) {
+    public void draw(){//T arena, ScreenManager screenManager) {
         TextGraphics graphics = screenManager.getTextGraphics(); // Obtenção do TextGraphics do GUI
         int rows = arena.getRows();
         int columns = arena.getColumns();
@@ -29,7 +42,7 @@ public class ArenaView<T extends Arena> implements ElementViewer<T> {
             }
         }
 
-        //Prototype
+        //Prototype for menu
         graphics.setBackgroundColor(TextColor.Factory.fromString("white")); // Fundo branco
         graphics.setForegroundColor(TextColor.Factory.fromString("black")); // Texto preto
 

@@ -4,14 +4,29 @@ import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
+import tetronix.Game;
 import tetronix.Model.Position;
 import tetronix.Model.TetrisBlock;
 
 public class TetrisBlockView implements ElementViewer<TetrisBlock> {
 
+    private Game game;
+    private final ScreenManager screenManager;
+    private TetrisBlock block;
+
+    public TetrisBlockView(Game game_){
+        this.game = game_;
+        this.screenManager = game_.getScreenManager();
+    }
+
+
+
     @Override
-    public void draw(TetrisBlock block, ScreenManager screenManager) {
+    public void draw(){//TetrisBlock block, ScreenManager screenManager) {
+        block = game.getTetris_block();
         if(block == null) return;
+
+
         TextGraphics graphics = screenManager.getTextGraphics();
         int[][] shape = block.getShape();
         Position position = block.getPosition();

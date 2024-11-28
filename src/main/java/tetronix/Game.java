@@ -45,9 +45,9 @@ public class Game {
 
         tetris_block = TetrisBlockFactory.createBlock(columns,rows);
 
-        gameView = new GameView();
+        gameView = new GameView(this);
 
-        tetrisBlockController = new TetrisBlockController();
+        tetrisBlockController = new TetrisBlockController(this);
 
     }
 
@@ -117,14 +117,14 @@ public class Game {
         }
 
 
-        if (tetris_block == null || !continuousBlockFall(tetrisBlockController.moveDown(tetris_block))) {
+        if (tetris_block == null || !continuousBlockFall(tetrisBlockController.moveDown())) {
             tetris_block = TetrisBlockFactory.createBlock(columns, rows);
 
         }
 
         // Atualizar a renderização
         try {
-            gameView.render(arena, tetris_block, screenManager);
+            gameView.render();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -158,7 +158,7 @@ public class Game {
 
         while(true){
             handleInput();
-            gameView.render(arena,tetris_block,screenManager);
+            gameView.render();
         }
     }
 
