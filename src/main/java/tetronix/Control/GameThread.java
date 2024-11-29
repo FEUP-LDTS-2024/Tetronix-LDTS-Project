@@ -11,27 +11,25 @@ import java.io.IOException;
 
 public class GameThread extends Thread {
     private final Game game;
-    private int level = 1;
-    private int score_per_level = 1;
-    private int current_score;
-    private int speed_per_level = 200;
-    private int pause = 500;
 
-    public GameThread(Game game) {
-        this.game = game;
+    private int speed_per_level;
+    private int initial_speed;
+    private int level;
+
+    public GameThread(Game game_) {
+        this.game = game_;
+        initial_speed = game_.getInitial_speed();
+        speed_per_level = game_.getSpeed_per_level();
     }
 
     @Override
     public void run() {
         while (true) {
-            current_score = game.getScore();
-            int can_up_level = current_score / score_per_level + 1;
-
-            if(can_up_level > level){
-                System.out.println("Level Up!,increasing speed...\n");
-                level = can_up_level;
-                pause -= speed_per_level;
+            if(game.can_level_up()){
+                System.out.println("Increasing speed...\n");
+                game.setLevel(game.getLevel() + 1);
             }
+            level = game.getLevel();
 
             try {
 
@@ -40,12 +38,13 @@ public class GameThread extends Thread {
                     game.setTetris_block(null); //assim n dá para mexer mais no bloco quando jogo acaba
                     break;
                 }
-                Thread.sleep(pause); // Controla o intervalo de atualização
+                Thread.sleep(initial_speed - (level * speed_per_level)); // Controla o intervalo de atualização
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
 
         }
     }
+
 }
 

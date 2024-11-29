@@ -2,8 +2,6 @@ package tetronix.View;
 
 
 import tetronix.Game;
-import tetronix.Model.Arena;
-import tetronix.Model.TetrisBlock;
 
 import java.io.IOException;
 import java.util.ArrayList;

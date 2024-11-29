@@ -16,9 +16,8 @@ import java.io.IOException;
 import static com.googlecode.lanterna.input.KeyType.*;
 
 public class Game {
-    private int rows = 20;
-    private int columns = 20;
-    private int score = 0;
+    private int rows = 15;
+    private int columns = 15;
 
     private Arena arena;
     private TetrisBlock tetris_block;
@@ -30,6 +29,11 @@ public class Game {
     private ScreenManager screenManager;
     private GameView gameView;
 
+    private int score = 0;
+    private int level = 1;
+    private int score_per_level = 1;
+    private int speed_per_level = 200;
+    private int initial_speed = 700;
 
 
     public Game() {
@@ -50,6 +54,16 @@ public class Game {
         tetrisBlockController = new TetrisBlockController(this);
 
     }
+
+    public int getInitial_speed() {return initial_speed;}
+
+    public int getScore_per_level() {return score_per_level;}
+
+    public int getSpeed_per_level() {return speed_per_level;}
+
+    public int getLevel() {return level;}
+
+    public void setLevel(int level) {this.level = level;}
 
     public int getScore() {return score;}
 
@@ -90,6 +104,27 @@ public class Game {
     public ScreenManager getScreenManager() {
         return screenManager;
     }
+
+
+    public boolean can_level_up(){
+        int can_up_level = score / score_per_level + 1;
+
+        if(can_up_level > level){
+            return true;
+        }
+
+        return  false;
+    }
+
+
+        /*current_score = game.getScore();
+            int can_up_level = current_score / score_per_level + 1;
+
+            if(can_up_level > level){
+                System.out.println("Level Up!,increasing speed...\n");
+                level = can_up_level;
+                pause -= speed_per_level;
+            }*/
 
 
 
