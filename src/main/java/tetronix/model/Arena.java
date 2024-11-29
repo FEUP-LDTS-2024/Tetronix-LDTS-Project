@@ -1,4 +1,4 @@
-package tetronix.model;
+package tetronix.Model;
 
 
 public class Arena {

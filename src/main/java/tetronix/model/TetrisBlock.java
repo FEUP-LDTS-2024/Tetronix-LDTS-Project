@@ -1,5 +1,4 @@
-package tetronix.model;
-
+package tetronix.Model;
 
 public class TetrisBlock {
     private int [][]shape;
@@ -58,15 +57,6 @@ public class TetrisBlock {
     public int[][][] getPossible_shapes() {return possible_shapes;}
 
     public void setShape(int[][] shape) {this.shape = shape;}
-
-    public boolean canMoveDown(Arena arena) {return arena.canMoveDown(this);}
-
-    public boolean canMoveLeft(Arena arena) {return arena.canMoveLeft(this);}
-
-    public boolean canMoveRight(Arena arena) {return arena.canMoveRight(this);}
-
-
-
 
 }
 

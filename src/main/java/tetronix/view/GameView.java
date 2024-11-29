@@ -1,8 +1,7 @@
-package tetronix.view;
+package tetronix.View;
 
 
 import tetronix.Game;
-import tetronix.model.Position;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ public class GameView {
         elements.add(arenaView);
         elements.add(tetrisBlockView);
     }
+
 
     public void render() throws IOException {
         screenManager.clear();
