@@ -1,12 +1,12 @@
-package tetronix.View;
+package tetronix.view;
 
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import tetronix.Game;
-import tetronix.Model.Position;
-import tetronix.Model.TetrisBlock;
+import tetronix.model.Position;
+import tetronix.model.TetrisBlock;
 
 public class TetrisBlockView implements ElementViewer<TetrisBlock> {
 
