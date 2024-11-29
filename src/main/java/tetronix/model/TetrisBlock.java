@@ -1,9 +1,4 @@
-package tetronix.Model;
-
-import com.googlecode.lanterna.TerminalPosition;
-import com.googlecode.lanterna.TerminalSize;
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.graphics.TextGraphics;
+package tetronix.model;
 
 
 public class TetrisBlock {
@@ -63,6 +58,15 @@ public class TetrisBlock {
     public int[][][] getPossible_shapes() {return possible_shapes;}
 
     public void setShape(int[][] shape) {this.shape = shape;}
+
+    public boolean canMoveDown(Arena arena) {return arena.canMoveDown(this);}
+
+    public boolean canMoveLeft(Arena arena) {return arena.canMoveLeft(this);}
+
+    public boolean canMoveRight(Arena arena) {return arena.canMoveRight(this);}
+
+
+
 
 }
 

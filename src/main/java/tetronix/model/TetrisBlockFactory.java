@@ -1,4 +1,4 @@
-package tetronix.Model;
+package tetronix.model;
 
 public class TetrisBlockFactory {
     public static TetrisBlock createBlock(int columns, int rows) {  //Factory pattern

@@ -5,9 +5,9 @@ import tetronix.*;
 import static org.mockito.Mockito.*;
 
 import com.googlecode.lanterna.input.KeyType;
-import tetronix.Model.Arena;
-import tetronix.Model.Position;
-import tetronix.Model.TetrisBlock;
+import tetronix.model.Arena;
+import tetronix.model.Position;
+import tetronix.model.TetrisBlock;
 
 import java.io.IOException;
 
@@ -110,5 +110,6 @@ class GameTest {
         verify(mockArena, times(1)).draw(any()); // Arena deve ser desenhada
         verify(mockBlock, times(1)).draw(any()); // Bloco deve ser desenhado
     }
+
 
 }

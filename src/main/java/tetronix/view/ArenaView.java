@@ -1,11 +1,11 @@
-package tetronix.View;
+package tetronix.view;
 
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import tetronix.Game;
-import tetronix.Model.Arena;
+import tetronix.model.Arena;
 
 public class ArenaView<T extends Arena> implements ElementViewer<T> {
 

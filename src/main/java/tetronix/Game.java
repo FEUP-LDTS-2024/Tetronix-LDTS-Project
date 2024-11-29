@@ -2,14 +2,14 @@ package tetronix;
 
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
-import tetronix.Control.GameThread;
-import tetronix.Control.InputHandler;
-import tetronix.Control.TetrisBlockController;
-import tetronix.Model.Arena;
-import tetronix.Model.Position;
-import tetronix.Model.TetrisBlock;
-import tetronix.Model.TetrisBlockFactory;
-import tetronix.View.*;
+import tetronix.control.GameThread;
+import tetronix.control.InputHandler;
+import tetronix.control.TetrisBlockController;
+import tetronix.model.Arena;
+import tetronix.model.Position;
+import tetronix.model.TetrisBlock;
+import tetronix.model.TetrisBlockFactory;
+import tetronix.view.*;
 
 import java.io.IOException;
 

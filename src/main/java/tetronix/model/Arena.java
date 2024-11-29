@@ -1,9 +1,4 @@
-package tetronix.Model;
-
-import com.googlecode.lanterna.TerminalPosition;
-import com.googlecode.lanterna.TerminalSize;
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.graphics.TextGraphics;
+package tetronix.model;
 
 
 public class Arena {

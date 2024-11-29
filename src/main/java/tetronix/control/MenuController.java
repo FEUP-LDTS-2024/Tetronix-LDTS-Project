@@ -1,4 +1,4 @@
-package tetronix.Control;
+package tetronix.control;
 
 public class MenuController {
 }

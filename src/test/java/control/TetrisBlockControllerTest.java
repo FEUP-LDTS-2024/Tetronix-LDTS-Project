@@ -1,9 +1,9 @@
-package Control;   //tetronix control
+package control;   //tetronix control
 
 import org.junit.jupiter.api.BeforeEach;
-import tetronix.Model.Arena;
-import tetronix.Model.Position;
-import tetronix.Model.TetrisBlock;
+import tetronix.model.Arena;
+import tetronix.model.Position;
+import tetronix.model.TetrisBlock;
 
 import static org.mockito.Mockito.mock;
 

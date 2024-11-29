@@ -1,12 +1,6 @@
-package tetronix.Control;
+package tetronix.control;
 
 import tetronix.Game;
-import tetronix.Model.TetrisBlock;
-import tetronix.Model.TetrisBlockFactory;
-import tetronix.View.GameView;
-
-import java.io.IOException;
-
 
 
 public class GameThread extends Thread {

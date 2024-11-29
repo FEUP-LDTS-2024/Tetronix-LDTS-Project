@@ -1,4 +1,4 @@
-package tetronix.View;
+package tetronix.view;
 
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.graphics.TextGraphics;

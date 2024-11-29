@@ -1,9 +1,9 @@
-package tetronix.Control;
+package tetronix.control;
 
 import tetronix.Game;
-import tetronix.Model.Arena;
-import tetronix.Model.Position;
-import tetronix.Model.TetrisBlock;
+import tetronix.model.Arena;
+import tetronix.model.Position;
+import tetronix.model.TetrisBlock;
 
 public class TetrisBlockController {
     private Game game;

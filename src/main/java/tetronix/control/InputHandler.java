@@ -1,9 +1,8 @@
-package tetronix.Control;
+package tetronix.control;
 
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import tetronix.Game;
-import tetronix.Model.TetrisBlock;
 
 import java.io.IOException;
 

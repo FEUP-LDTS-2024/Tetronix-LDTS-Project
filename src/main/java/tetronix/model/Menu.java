@@ -1,4 +1,4 @@
-package tetronix.Model;
+package tetronix.model;
 
 public class Menu {
 

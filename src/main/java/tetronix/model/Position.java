@@ -1,4 +1,4 @@
-package tetronix.Model;
+package tetronix.model;
 
 public class Position {
     private int row_identifier;

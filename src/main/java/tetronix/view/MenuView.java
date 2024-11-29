@@ -1,4 +1,4 @@
-package tetronix.View;
+package tetronix.view;
 
 
 
