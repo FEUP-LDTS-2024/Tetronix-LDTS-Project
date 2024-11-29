@@ -6,13 +6,17 @@ public class TetrisBlock {
     private int current_rotation;
     private String color;
     private Position position;
+    private int rows;
+    private int columns;
 
-    public TetrisBlock(int [][] shape_, String color_,Position position_){
+    public TetrisBlock(int [][] shape_, String color_,Position position_, int rotation_,int columns_,int rows_){
         this.shape = shape_;
         this.color = color_;
         this.position = position_;
         initShapes();
-        current_rotation = 0;
+        current_rotation = rotation_;
+        this.columns = columns_;
+        this.rows = rows_;
     }
 
     private void initShapes(){
@@ -34,9 +38,7 @@ public class TetrisBlock {
     }
 
 
-    public int[][] getShape() {
-        return shape;
-    }
+    public int[][] getShape() {return possible_shapes[current_rotation];}
 
     public void setPosition(Position position) {
         this.position = position;
@@ -57,6 +59,25 @@ public class TetrisBlock {
     public int[][][] getPossible_shapes() {return possible_shapes;}
 
     public void setShape(int[][] shape) {this.shape = shape;}
+
+    public void CorrectPositionAfterRotation(){
+        //rightbound
+        if(position.getColumn_identifier() + getShape()[0].length > columns){
+            Position position1 = new Position(columns - getShape()[0].length,position.getRow_identifier());
+            setPosition(position1);
+        }
+
+        //lowerbound
+        if(position.getRow_identifier() + getShape().length > rows){
+            Position position1 = new Position(position.getColumn_identifier(),rows - getShape().length);
+            setPosition(position1);
+        }
+
+
+        //it can overwrite other blocks that are already on the background
+
+
+    }
 
 }
 

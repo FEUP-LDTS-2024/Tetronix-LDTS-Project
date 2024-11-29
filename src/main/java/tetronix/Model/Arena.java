@@ -27,7 +27,7 @@ public class Arena {
         Position position = block.getPosition();
         int[][] shape = block.getShape();
 
-        return ((position.getColumn_identifier() + (shape[0].length)) == (columns)); //Erro aqui
+        return ((position.getColumn_identifier() + (shape[0].length)) == (columns));
     }
 
     public boolean isAtLeftEdge(TetrisBlock block){
@@ -64,9 +64,9 @@ public class Arena {
                     int nextRow = blockRow + r + 1;
                     int sameColumn = blockColumn + c;
 
-                    /*if(blockRow < 0){
+                    if(blockRow < 0){
                         break;
-                    }*/
+                    }
                     if (background[nextRow][sameColumn] != null) {
                         // Colisão detectada
                         return false;
@@ -217,8 +217,37 @@ public class Arena {
         }
     }
 
+    private boolean isRowZeroEmpty(){
+        for(int c = 0; c < columns; c++){
+            if(background[0][c] != null){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public boolean isBlockOutBounds(TetrisBlock block) {
-        if (block.getPosition().getRow_identifier() < 0) {
+        if(!isRowZeroEmpty()) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    public boolean isBlockOutBoundsAfterRotation(TetrisBlock block){
+        int widht = block.getShape()[0].length;
+        int height = block.getShape().length;
+        Position position = block.getPosition();
+
+        //check right
+        if(position.getColumn_identifier() + widht > columns){
+            return true;
+        }
+
+        //checkground
+        if(position.getRow_identifier() + height > rows){
             return true;
         }
 

@@ -20,9 +20,8 @@ public class TetrisBlockView implements ElementViewer<TetrisBlock> {
     }
 
 
-
     @Override
-    public void draw(){//TetrisBlock block, ScreenManager screenManager) {
+    public void draw(){
         block = game.getTetris_block();
         if(block == null) return;
 

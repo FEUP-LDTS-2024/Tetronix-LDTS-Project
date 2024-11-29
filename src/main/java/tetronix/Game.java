@@ -33,7 +33,7 @@ public class Game {
     private int level = 1;
     private int score_per_level = 1;
     private int speed_per_level = 200;
-    private int initial_speed = 700;
+    private int initial_speed = 600;
 
 
     public Game() {
@@ -143,13 +143,12 @@ public class Game {
 
     public boolean updateGameState() {
 
-        if(!arena.canMoveDown(tetris_block)){
             if(arena.isBlockOutBounds(tetris_block)){
                 System.out.println("Game Stopped!: Row: " + tetris_block.getPosition().getRow_identifier() + " ------ " + "Column: " + tetris_block.getPosition().getColumn_identifier());
                 arena.moveBlocktoBackground(tetris_block);
                 return false;
             }
-        }
+
 
 
         if (tetris_block == null || !continuousBlockFall(tetrisBlockController.moveDown())) {

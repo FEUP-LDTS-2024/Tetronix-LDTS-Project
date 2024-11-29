@@ -1,4 +1,2 @@
-
-Função "isBlockOutBounds" em Model.Arena: se tentar girar o bloco logo no ínicio(row negativa) dá erro por causa da linha 72 da Model.Arena.
-							->É preciso que canMoveDown retorne false quando o bloco acenta, mas isso também acontece quando o bloco está em rows negativas
-							   ->ele está nas rows negativas no início e no fim, no início resulta porque nextRow no background[nextRow][] é 0 no início, mas se o bloco estiver rotacionado logo no início, nextRow pode não ser 0, e dá erro
+TetrisBlock: isBlockOutBoundsAfterRotation: deveria meter a função de outra maneira? com dependency injetcion?
+    ->falta ainda meter a condição para o bloco ao girar não ir para cima de outros blocos no background
