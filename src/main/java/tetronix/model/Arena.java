@@ -1,5 +1,8 @@
-package tetronix.Model;
-
+package tetronix.model;
+import com.googlecode.lanterna.input.KeyType;
+import tetronix.model.Arena;
+import tetronix.model.Position;
+import tetronix.model.TetrisBlock;
 
 public class Arena {
     private int columns;
@@ -42,7 +45,6 @@ public class Arena {
 
         return ((shape.length + position.getRow_identifier()) >= rows); //função para verificar se o bloco pode continuar a descer
     }
-
 
 
     public boolean canMoveDown(TetrisBlock block){
