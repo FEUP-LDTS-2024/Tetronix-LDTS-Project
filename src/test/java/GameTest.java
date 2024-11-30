@@ -106,9 +106,7 @@ class GameTest {
 
         when(mockArena.canMoveDown(mockBlock)).thenReturn(true, true, false); // Pode descer 2 vezes, depois não
 
-
         game.dropBlock();
-
 
         verify(mockArena, times(2)).canMoveDown(mockBlock); // Deve descer 2 vezes
         verify(mockBlock, times(2)).setPosition(any()); // Deve ajustar a posição 2 vezes
