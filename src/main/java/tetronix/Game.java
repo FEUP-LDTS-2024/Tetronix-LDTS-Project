@@ -7,6 +7,7 @@ import tetronix.control.InputHandler;
 import tetronix.control.TetrisBlockController;
 import tetronix.model.Arena;
 import tetronix.model.Position;
+import tetronix.view.GameView;
 import tetronix.model.TetrisBlock;
 import tetronix.model.TetrisBlockFactory;
 import tetronix.view.*;
@@ -53,6 +54,16 @@ public class Game {
 
         tetrisBlockController = new TetrisBlockController(this);
 
+    }
+
+    public Game(Arena arena, TetrisBlockController controller) {
+        this.arena = arena;
+        this.tetrisBlockController = controller;
+    }
+
+    public Game(Arena arena, GameView gameView) {
+        this.arena = arena;
+        this.gameView = gameView;
     }
 
     public int getInitial_speed() {return initial_speed;}
@@ -126,7 +137,9 @@ public class Game {
                 pause -= speed_per_level;
             }*/
 
-
+    public void dropBlock(){
+        tetrisBlockController.dropBlock(arena);
+    }
 
     public boolean continuousBlockFall(Position position){ //(para a thread)
 
