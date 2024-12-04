@@ -254,6 +254,3 @@ public class Arena {
         return false;
     }
 }
-
-
-

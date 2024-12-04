@@ -4,20 +4,22 @@ import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import tetronix.Control.GameThread;
 import tetronix.Control.InputHandler;
+import tetronix.Control.InputHandlerForGame;
 import tetronix.Control.TetrisBlockController;
-import tetronix.Model.Arena;
-import tetronix.Model.Position;
-import tetronix.Model.TetrisBlock;
-import tetronix.Model.TetrisBlockFactory;
+import tetronix.Model.*;
 import tetronix.View.*;
 
 import java.io.IOException;
 
 import static com.googlecode.lanterna.input.KeyType.*;
+import static tetronix.Model.MenuState.GAME_OVER;
+import static tetronix.Model.MenuState.INITIAL_MENU;
 
 public class Game {
-    private int rows = 15;
-    private int columns = 15;
+    private int rows = 20;
+    private int columns = 20;
+
+    private Menu menu;
 
     private Arena arena;
     private TetrisBlock tetris_block;
@@ -36,14 +38,13 @@ public class Game {
     private int initial_speed = 600;
 
 
-    public Game() {
-        try {
-            screenManager = new ScreenManager(this); // Gerencia a tela
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public Game(Menu menu_) {
 
-        inputHandler = new InputHandler(this); // Gerencia entradas
+        this.menu = menu_;
+
+        screenManager = menu_.getScreenManager();
+
+        inputHandler = new InputHandlerForGame(this); // Gerencia entradas
 
         arena = new Arena(columns, rows); // Inicializa a arena
 
@@ -54,6 +55,8 @@ public class Game {
         tetrisBlockController = new TetrisBlockController(this);
 
     }
+
+    public Menu getMenu() {return menu;}
 
     public int getInitial_speed() {return initial_speed;}
 
@@ -146,6 +149,7 @@ public class Game {
             if(arena.isBlockOutBounds(tetris_block)){
                 System.out.println("Game Stopped!: Row: " + tetris_block.getPosition().getRow_identifier() + " ------ " + "Column: " + tetris_block.getPosition().getColumn_identifier());
                 arena.moveBlocktoBackground(tetris_block);
+                menu.setCurr_state(INITIAL_MENU);
                 return false;
             }
 
@@ -191,6 +195,10 @@ public class Game {
         gameThread.start(); // Inicia a thread
 
         while(true){
+            if(menu.getCurr_state() == INITIAL_MENU){
+                screenManager.clear(); //por agora
+                return; //prototype
+            }
             handleInput();
             gameView.render();
         }

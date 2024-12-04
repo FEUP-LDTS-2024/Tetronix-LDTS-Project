@@ -45,4 +45,3 @@ public class TetrisBlockView implements ElementViewer<TetrisBlock> {
         }
     }
 }
-

@@ -1,12 +1,15 @@
 package tetronix.Control;
 
 import tetronix.Game;
+import tetronix.Model.Menu;
+import tetronix.Model.MenuState;
 import tetronix.Model.TetrisBlock;
 import tetronix.Model.TetrisBlockFactory;
 import tetronix.View.GameView;
 
 import java.io.IOException;
 
+import static tetronix.Model.MenuState.GAME_OVER;
 
 
 public class GameThread extends Thread {
@@ -34,7 +37,6 @@ public class GameThread extends Thread {
             try {
 
                 if(!game.updateGameState()){
-                    System.out.println("GameOver!\n");
                     game.setTetris_block(null); //assim n dá para mexer mais no bloco quando jogo acaba
                     break;
                 }
