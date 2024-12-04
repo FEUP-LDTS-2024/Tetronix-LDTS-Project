@@ -43,11 +43,12 @@ public class Game {
             throw new RuntimeException(e);
         }
 
+
         inputHandler = new InputHandler(this); // Gerencia entradas
 
         arena = new Arena(columns, rows); // Inicializa a arena
 
-        tetris_block = TetrisBlockFactory.createBlock(columns,rows);
+        tetris_block = TetrisBlockFactory.createBlock(columns, rows);
 
         gameView = new GameView(this);
 
@@ -55,19 +56,33 @@ public class Game {
 
     }
 
-    public int getInitial_speed() {return initial_speed;}
+    public int getInitial_speed() {
+        return initial_speed;
+    }
 
-    public int getScore_per_level() {return score_per_level;}
+    public int getScore_per_level() {
+        return score_per_level;
+    }
 
-    public int getSpeed_per_level() {return speed_per_level;}
+    public int getSpeed_per_level() {
+        return speed_per_level;
+    }
 
-    public int getLevel() {return level;}
+    public int getLevel() {
+        return level;
+    }
 
-    public void setLevel(int level) {this.level = level;}
+    public void setLevel(int level) {
+        this.level = level;
+    }
 
-    public int getScore() {return score;}
+    public int getScore() {
+        return score;
+    }
 
-    public TetrisBlockController getTetrisBlockController() {return tetrisBlockController;}
+    public TetrisBlockController getTetrisBlockController() {
+        return tetrisBlockController;
+    }
 
     public TetrisBlock getTetris_block() {
         return tetris_block;
@@ -106,14 +121,14 @@ public class Game {
     }
 
 
-    public boolean can_level_up(){
+    public boolean can_level_up() {
         int can_up_level = score / score_per_level + 1;
 
-        if(can_up_level > level){
+        if (can_up_level > level) {
             return true;
         }
 
-        return  false;
+        return false;
     }
 
 
@@ -127,10 +142,9 @@ public class Game {
             }*/
 
 
+    public boolean continuousBlockFall(Position position) { //(para a thread)
 
-    public boolean continuousBlockFall(Position position){ //(para a thread)
-
-        if(arena.canMoveDown(tetris_block)){
+        if (arena.canMoveDown(tetris_block)) {
             tetris_block.setPosition(position);
             return true;
         } else {
@@ -143,12 +157,13 @@ public class Game {
 
     public boolean updateGameState() {
 
-            if(arena.isBlockOutBounds(tetris_block)){
-                System.out.println("Game Stopped!: Row: " + tetris_block.getPosition().getRow_identifier() + " ------ " + "Column: " + tetris_block.getPosition().getColumn_identifier());
-                arena.moveBlocktoBackground(tetris_block);
-                return false;
-            }
-
+        if (arena.isBlockOutBounds(tetris_block)) {
+            System.out.println("Game Stopped!: Row: " +
+                    tetris_block.getPosition().getRow_identifier() + " ------ " + "Column: " +
+                    tetris_block.getPosition().getColumn_identifier());
+            arena.moveBlocktoBackground(tetris_block);
+            return false;
+        }
 
 
         if (tetris_block == null || !continuousBlockFall(tetrisBlockController.moveDown())) {
@@ -167,17 +182,16 @@ public class Game {
     }
 
 
-    public void moveBlock(Position position,KeyType key){
-        if(key == ArrowRight && !arena.canMoveRight(tetris_block)){
+    public void moveBlock(Position position, KeyType key) {
+        if (key == ArrowRight && !arena.canMoveRight(tetris_block)) {
             return;
         }
-        if(key == ArrowLeft && !arena.canMoveLeft(tetris_block)){
+        if (key == ArrowLeft && !arena.canMoveLeft(tetris_block)) {
             return;
         }
 
         tetris_block.setPosition(position);
     }
-
 
 
     public void handleInput() throws IOException {
@@ -190,7 +204,7 @@ public class Game {
         GameThread gameThread = new GameThread(this); // Passa a instância atual de tetronix.Game
         gameThread.start(); // Inicia a thread
 
-        while(true){
+        while (true) {
             handleInput();
             gameView.render();
         }
