@@ -149,7 +149,7 @@ public class Game {
             if(arena.isBlockOutBounds(tetris_block)){
                 System.out.println("Game Stopped!: Row: " + tetris_block.getPosition().getRow_identifier() + " ------ " + "Column: " + tetris_block.getPosition().getColumn_identifier());
                 arena.moveBlocktoBackground(tetris_block);
-                menu.setCurr_state(INITIAL_MENU);
+                menu.setCurr_state(GAME_OVER);
                 return false;
             }
 
@@ -195,12 +195,11 @@ public class Game {
         gameThread.start(); // Inicia a thread
 
         while(true){
-            if(menu.getCurr_state() == INITIAL_MENU){
-                screenManager.clear(); //por agora
-                return; //prototype
-            }
             handleInput();
             gameView.render();
+            if(menu.getCurr_state() == GAME_OVER){
+                return; //prototype
+            }
         }
     }
 

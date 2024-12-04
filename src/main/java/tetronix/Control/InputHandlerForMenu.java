@@ -5,6 +5,7 @@ import com.googlecode.lanterna.input.KeyType;
 import tetronix.Model.Menu;
 
 import static tetronix.Model.MenuState.PLAYING;
+import static tetronix.Model.MenuState.STATISTICS;
 
 public class InputHandlerForMenu implements InputHandler{
     private Menu menu;
@@ -24,7 +25,13 @@ public class InputHandlerForMenu implements InputHandler{
             case Escape:
                 System.exit(0);
                 break;
-            default:
+            case Character:
+                char c = key.getCharacter();
+                if (c == 'n' || c == 'N') {
+                    menu.setCurr_state(PLAYING);
+                } else if (c == 's' || c == 'S') {
+                    menu.setCurr_state(STATISTICS);
+                }
                 break;
         }
     }

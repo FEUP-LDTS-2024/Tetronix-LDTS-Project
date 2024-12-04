@@ -13,10 +13,13 @@ import java.io.IOException;
 
 public class ScreenManager {
     private Screen screen;
-
-    public ScreenManager() throws IOException {
+    private int rows;
+    private int columns;
+    public ScreenManager(int rows_, int columns_ ) throws IOException {
         // Criação do terminal
-        TerminalSize terminalSize = new TerminalSize(40, 20);
+        this.columns = columns_;
+        this.rows = rows_;
+        TerminalSize terminalSize = new TerminalSize(columns_, rows_);
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
         Terminal terminal = terminalFactory.createTerminal();
 
@@ -25,6 +28,8 @@ public class ScreenManager {
         screen.setCursorPosition(null); // Desabilitar o cursor
         screen.startScreen(); // Iniciar a tela
     }
+
+    public int getColumns() {return columns;}
 
     public void clear() {
         screen.clear();
