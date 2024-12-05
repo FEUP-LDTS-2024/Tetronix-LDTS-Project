@@ -21,7 +21,7 @@ public class Menu {
     private ElementViewer<Menu> menuStatisticsView;
     private InputHandler menuController;
     List<Integer> Track_Scores = new ArrayList<>();
-    private int rows = 20;
+    private int rows = 40;
     private  int columns = 40;
 
 

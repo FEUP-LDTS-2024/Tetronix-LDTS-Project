@@ -3,7 +3,7 @@ package tetronix.Model;
 public enum MenuState {
     INITIAL_MENU,
     PLAYING,
-    GAME_OVER, //?
+    GAME_OVER, //
     STATISTICS,
     DISPLAY_SCORES
 }

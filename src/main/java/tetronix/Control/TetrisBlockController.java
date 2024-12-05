@@ -58,12 +58,17 @@ public class TetrisBlockController {
         block = game.getTetris_block();
         if(block == null) return;
         int new_rotation = block.getCurrent_rotation() + 1;
-
         if(new_rotation > 3) new_rotation = 0;
+
+
+        if(!game.getArena().canRotate(block,new_rotation)){
+            return;
+        }
+
         block.setCurrent_rotation(new_rotation);
 
+
         if(game.getArena().isBlockOutBoundsAfterRotation(block)){
-            System.out.println("Bloco rodou mas é preciso corrigir!!");
             block.CorrectPositionAfterRotation();
         }
     }

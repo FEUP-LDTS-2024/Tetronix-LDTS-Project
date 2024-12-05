@@ -33,8 +33,8 @@ public class Game {
 
     private int score = 0;
     private int level = 1;
-    private int score_per_level = 1;
-    private int speed_per_level = 200;
+    private int score_per_level = 5;
+    private int speed_per_level = 100;
     private int initial_speed = 600;
 
 
@@ -139,7 +139,7 @@ public class Game {
         } else {
 
             arena.moveBlocktoBackground(tetris_block);
-            score += arena.clearLines(); //caso alguma linha esteja completa, é limpa
+            score += arena.clearLines() * 5; //caso alguma linha esteja completa, é limpa
             return false;
         }
     }

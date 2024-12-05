@@ -248,6 +248,38 @@ public class Arena {
         return false;
     }
 
+    public boolean canRotate(TetrisBlock block, int newRotation) {
+
+        int[][] rotatedShape = block.getPossible_shapes()[newRotation];
+        int rotatedHeight = rotatedShape.length;
+        int rotatedWidth = rotatedShape[0].length;
+
+        // Posição atual do bloco
+        int blockRow = block.getPosition().getRow_identifier();
+        int blockColumn = block.getPosition().getColumn_identifier();
+
+
+        // Verificar colisões com o background
+        for (int r = 0; r < rotatedHeight; r++) {
+            for (int c = 0; c < rotatedWidth; c++) {
+                if (rotatedShape[r][c] == 1) { // Apenas células ocupadas no bloco rotacionado
+                    int arenaRow = blockRow + r;
+                    int arenaColumn = blockColumn + c * 2; // Considera duplicação horizontal
+
+                    if(arenaRow < rows && arenaRow > 0 && arenaColumn < columns){
+                        if (background[arenaRow][arenaColumn] != null) {
+                            return false;
+                        }
+                    }
+
+                }
+            }
+        }
+
+        return true; // Nenhuma colisão e dentro dos limites
+    }
+
+
 
     public boolean isBlockOutBoundsAfterRotation(TetrisBlock block){
         int widht = block.getShape()[0].length;
