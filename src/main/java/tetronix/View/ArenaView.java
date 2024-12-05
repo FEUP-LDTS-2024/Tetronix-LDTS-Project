@@ -15,14 +15,14 @@ public class ArenaView<T extends Arena> implements ElementViewer<T> {
     private final ScreenManager screenManager;
 
 
-    public ArenaView(Game game_){
+    public ArenaView(Game game_) {
         this.game = game_;
         this.arena = game.getArena();
         this.screenManager = game.getScreenManager();
     }
 
     @Override
-    public void draw(){//T arena, ScreenManager screenManager) {
+    public void draw() {//T arena, ScreenManager screenManager) {
         TextGraphics graphics = screenManager.getTextGraphics(); // Obtenção do TextGraphics do GUI
         int rows = arena.getRows();
         int columns = arena.getColumns();
@@ -34,10 +34,12 @@ public class ArenaView<T extends Arena> implements ElementViewer<T> {
             for (int c = 0; c < columns; c++) {
                 if (background[r][c] == null) {
                     graphics.setBackgroundColor(TextColor.Factory.fromString("white"));
-                    graphics.fillRectangle(new TerminalPosition(c, r), new TerminalSize(gridCellsize, gridCellsize), ' ');
+                    graphics.fillRectangle(new TerminalPosition(c, r),
+                            new TerminalSize(gridCellsize, gridCellsize), ' ');
                 } else {
                     graphics.setBackgroundColor(TextColor.Factory.fromString(background[r][c]));
-                    graphics.fillRectangle(new TerminalPosition(c, r), new TerminalSize(gridCellsize, gridCellsize), ' ');
+                    graphics.fillRectangle(new TerminalPosition(c, r),
+                            new TerminalSize(gridCellsize, gridCellsize), ' ');
                 }
             }
         }

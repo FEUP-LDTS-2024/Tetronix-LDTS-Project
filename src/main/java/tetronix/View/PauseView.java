@@ -1,24 +1,20 @@
 package tetronix.View;
+import com.googlecode.lanterna.SGR;
+import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.Screen;
-import com.googlecode.lanterna.screen.TerminalScreen;
-import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
-import com.googlecode.lanterna.terminal.Terminal;
-
-import tetronix.Game;
-import tetronix.Model.Menu;
 
 import java.io.IOException;
 
 
-public class MenuVieww {
+public class PauseView{
 
     public Screen screen;
 
-    public MenuVieww(Screen screen_){
+    public PauseView(Screen screen_){
         this.screen=screen_;
     }
     public void refresh() throws IOException {
@@ -44,7 +40,7 @@ public class MenuVieww {
 
         // Título do menu
         tg.setForegroundColor(TextColor.ANSI.WHITE);
-        tg.putString(10, 2, "===== MAIN MENU =====");
+        tg.putString(10, 2, "===== PAUSE GAME =====");
 
         // Exibe cada opção do menu em uma linha diferente
         for (int i = 0; i < options.length; i++) {
@@ -56,6 +52,16 @@ public class MenuVieww {
                 tg.putString(10, 4 + i, "  " + options[i]); // Opção não selecionada
             }
         }
+
+        TextGraphics sg =screen.newTextGraphics();
+
+        sg.putString(7, 10, "████████╗███████╗████████╗██████╗  ██████╗ ███╗   ██╗██╗██╗  ██╗", SGR.BOLD);
+        sg.putString(7, 11, "╚══██╔══╝██╔════╝╚══██╔══╝██╔══██╗██╔═══██╗████╗  ██║██║██║ ██╔╝", SGR.BOLD);
+        sg.putString(7, 12, "   ██║   █████╗     ██║   ██████╔╝██║   ██║██╔██╗ ██║██║ ╚╔██╔╝ ", SGR.BOLD);
+        sg.putString(7, 13, "   ██║   ██╔══╝     ██║   ██ ██══╝ ██║   ██║██║╚██╗██║██║██═██╗ ", SGR.BOLD);
+        sg.putString(7, 14, "   ██║   ███████╗   ██║   ██║ ██║ ╚██████╔╝██║ ╚████║██║██║  ██╗", SGR.BOLD);
+        sg.putString(7, 15, "   ╚═╝   ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝", SGR.BOLD);
+
 
         refresh();
     }

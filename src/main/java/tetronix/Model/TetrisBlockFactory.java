@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class TetrisBlockFactory {
     private static Random random = new Random();
-    private static String [] colors = {"green","red","blue","black"};
+    private static String[] colors = {"green", "red", "blue", "black"};
 
     private static final int[][][] shapes = {
             // I Shape
@@ -41,17 +41,16 @@ public class TetrisBlockFactory {
     };
 
 
-
     public static TetrisBlock createBlock(int columns, int rows) {  //Factory pattern
         int[][] shape = shapes[random.nextInt(shapes.length)];
 
-        int spawnRow =-shape.length;
+        int spawnRow = -shape.length;
         int spawnColumn = random.nextInt(columns - shape[0].length);
         int random_rotation = random.nextInt(3);
         String random_color = colors[random.nextInt(colors.length)];
 
 
         Position position = new Position(spawnColumn, spawnRow);
-        return new TetrisBlock(shape, random_color, position,random_rotation,columns,rows);
+        return new TetrisBlock(shape, random_color, position, random_rotation, columns, rows);
     }
 }

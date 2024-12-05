@@ -12,6 +12,7 @@ import tetronix.Model.TetrisBlockFactory;
 import tetronix.View.*;
 
 import java.io.IOException;
+import java.sql.SQLOutput;
 
 import static com.googlecode.lanterna.input.KeyType.*;
 
@@ -22,6 +23,8 @@ public class Game {
     private Arena arena;
     private TetrisBlock tetris_block;
     private Position position;
+    private TetrisBlock shootingBlock;
+    private boolean shootingMode = false;
 
     private InputHandler inputHandler;
     private TetrisBlockController tetrisBlockController;
@@ -181,6 +184,46 @@ public class Game {
         return true;
     }
 
+    //vou adicionar novo gameState onde quando chega a um certo nivel vai disparar para
+    //os blocos abaixo
+    public boolean gameState() {
+        if (can_level_up()) {
+            level++;
+            if (level >= 5) {
+                shootingMode = true;
+            }
+        }
+        //logica do disparo
+        if (shootingMode) {
+            if (shootingBlock == null) {
+                shootingBlock = TetrisBlockFactory.createBlock(1, 1);
+                shootingBlock.setPosition(new Position(0, columns / 2));
+            }
+        } else if (arena.canMoveDown(shootingBlock)) {
+            shootingBlock.setPosition(shootingBlock.getPosition());
+        } else {
+            arena.moveBlocktoBackground(shootingBlock); //colide e fixa o bloco na arena
+            shootingBlock = null;//remove o bloco disparado apos a colisao
+        }
+        if (arena.isBlockOutBounds(tetris_block)) {
+            System.out.println("Game Over!");
+            return false;
+        }
+
+        if (tetris_block == null || !continuousBlockFall(tetrisBlockController.moveDown())) {
+            tetris_block = TetrisBlockFactory.createBlock(columns, rows);
+        }
+
+        // Atualiza a renderização
+        try {
+            gameView.render();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return true;
+    }
+
 
     public void moveBlock(Position position, KeyType key) {
         if (key == ArrowRight && !arena.canMoveRight(tetris_block)) {
@@ -193,6 +236,13 @@ public class Game {
         tetris_block.setPosition(position);
     }
 
+    public TetrisBlock getShootingBlock() {
+        return shootingBlock;
+    }
+
+    public boolean isShootingMode() {
+        return shootingMode;
+    }
 
     public void handleInput() throws IOException {
         KeyStroke key = screenManager.readInput();

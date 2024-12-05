@@ -9,14 +9,14 @@ public class TetrisBlockController {
     private Game game;
     private TetrisBlock block;
 
-    public TetrisBlockController(Game game_){
+    public TetrisBlockController(Game game_) {
         this.game = game_;
     }
 
     public void dropBlock(Arena arena) {
         block = game.getTetris_block();
         // Enquanto o bloco não atingir o fundo ou não houver espaço ocupado abaixo dele
-        while(arena.canMoveDown(block)){
+        while (arena.canMoveDown(block)) {
 
             block.setPosition(moveDown());
         }
@@ -27,42 +27,42 @@ public class TetrisBlockController {
 
     public Position moveDown() {
         block = game.getTetris_block();
-        if(block == null) return null;
+        if (block == null) return null;
         Position current_position = block.getPosition();
 
-        Position new_position = new Position(current_position.getColumn_identifier(),current_position.getRow_identifier() + 1);
+        Position new_position = new Position(current_position.getColumn_identifier(), current_position.getRow_identifier() + 1);
         return new_position;
     }
 
     public Position moveLeft() {
         block = game.getTetris_block();
-        if(block == null) return null;
+        if (block == null) return null;
         Position current_position = block.getPosition();
 
-        Position new_position = new Position(current_position.getColumn_identifier() - 1,current_position.getRow_identifier());
+        Position new_position = new Position(current_position.getColumn_identifier() - 1, current_position.getRow_identifier());
         return new_position;
 
     }
 
     public Position moveRight() {
         block = game.getTetris_block();
-        if(block == null) return null;
+        if (block == null) return null;
         Position current_position = block.getPosition();
 
-        Position new_position = new Position(current_position.getColumn_identifier() + 1,current_position.getRow_identifier());
+        Position new_position = new Position(current_position.getColumn_identifier() + 1, current_position.getRow_identifier());
         return new_position;
 
     }
 
     public void rotateBlock() {
         block = game.getTetris_block();
-        if(block == null) return;
+        if (block == null) return;
         int new_rotation = block.getCurrent_rotation() + 1;
 
-        if(new_rotation > 3) new_rotation = 0;
+        if (new_rotation > 3) new_rotation = 0;
         block.setCurrent_rotation(new_rotation);
 
-        if(game.getArena().isBlockOutBoundsAfterRotation(block)){
+        if (game.getArena().isBlockOutBoundsAfterRotation(block)) {
             block.CorrectPositionAfterRotation();
         }
 

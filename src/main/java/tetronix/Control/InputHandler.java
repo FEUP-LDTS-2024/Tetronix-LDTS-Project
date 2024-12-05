@@ -3,7 +3,9 @@ package tetronix.Control;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import tetronix.Game;
+import tetronix.Model.Pause;
 import tetronix.Model.TetrisBlock;
+import tetronix.PauseMenu;
 
 import java.io.IOException;
 
@@ -36,9 +38,20 @@ public class InputHandler {
                 System.out.println("ArrowRight pressed!");
                 game.moveBlock(tetrisBlockController.moveRight(), KeyType.ArrowRight);
                 break;
+
             case Character:
                 if (key.getCharacter() == 'q') {
                     System.exit(0);
+                }
+                if(key.getCharacter()=='p'){
+                    System.out.println("Pause");
+                    try {
+                        PauseMenu pauseMenu = new PauseMenu();
+                        pauseMenu.show(); // Trata a exceção aqui
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                 }
                 break;
             default:
