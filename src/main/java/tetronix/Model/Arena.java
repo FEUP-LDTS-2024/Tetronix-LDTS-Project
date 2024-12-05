@@ -27,7 +27,7 @@ public class Arena {
         Position position = block.getPosition();
         int[][] shape = block.getShape();
 
-        return ((position.getColumn_identifier() + (shape[0].length)) == (columns));
+        return ((position.getColumn_identifier() + (shape[0].length)*2) == (columns)); //*2 porque a largura foi duplicada para ter um formato de quadrado
     }
 
     public boolean isAtLeftEdge(TetrisBlock block){
@@ -45,15 +45,16 @@ public class Arena {
 
 
 
-    public boolean canMoveDown(TetrisBlock block){
-        if(block == null) return false;
-        int [][] shape = block.getShape();
-        int blockHeight = block.getShape().length;
-        int blockWidth = block.getShape()[0].length;
+    public boolean canMoveDown(TetrisBlock block) {
+        if (block == null) return false;
+
+        int[][] shape = block.getShape();
+        int blockHeight = shape.length;
+        int blockWidth = shape[0].length;
         int blockRow = block.getPosition().getRow_identifier();
         int blockColumn = block.getPosition().getColumn_identifier();
 
-        if(isAtBottomEdge(block)){
+        if (isAtBottomEdge(block)) {
             return false;
         }
 
@@ -62,16 +63,19 @@ public class Arena {
             for (int r = blockHeight - 1; r >= 0; r--) { // Começa da parte inferior do bloco
                 if (shape[r][c] == 1) { // Apenas verifica células ocupadas
                     int nextRow = blockRow + r + 1;
-                    int sameColumn = blockColumn + c;
+                    int realColumn = blockColumn + c * 2; // Considera a duplicação de largura
 
-                    if(blockRow < 0){
-                        break;
+                    if (blockRow < 0) {
+                        break; // Ignorar se o bloco está acima da tela
                     }
-                    if (background[nextRow][sameColumn] != null) {
+
+                    // Verifica colisão para ambas as colunas ocupadas pela célula lógica
+                    if (/*nextRow >= background.length || realColumn + 1 >= background[0].length ||*/
+                            background[nextRow][realColumn] != null || background[nextRow][realColumn + 1] != null) {
                         // Colisão detectada
                         return false;
                     }
-                    break;
+                    break; // Só precisa verificar a primeira célula ocupada nessa coluna
                 }
             }
         }
@@ -118,38 +122,41 @@ public class Arena {
 
 
     public boolean canMoveRight(TetrisBlock block) {
-        if(block == null){ return false;}
-        int [][] shape = block.getShape();
-        int blockHeight = block.getShape().length;
-        int blockWidth = block.getShape()[0].length;
+        if (block == null) return false;
+
+        int[][] shape = block.getShape();
+        int blockHeight = shape.length;
+        int blockWidth = shape[0].length;
         int blockRow = block.getPosition().getRow_identifier();
         int blockColumn = block.getPosition().getColumn_identifier();
 
-        if(isAtRightEdge(block)){
+        if (isAtRightEdge(block)) {
             return false;
         }
 
-
         // Verificar todas as linhas
         for (int r = 0; r < blockHeight; r++) {
-            for (int c = blockWidth - 1; c >= 0; c--) {
-                if (shape[r][c] == 1) {
+            for (int c = blockWidth - 1; c >= 0; c--) { // Começa da célula mais à direita
+                if (shape[r][c] == 1) { // Apenas verifica células ocupadas
                     int sameRow = blockRow + r;
-                    int rightColumn = blockColumn + c + 1;
+                    int rightColumn = blockColumn + c * 2 + 2; // Considera a duplicação horizontal
 
-                    if(blockRow < 0){
+                    if (blockRow < 0) {
                         break;
                     }
-                    if (background[sameRow][rightColumn] != null) {
+
+
+                    if (/*rightColumn >= background[0].length ||*/ background[sameRow][rightColumn] != null) {
                         return false; // Colisão detectada
                     }
-                    break; // Sai do loop após verificar a célula mais à direita*/
+                    break;
                 }
             }
         }
 
-        return true; // Nenhuma colisão detectada
+        return true;
     }
+
 
     public int clearLines(){
         int cleared_lines = 0;
@@ -208,10 +215,16 @@ public class Arena {
             row_pos++; //para mover o último bloco para arena, caso contrário, se o jogo acabar e carregar arrowRight,o bloco desaparece todo
         }
 
-        for (int r = 0; r < number_of_rows ; r++) {
+        for (int r = 0; r < number_of_rows; r++) {
             for (int c = 0; c < number_of_columns; c++) {
-                if(shape[r][c] == 1){
-                    background[row_pos + r][column_pos + c] = color;
+                if (shape[r][c] == 1) {
+                    // Calcula a posição correta para a duplicação
+                    int realColumn = column_pos + c * 2; // Duplicação de largura
+
+                    // Preenche ambas as células horizontais
+                        background[row_pos + r][realColumn] = color;
+                        background[row_pos + r][realColumn + 1] = color;
+
                 }
             }
         }
@@ -241,10 +254,17 @@ public class Arena {
         int height = block.getShape().length;
         Position position = block.getPosition();
 
-        //check right
-        if(position.getColumn_identifier() + widht > columns){
+        // Verificar limites à direita (considera duplicação horizontal)
+        if (position.getColumn_identifier() + (height * 2) > columns) {
             return true;
         }
+
+        /*
+        * 1             1 1 1
+        * 1     ->      1
+        * 1 1
+        *
+        * */
 
         //checkground
         if(position.getRow_identifier() + height > rows){

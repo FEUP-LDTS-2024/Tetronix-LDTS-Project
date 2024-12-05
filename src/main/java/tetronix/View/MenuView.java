@@ -23,6 +23,5 @@ public class MenuView implements ElementViewer<Menu> {
         graphics.putString(10, 5, "TETRONIX", SGR.BOLD);
         graphics.putString(10, 7, "Press ENTER to Start");
         graphics.putString(10, 9, "Press ESC to Exit");
-
     }
 }

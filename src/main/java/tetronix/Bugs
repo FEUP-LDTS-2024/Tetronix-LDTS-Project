@@ -1,2 +1,0 @@
-TetrisBlock: isBlockOutBoundsAfterRotation: deveria meter a função de outra maneira? com dependency injetcion?
-    ->falta ainda meter a condição para o bloco ao girar não ir para cima de outros blocos no background
