@@ -255,16 +255,9 @@ public class Arena {
         Position position = block.getPosition();
 
         // Verificar limites à direita (considera duplicação horizontal)
-        if (position.getColumn_identifier() + (height * 2) > columns) {
+        if (position.getColumn_identifier() + (widht * 2) > columns) {
             return true;
         }
-
-        /*
-        * 1             1 1 1
-        * 1     ->      1
-        * 1 1
-        *
-        * */
 
         //checkground
         if(position.getRow_identifier() + height > rows){

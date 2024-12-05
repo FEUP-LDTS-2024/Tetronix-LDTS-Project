@@ -62,10 +62,12 @@ public class TetrisBlock {
 
     public void CorrectPositionAfterRotation(){
         //rightbound
-        if(position.getColumn_identifier() + getShape()[0].length > columns){
-            Position position1 = new Position(columns - getShape()[0].length,position.getRow_identifier());
-            setPosition(position1);
-        }
+
+            while(position.getColumn_identifier() + (getShape()[0].length * 2) > columns){
+                Position position1 = new Position(position.getColumn_identifier() - 1,position.getRow_identifier());
+                setPosition(position1);
+            }
+
 
         //lowerbound
         if(position.getRow_identifier() + getShape().length > rows){
@@ -73,12 +75,7 @@ public class TetrisBlock {
             setPosition(position1);
         }
 
-
-        //it can overwrite other blocks that are already on the background
-
-
     }
-
 }
 
 

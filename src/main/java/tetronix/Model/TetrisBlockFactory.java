@@ -46,8 +46,8 @@ public class TetrisBlockFactory {
         int[][] shape = shapes[random.nextInt(shapes.length)];
 
         int spawnRow =-shape.length;
-        int spawnColumn = random.nextInt(columns - shape[0].length);
-        int random_rotation = random.nextInt(3);
+        int spawnColumn =(columns - (shape[0].length * 2) - 2);
+        int random_rotation =random.nextInt(3);
         String random_color = colors[random.nextInt(colors.length)];
 
 
