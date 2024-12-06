@@ -1,27 +1,36 @@
 package tetronix.View;
 
 import com.googlecode.lanterna.SGR;
+import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
-import tetronix.Game;
 import tetronix.Model.Menu;
 
-import java.io.IOException;
-
-
 public class MenuView implements ElementViewer<Menu> {
-    private Menu menu;
-    private ScreenManager screenManager;
+    private final Menu menu;
+    private final ScreenManager screenManager;
 
     public MenuView(Menu menu) {
+        this.menu = menu;
         this.screenManager = menu.getScreenManager();
     }
 
     @Override
     public void draw() {
-
         TextGraphics graphics = screenManager.getTextGraphics();
-        graphics.putString(10, 5, "TETRONIX", SGR.BOLD);
-        graphics.putString(10, 7, "Press ENTER to Start");
-        graphics.putString(10, 9, "Press ESC to Exit");
+
+
+        graphics.setForegroundColor(TextColor.ANSI.WHITE);
+        graphics.putString(10, 2, "===== MAIN MENU =====");
+
+        // Exibe as opções do menu
+        for (int i = 0; i < menu.getOptions().size(); i++) {
+            if (i == menu.getSelectedOption()) {
+                graphics.setForegroundColor(TextColor.ANSI.YELLOW); // Destaque para a opção selecionada
+                graphics.putString(10, 4 + i, "> " + menu.getOptions().get(i));
+            } else {
+                graphics.setForegroundColor(TextColor.ANSI.WHITE);
+                graphics.putString(10, 4 + i, "  " + menu.getOptions().get(i));
+            }
+        }
     }
 }
