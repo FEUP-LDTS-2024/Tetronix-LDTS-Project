@@ -6,10 +6,14 @@ import tetronix.Control.GameThread;
 import tetronix.Control.InputHandler;
 import tetronix.Control.InputHandlerForGame;
 import tetronix.Control.TetrisBlockController;
+import tetronix.Model.Bomb;
+import tetronix.Model.BombFactory;
 import tetronix.Model.*;
 import tetronix.View.*;
-
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import static com.googlecode.lanterna.input.KeyType.*;
 import static tetronix.Model.MenuState.GAME_OVER;
@@ -36,6 +40,15 @@ public class Game {
     private int score_per_level = 5;
     private int speed_per_level = 100;
     private int initial_speed = 600;
+    // Add a list to store bombs
+    private List<Bomb> bombs = new ArrayList<>();
+
+    // Add a method to spawn a bomb
+    public void spawnBomb() {
+        Bomb bomb = BombFactory.createBomb(columns, rows);
+        bombs.add(bomb);
+        System.out.println("Bomb spawned at: Row " + bomb.getPosition().getRow_identifier() + ", Column " + bomb.getPosition().getColumn_identifier());
+    }
 
 
     public Game(Menu menu_) {
@@ -145,22 +158,22 @@ public class Game {
     }
 
     public boolean updateGameState() {
-
-            if(arena.isBlockOutBounds(tetris_block)){
-                System.out.println("Game Stopped!: Row: " + tetris_block.getPosition().getRow_identifier() + " ------ " + "Column: " + tetris_block.getPosition().getColumn_identifier());
-                arena.moveBlocktoBackground(tetris_block);
-                menu.setCurr_state(GAME_OVER);
-                return false;
-            }
-
-
+        if (arena.isBlockOutBounds(tetris_block)) {
+            System.out.println("Game Stopped!: Row: " + tetris_block.getPosition().getRow_identifier() + " ------ " + "Column: " + tetris_block.getPosition().getColumn_identifier());
+            arena.moveBlocktoBackground(tetris_block);
+            menu.setCurr_state(GAME_OVER);
+            return false;
+        }
 
         if (tetris_block == null || !continuousBlockFall(tetrisBlockController.moveDown())) {
             tetris_block = TetrisBlockFactory.createBlock(columns, rows);
-
+            // Randomly spawn a bomb
+            if (new Random().nextInt(10) == 0) { // 10% chance to spawn a bomb
+                spawnBomb();
+            }
         }
 
-        // Atualizar a renderização
+        // Update rendering
         try {
             gameView.render();
         } catch (IOException e) {
@@ -168,6 +181,10 @@ public class Game {
         }
 
         return true;
+    }
+
+    public List<Bomb> getBombs() {
+        return bombs;
     }
 
 

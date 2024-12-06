@@ -11,6 +11,8 @@ public class BombFactory {
         int spawnRow = random.nextInt(rows);
         int spawnColumn = random.nextInt(columns);
         Position position = new Position(spawnColumn, spawnRow);
-        return new Bomb(random_color, position, columns, rows);
+        Bomb bomb = new Bomb(random_color, position, columns, rows);
+        System.out.println("Bomb created at: Row " + spawnRow + ", Column " + spawnColumn + " with color " + random_color);
+        return bomb;
     }
 }
