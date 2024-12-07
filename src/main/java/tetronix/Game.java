@@ -195,7 +195,6 @@ public class Game {
         if(key == ArrowLeft && !arena.canMoveLeft(tetris_block)){
             return;
         }
-
         tetris_block.setPosition(position);
     }
 

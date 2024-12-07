@@ -25,11 +25,11 @@ public class MenuGame_OverView implements ElementViewer<Menu> {
         TextGraphics graphics = screenManager.getTextGraphics();
 
         // Desenha o retângulo vermelho
-        graphics.setBackgroundColor(TextColor.Factory.fromString("red"));
+        graphics.setBackgroundColor(TextColor.Factory.fromString("black"));
         graphics.fillRectangle(new TerminalPosition(2, 5), new TerminalSize(30, 10), ' ');
 
         // Define o texto com cor preta
-        graphics.setForegroundColor(TextColor.Factory.fromString("black"));
+        graphics.setForegroundColor(TextColor.Factory.fromString("white"));
         graphics.enableModifiers(SGR.BOLD); // Opcional: torna o texto em negrito
 
         // Escreve os textos dentro do retângulo

@@ -20,7 +20,9 @@ public class MenuView implements ElementViewer<Menu> {
 
 
         graphics.setForegroundColor(TextColor.ANSI.WHITE);
-        graphics.putString(10, 2, "===== MAIN MENU =====");
+        graphics.putString(10, 2, "==== MAIN MENU ====");
+        graphics.putString(10, 7, "===================");
+
 
         // Exibe as opções do menu
         for (int i = 0; i < menu.getOptions().size(); i++) {
@@ -32,5 +34,6 @@ public class MenuView implements ElementViewer<Menu> {
                 graphics.putString(10, 4 + i, "  " + menu.getOptions().get(i));
             }
         }
+
     }
 }
