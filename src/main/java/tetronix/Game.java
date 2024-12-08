@@ -166,18 +166,15 @@ public class Game {
             return false;
         }
 
-        if (isBombFalling) {
-            updateBombs();
-            if (bombs.isEmpty()) {
-                isBombFalling = false;
-            }
-        } else {
+        if (bombs.isEmpty()) {
             if (tetris_block == null || !continuousBlockFall(tetrisBlockController.moveDown())) {
                 tetris_block = TetrisBlockFactory.createBlock(columns, rows);
-                if (new Random().nextInt(10) == 0) {
+                if (new Random().nextInt(10) == 0) { // 10% chance to spawn a bomb
                     spawnBomb();
                 }
             }
+        } else {
+            updateBombs();
         }
 
         try {

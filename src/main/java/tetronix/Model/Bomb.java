@@ -35,13 +35,17 @@ public class Bomb {
         int row = position.getRow_identifier();
         int col = position.getColumn_identifier();
 
+        System.out.println("Bomb exploding at: Row " + row + ", Column " + col);
+
         // Clear surrounding blocks in a 3x3 area
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 int newRow = row + i;
                 int newCol = col + j;
+
                 if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < columns) {
-                    grid[newRow][newCol] = null; // Remove block
+                    System.out.println("Clearing cell at: Row " + newRow + ", Column " + newCol);
+                    grid[newRow][newCol] = null;
                 }
             }
         }

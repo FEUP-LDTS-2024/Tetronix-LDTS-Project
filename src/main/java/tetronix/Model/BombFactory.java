@@ -8,11 +8,10 @@ public class BombFactory {
 
     public static Bomb createBomb(int columns, int rows) {
         String random_color = colors[random.nextInt(colors.length)];
-        int spawnRow = random.nextInt(rows);
         int spawnColumn = random.nextInt(columns);
-        Position position = new Position(spawnColumn, spawnRow);
+        Position position = new Position(spawnColumn, 0); // Start at the top row
         Bomb bomb = new Bomb(random_color, position, columns, rows);
-        System.out.println("Bomb created at: Row " + spawnRow + ", Column " + spawnColumn + " with color " + random_color);
+        System.out.println("Bomb created at: Row 0, Column " + spawnColumn + " with color " + random_color);
         return bomb;
     }
 }
