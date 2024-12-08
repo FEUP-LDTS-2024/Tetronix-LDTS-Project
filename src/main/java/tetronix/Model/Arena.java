@@ -45,29 +45,14 @@ public class Arena {
 
 
 
-    public boolean canMoveDown(Object object) {
-        if (object == null) return false;
+    public boolean canMoveDown(TetrisBlock block) {
+        if (block == null) return false;
 
-        int[][] shape;
-        int blockRow;
-        int blockColumn;
-
-        if (object instanceof TetrisBlock) {
-            TetrisBlock block = (TetrisBlock) object;
-            shape = block.getShape();
-            blockRow = block.getPosition().getRow_identifier();
-            blockColumn = block.getPosition().getColumn_identifier();
-        } else if (object instanceof Bomb) {
-            Bomb bomb = (Bomb) object;
-            shape = bomb.getShape();
-            blockRow = bomb.getPosition().getRow_identifier();
-            blockColumn = bomb.getPosition().getColumn_identifier();
-        } else {
-            return false; // Unsupported object type
-        }
-
+        int[][] shape = block.getShape();
         int blockHeight = shape.length;
         int blockWidth = shape[0].length;
+        int blockRow = block.getPosition().getRow_identifier();
+        int blockColumn = block.getPosition().getColumn_identifier();
 
         if (blockRow + blockHeight >= rows) {
             return false; // At bottom edge
@@ -351,18 +336,14 @@ public class Arena {
 
     public boolean canMoveDown(Bomb bomb) {
         if (bomb == null) return false;
-        int[][] shape = bomb.getShape();
         int bombRow = bomb.getPosition().getRow_identifier();
         int bombColumn = bomb.getPosition().getColumn_identifier();
 
         if (bombRow + 1 >= rows) {
-            return false;
+            return false; // At bottom edge
         }
 
-        if (background[bombRow + 1][bombColumn] != null) {
-            return false;
-        }
-
-        return true;
+        // Check if the space below is occupied
+        return background[bombRow + 1][bombColumn] == null;
     }
 }

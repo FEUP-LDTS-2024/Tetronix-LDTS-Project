@@ -42,11 +42,13 @@ public class Game {
     private int initial_speed = 600;
     // Add a list to store bombs
     private List<Bomb> bombs = new ArrayList<>();
+    private boolean isBombFalling = false;
 
     // Add a method to spawn a bomb
     public void spawnBomb() {
         Bomb bomb = BombFactory.createBomb(columns, rows);
         bombs.add(bomb);
+        isBombFalling = true;
         System.out.println("Bomb spawned at: Row " + bomb.getPosition().getRow_identifier() + ", Column " + bomb.getPosition().getColumn_identifier());
     }
 
@@ -159,23 +161,25 @@ public class Game {
 
     public boolean updateGameState() {
         if (arena.isBlockOutBounds(tetris_block)) {
-            System.out.println("Game Stopped!: Row: " + tetris_block.getPosition().getRow_identifier() + " ------ " + "Column: " + tetris_block.getPosition().getColumn_identifier());
             arena.moveBlocktoBackground(tetris_block);
             menu.setCurr_state(GAME_OVER);
             return false;
         }
 
-        if (tetris_block == null || !continuousBlockFall(tetrisBlockController.moveDown())) {
-            tetris_block = TetrisBlockFactory.createBlock(columns, rows);
-            // Randomly spawn a bomb
-            if (new Random().nextInt(10) == 0) { // 10% chance to spawn a bomb
-                spawnBomb();
+        if (isBombFalling) {
+            updateBombs();
+            if (bombs.isEmpty()) {
+                isBombFalling = false;
+            }
+        } else {
+            if (tetris_block == null || !continuousBlockFall(tetrisBlockController.moveDown())) {
+                tetris_block = TetrisBlockFactory.createBlock(columns, rows);
+                if (new Random().nextInt(10) == 0) {
+                    spawnBomb();
+                }
             }
         }
 
-        updateBombs();
-
-        // Update rendering
         try {
             gameView.render();
         } catch (IOException e) {
@@ -227,6 +231,7 @@ public class Game {
 
         while(true){
             handleInput();
+            updateBombs();
             gameView.render();
             if(menu.getCurr_state() == GAME_OVER){
                 return; //prototype
@@ -246,6 +251,9 @@ public class Game {
             }
         }
         bombs.removeAll(bombsToRemove);
+        if (bombs.isEmpty()) {
+            isBombFalling = false;
+        }
     }
 
 }
