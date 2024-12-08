@@ -60,6 +60,11 @@ public class TetrisBlock {
 
     public void setShape(int[][] shape) {this.shape = shape;}
 
+    public TetrisBlock(String color) {
+        this.color = color;
+        // Initialize other properties as needed
+    }
+
     public void CorrectPositionAfterRotation(){
         //rightbound
 

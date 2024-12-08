@@ -4,17 +4,17 @@ package tetronix.Model;
 public class Arena {
     private int columns;
     private int rows;
-    private String[][] background;
+    private TetrisBlock[][] background;
     private int gridCellsize;
 
     public Arena(int columns_, int rows_){
         this.columns = columns_;
         this.rows = rows_;
         this.gridCellsize = rows_ / columns_;
-        background = new String[rows_][columns_];
+        background = new TetrisBlock[rows_][columns_];
     }
 
-    public String[][] getBackground(){
+    public TetrisBlock[][] getBackground(){
         return this.background;
     }
 
@@ -45,37 +45,46 @@ public class Arena {
 
 
 
-    public boolean canMoveDown(TetrisBlock block) {
-        if (block == null) return false;
+    public boolean canMoveDown(Object object) {
+        if (object == null) return false;
 
-        int[][] shape = block.getShape();
-        int blockHeight = shape.length;
-        int blockWidth = shape[0].length;
-        int blockRow = block.getPosition().getRow_identifier();
-        int blockColumn = block.getPosition().getColumn_identifier();
+        int[][] shape;
+        int blockRow;
+        int blockColumn;
 
-        if (isAtBottomEdge(block)) {
-            return false;
+        if (object instanceof TetrisBlock) {
+            TetrisBlock block = (TetrisBlock) object;
+            shape = block.getShape();
+            blockRow = block.getPosition().getRow_identifier();
+            blockColumn = block.getPosition().getColumn_identifier();
+        } else if (object instanceof Bomb) {
+            Bomb bomb = (Bomb) object;
+            shape = bomb.getShape();
+            blockRow = bomb.getPosition().getRow_identifier();
+            blockColumn = bomb.getPosition().getColumn_identifier();
+        } else {
+            return false; // Unsupported object type
         }
 
-        // Verificar todas as células do bloco
+        int blockHeight = shape.length;
+        int blockWidth = shape[0].length;
+
+        if (blockRow + blockHeight >= rows) {
+            return false; // At bottom edge
+        }
+
+        // Check for collisions
         for (int c = 0; c < blockWidth; c++) {
-            for (int r = blockHeight - 1; r >= 0; r--) { // Começa da parte inferior do bloco
-                if (shape[r][c] == 1) { // Apenas verifica células ocupadas
+            for (int r = blockHeight - 1; r >= 0; r--) {
+                if (shape[r][c] == 1) {
                     int nextRow = blockRow + r + 1;
-                    int realColumn = blockColumn + c * 2; // Considera a duplicação de largura
+                    int realColumn = blockColumn + c * 2; // Consider width duplication
 
-                    if (blockRow < 0) {
-                        break; // Ignorar se o bloco está acima da tela
+                    if (nextRow >= 0 && (background[nextRow][realColumn] != null ||
+                            (realColumn + 1 < columns && background[nextRow][realColumn + 1] != null))) {
+                        return false; // Collision detected
                     }
-
-                    // Verifica colisão para ambas as colunas ocupadas pela célula lógica
-                    if (/*nextRow >= background.length || realColumn + 1 >= background[0].length ||*/
-                            background[nextRow][realColumn] != null || background[nextRow][realColumn + 1] != null) {
-                        // Colisão detectada
-                        return false;
-                    }
-                    break; // Só precisa verificar a primeira célula ocupada nessa coluna
+                    break; // Only need to check the first occupied cell in this column
                 }
             }
         }
@@ -84,70 +93,111 @@ public class Arena {
     }
 
 
-    public boolean canMoveLeft(TetrisBlock block) {
-        if(block == null) return false;
-        int [][] shape = block.getShape();
-        int blockHeight = block.getShape().length;
-        int blockWidth = block.getShape()[0].length;
-        int blockRow = block.getPosition().getRow_identifier();
-        int blockColumn = block.getPosition().getColumn_identifier();
+    public boolean canMoveLeft(Object object) {
+        if (object == null) return false;
 
-        // Verificar se o bloco inteiro está na borda esquerda
-        if (isAtLeftEdge(block)) {
-            return false; // Não pode se mover para a esquerda
-        }
+        int[][] shape;
+        int blockHeight;
+        int blockWidth;
+        int blockRow;
+        int blockColumn;
 
-        // Verificar todas as células do bloco para colisões
-        for (int r = 0; r < blockHeight; r++) { // Para cada linha
-            for (int c = 0; c < blockWidth; c++) { // Para cada coluna
-                if (shape[r][c] == 1) { // Encontrar uma célula ocupada
-                    int sameRow = blockRow + r;
-                    int leftColumn = blockColumn + c - 1;
+        if (object instanceof TetrisBlock) {
+            TetrisBlock block = (TetrisBlock) object;
+            shape = block.getShape();
+            blockHeight = shape.length;
+            blockWidth = shape[0].length;
+            blockRow = block.getPosition().getRow_identifier();
+            blockColumn = block.getPosition().getColumn_identifier();
 
-                    if(blockRow < 0){
-                        break;
-                    }
-                    if (background[sameRow][leftColumn] != null) {
-                        return false; // Movimento bloqueado
-                    }
-
-                    break; // Verificar apenas a célula mais à esquerda da linha atual
-                }
+            if (isAtLeftEdge(block)) {
+                return false;
             }
-        }
+        } else if (object instanceof Bomb) {
+            Bomb bomb = (Bomb) object;
+            shape = bomb.getShape();
+            blockHeight = shape.length;
+            blockWidth = shape[0].length;
+            blockRow = bomb.getPosition().getRow_identifier();
+            blockColumn = bomb.getPosition().getColumn_identifier();
 
-        return true; // Nenhuma colisão detectada, pode mover
-    }
-
-
-
-    public boolean canMoveRight(TetrisBlock block) {
-        if (block == null) return false;
-
-        int[][] shape = block.getShape();
-        int blockHeight = shape.length;
-        int blockWidth = shape[0].length;
-        int blockRow = block.getPosition().getRow_identifier();
-        int blockColumn = block.getPosition().getColumn_identifier();
-
-        if (isAtRightEdge(block)) {
+            if (blockColumn == 0) {
+                return false;
+            }
+        } else {
             return false;
         }
 
-        // Verificar todas as linhas
         for (int r = 0; r < blockHeight; r++) {
-            for (int c = blockWidth - 1; c >= 0; c--) { // Começa da célula mais à direita
-                if (shape[r][c] == 1) { // Apenas verifica células ocupadas
+            for (int c = 0; c < blockWidth; c++) {
+                if (shape[r][c] == 1) {
                     int sameRow = blockRow + r;
-                    int rightColumn = blockColumn + c * 2 + 2; // Considera a duplicação horizontal
+                    int leftColumn = blockColumn + c * 2 - 1;
 
                     if (blockRow < 0) {
                         break;
                     }
 
+                    if (leftColumn >= 0 && background[sameRow][leftColumn] != null) {
+                        return false;
+                    }
+                    break;
+                }
+            }
+        }
 
-                    if (/*rightColumn >= background[0].length ||*/ background[sameRow][rightColumn] != null) {
-                        return false; // Colisão detectada
+        return true;
+    }
+
+
+
+    public boolean canMoveRight(Object object) {
+        if (object == null) return false;
+
+        int[][] shape;
+        int blockHeight;
+        int blockWidth;
+        int blockRow;
+        int blockColumn;
+
+        if (object instanceof TetrisBlock) {
+            TetrisBlock block = (TetrisBlock) object;
+            shape = block.getShape();
+            blockHeight = shape.length;
+            blockWidth = shape[0].length;
+            blockRow = block.getPosition().getRow_identifier();
+            blockColumn = block.getPosition().getColumn_identifier();
+
+            if (isAtRightEdge(block)) {
+                return false;
+            }
+        } else if (object instanceof Bomb) {
+            Bomb bomb = (Bomb) object;
+            shape = bomb.getShape();
+            blockHeight = shape.length;
+            blockWidth = shape[0].length;
+            blockRow = bomb.getPosition().getRow_identifier();
+            blockColumn = bomb.getPosition().getColumn_identifier();
+
+            if (blockColumn + 2 >= columns) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+        for (int r = 0; r < blockHeight; r++) {
+            for (int c = blockWidth - 1; c >= 0; c--) {
+                if (shape[r][c] == 1) {
+                    int sameRow = blockRow + r;
+                    int rightColumn = blockColumn + c * 2 + 2;
+
+                    if (blockRow < 0) {
+                        break;
+                    }
+
+                    if (rightColumn < columns && background[sameRow][rightColumn] != null) {
+                        return false;
                     }
                     break;
                 }
@@ -222,8 +272,8 @@ public class Arena {
                     int realColumn = column_pos + c * 2; // Duplicação de largura
 
                     // Preenche ambas as células horizontais
-                        background[row_pos + r][realColumn] = color;
-                        background[row_pos + r][realColumn + 1] = color;
+                    background[row_pos + r][realColumn] = new TetrisBlock(color);
+                    background[row_pos + r][realColumn + 1] = new TetrisBlock(color);
 
                 }
             }
@@ -297,5 +347,22 @@ public class Arena {
         }
 
         return false;
+    }
+
+    public boolean canMoveDown(Bomb bomb) {
+        if (bomb == null) return false;
+        int[][] shape = bomb.getShape();
+        int bombRow = bomb.getPosition().getRow_identifier();
+        int bombColumn = bomb.getPosition().getColumn_identifier();
+
+        if (bombRow + 1 >= rows) {
+            return false;
+        }
+
+        if (background[bombRow + 1][bombColumn] != null) {
+            return false;
+        }
+
+        return true;
     }
 }
