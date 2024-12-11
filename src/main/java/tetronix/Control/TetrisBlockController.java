@@ -15,58 +15,43 @@ public class TetrisBlockController {
 
     public void dropBlock(Arena arena) {
         block = game.getTetris_block();
-        // Enquanto o bloco não atingir o fundo ou não houver espaço ocupado abaixo dele
         while(arena.canMoveDown(block)){
-
             block.setPosition(moveDown());
         }
-        // Após o bloco chegar ao fundo ou ser bloqueado, movê-lo para a arena
         arena.moveBlocktoBackground(block);
     }
-
 
     public Position moveDown() {
         block = game.getTetris_block();
         if(block == null) return null;
         Position current_position = block.getPosition();
-
-        Position new_position = new Position(current_position.getColumn_identifier(),current_position.getRow_identifier() + 1);
-        return new_position;
+        return new Position(current_position.getColumn_identifier(), current_position.getRow_identifier() + 1);
     }
 
     public Position moveLeft() {
         block = game.getTetris_block();
         if(block == null) return null;
         Position current_position = block.getPosition();
-
-        Position new_position = new Position(current_position.getColumn_identifier() - 1,current_position.getRow_identifier());
-        return new_position;
-
+        return new Position(current_position.getColumn_identifier() - 2, current_position.getRow_identifier());
     }
 
     public Position moveRight() {
         block = game.getTetris_block();
         if(block == null) return null;
         Position current_position = block.getPosition();
-
-        Position new_position = new Position(current_position.getColumn_identifier() + 1,current_position.getRow_identifier());
-        return new_position;
-
+        return new Position(current_position.getColumn_identifier() + 2, current_position.getRow_identifier());
     }
 
     public void rotateBlock() {
         block = game.getTetris_block();
         if(block == null) return;
-        int new_rotation = block.getCurrent_rotation() + 1;
-        if(new_rotation > 3) new_rotation = 0;
+        int new_rotation = (block.getCurrent_rotation() + 1) % 4;
 
-
-        if(!game.getArena().canRotate(block,new_rotation)){
+        if(!game.getArena().canRotate(block, new_rotation)){
             return;
         }
 
         block.setCurrent_rotation(new_rotation);
-
 
         if(game.getArena().isBlockOutBoundsAfterRotation(block)){
             block.CorrectPositionAfterRotation();

@@ -169,12 +169,17 @@ public class Game {
         if (!bombs.isEmpty()) {
             updateBombs();
         } else {
-            if (tetris_block == null || !continuousBlockFall(tetrisBlockController.moveDown())) {
-                arena.moveBlocktoBackground(tetris_block);
+            if (tetris_block == null) {
                 tetris_block = TetrisBlockFactory.createBlock(columns, rows);
-                if (new Random().nextInt(10) == 0) { // 10% chance to spawn a bomb
+                if (new Random().nextInt(10) == 0) {
                     spawnBomb();
+                    return true;
                 }
+            }
+
+            if (!continuousBlockFall(tetrisBlockController.moveDown())) {
+                arena.moveBlocktoBackground(tetris_block);
+                tetris_block = null;
             }
         }
 
@@ -186,6 +191,7 @@ public class Game {
 
         return true;
     }
+
 
 
     public List<Bomb> getBombs() {

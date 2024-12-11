@@ -33,7 +33,7 @@ public class ArenaView<T extends Arena> implements ElementViewer<T> {
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
                 if (background[r][c] == null) {
-                    graphics.setBackgroundColor(TextColor.Factory.fromString("#FFFFFF"));
+                    graphics.setBackgroundColor(TextColor.Factory.fromString("#808080"));
                 } else {
                     graphics.setBackgroundColor(TextColor.Factory.fromString(background[r][c].getColor()));
                 }
@@ -41,7 +41,7 @@ public class ArenaView<T extends Arena> implements ElementViewer<T> {
             }
         }
 
-        graphics.setBackgroundColor(TextColor.Factory.fromString("#FFFFFF"));
+        graphics.setBackgroundColor(TextColor.Factory.fromString("#D3D3D3"));
         graphics.setForegroundColor(TextColor.Factory.fromString("#000000"));
 
         graphics.putString(25, 4, "Level: " + game.getLevel());

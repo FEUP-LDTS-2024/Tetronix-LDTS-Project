@@ -117,13 +117,13 @@ public class Arena {
             for (int c = 0; c < blockWidth; c++) {
                 if (shape[r][c] == 1) {
                     int sameRow = blockRow + r;
-                    int leftColumn = blockColumn + c * 2 - 1;
+                    int leftColumn = blockColumn + c * 2 - 2;
 
-                    if (blockRow < 0) {
-                        break;
+                    if (sameRow < 0 || leftColumn < 0 || sameRow >= rows || leftColumn >= columns) {
+                        return false;
                     }
 
-                    if (leftColumn >= 0 && background[sameRow][leftColumn] != null) {
+                    if (background[sameRow][leftColumn] != null) {
                         return false;
                     }
                     break;
@@ -133,8 +133,6 @@ public class Arena {
 
         return true;
     }
-
-
 
     public boolean canMoveRight(Object object) {
         if (object == null) return false;
@@ -177,11 +175,11 @@ public class Arena {
                     int sameRow = blockRow + r;
                     int rightColumn = blockColumn + c * 2 + 2;
 
-                    if (blockRow < 0) {
-                        break;
+                    if (sameRow < 0 || rightColumn >= columns || sameRow >= rows) {
+                        return false;
                     }
 
-                    if (rightColumn < columns && background[sameRow][rightColumn] != null) {
+                    if (background[sameRow][rightColumn] != null) {
                         return false;
                     }
                     break;
@@ -191,6 +189,8 @@ public class Arena {
 
         return true;
     }
+
+
 
 
     public int clearLines(){
