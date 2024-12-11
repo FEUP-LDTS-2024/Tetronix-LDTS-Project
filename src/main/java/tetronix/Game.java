@@ -166,15 +166,16 @@ public class Game {
             return false;
         }
 
-        if (bombs.isEmpty()) {
+        if (!bombs.isEmpty()) {
+            updateBombs();
+        } else {
             if (tetris_block == null || !continuousBlockFall(tetrisBlockController.moveDown())) {
+                arena.moveBlocktoBackground(tetris_block);
                 tetris_block = TetrisBlockFactory.createBlock(columns, rows);
                 if (new Random().nextInt(10) == 0) { // 10% chance to spawn a bomb
                     spawnBomb();
                 }
             }
-        } else {
-            updateBombs();
         }
 
         try {
@@ -185,6 +186,7 @@ public class Game {
 
         return true;
     }
+
 
     public List<Bomb> getBombs() {
         return bombs;
@@ -206,20 +208,23 @@ public class Game {
 
     public void handleInput() throws IOException {
         KeyStroke key = screenManager.readInput();
-        inputHandler.processInput(key);
 
-        // Move the last bomb if it exists
         if (!bombs.isEmpty()) {
-            Bomb lastBomb = bombs.get(bombs.size() - 1);
-            Position bombPosition = lastBomb.getPosition();
-
-            if (key.getKeyType() == ArrowRight && arena.canMoveRight(lastBomb)) {
-                bombPosition.setColumn_identifier(bombPosition.getColumn_identifier() + 1);
-            } else if (key.getKeyType() == ArrowLeft && arena.canMoveLeft(lastBomb)) {
-                bombPosition.setColumn_identifier(bombPosition.getColumn_identifier() - 1);
+            Bomb activeBomb = bombs.get(bombs.size() - 1);
+            if (key.getKeyType() == ArrowDown && arena.canMoveDown(activeBomb)) {
+                activeBomb.getPosition().setRow_identifier(activeBomb.getPosition().getRow_identifier() + 1);
+            } else if (key.getKeyType() == ArrowLeft && arena.canMoveLeft(activeBomb)) {
+                activeBomb.getPosition().setColumn_identifier(activeBomb.getPosition().getColumn_identifier() - 1);
+            } else if (key.getKeyType() == ArrowRight && arena.canMoveRight(activeBomb)) {
+                activeBomb.getPosition().setColumn_identifier(activeBomb.getPosition().getColumn_identifier() + 1);
             }
+        } else {
+            // Handle Tetris block movement
+            inputHandler.processInput(key);
         }
     }
+
+
 
 
     public void run() throws IOException {
