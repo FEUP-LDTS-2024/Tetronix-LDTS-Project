@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class TetrisBlockFactory {
     private static Random random = new Random();
-    private static String [] colors = {"green","red","blue","black"};
+    private static String [] colors = {"green","red","blue","yellow"};
 
     private static final int[][][] shapes = {
             // I Shape
