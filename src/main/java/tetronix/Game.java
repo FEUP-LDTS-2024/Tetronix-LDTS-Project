@@ -173,6 +173,8 @@ public class Game {
             }
         }
 
+        updateBombs();
+
         // Update rendering
         try {
             gameView.render();
@@ -203,6 +205,17 @@ public class Game {
     public void handleInput() throws IOException {
         KeyStroke key = screenManager.readInput();
         inputHandler.processInput(key);
+
+        // Move the last bomb if it exists
+        if (!bombs.isEmpty()) {
+            Bomb lastBomb = bombs.get(bombs.size() - 1);
+            Position bombPosition = lastBomb.getPosition();
+            if (key.getKeyType() == ArrowRight && arena.canMoveRight(lastBomb)) {
+                bombPosition.setColumn_identifier(bombPosition.getColumn_identifier() + 1);
+            } else if (key.getKeyType() == ArrowLeft && arena.canMoveLeft(lastBomb)) {
+                bombPosition.setColumn_identifier(bombPosition.getColumn_identifier() - 1);
+            }
+        }
     }
 
 
@@ -218,5 +231,20 @@ public class Game {
             }
         }
     }
+
+    public void updateBombs() {
+        List<Bomb> bombsToRemove = new ArrayList<>();
+        for (Bomb bomb : bombs) {
+            if (arena.canMoveDown(bomb)) {
+                Position currentPosition = bomb.getPosition();
+                currentPosition.setRow_identifier(currentPosition.getRow_identifier() + 1);
+            } else {
+                bomb.explode(arena.getBackground());
+                bombsToRemove.add(bomb);
+            }
+        }
+        bombs.removeAll(bombsToRemove);
+    }
+
 
 }

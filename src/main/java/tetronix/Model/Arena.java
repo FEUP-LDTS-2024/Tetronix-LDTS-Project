@@ -157,6 +157,44 @@ public class Arena {
         return true;
     }
 
+    //BOMB MOVEMENT
+    public boolean canMoveDown(Bomb bomb) {
+        if (bomb == null) return false;
+        int bombRow = bomb.getPosition().getRow_identifier();
+        int bombColumn = bomb.getPosition().getColumn_identifier();
+
+        if (bombRow + 1 >= rows) {
+            return false;
+        }
+
+        return background[bombRow + 1][bombColumn] == null;
+    }
+
+    public boolean canMoveLeft(Bomb bomb) {
+        if (bomb == null) return false;
+        int bombRow = bomb.getPosition().getRow_identifier();
+        int bombColumn = bomb.getPosition().getColumn_identifier();
+
+        if (bombColumn == 0) {
+            return false;
+        }
+
+        return background[bombRow][bombColumn - 1] == null;
+    }
+
+    public boolean canMoveRight(Bomb bomb) {
+        if (bomb == null) return false;
+        int bombRow = bomb.getPosition().getRow_identifier();
+        int bombColumn = bomb.getPosition().getColumn_identifier();
+
+        if (bombColumn + 1 >= columns) {
+            return false;
+        }
+
+        return background[bombRow][bombColumn + 1] == null;
+    }
+
+
 
     public int clearLines(){
         int cleared_lines = 0;
