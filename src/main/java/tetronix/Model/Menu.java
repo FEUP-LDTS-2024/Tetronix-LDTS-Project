@@ -72,6 +72,7 @@ public class Menu {
                     menuView.draw();
                     screenManager.refresh();
                     handleInput();
+                    screenManager.clear();
                     break;
                 case PLAYING:
                     game = new Game(this);
