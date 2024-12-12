@@ -28,25 +28,34 @@ public class GameThread extends Thread {
     @Override
     public void run() {
         while (true) {
-            if(game.can_level_up()){
+            if (game.can_level_up()) {
                 System.out.println("Increasing speed...\n");
                 game.setLevel(game.getLevel() + 1);
             }
             level = game.getLevel();
 
             try {
+                // Update bombs before checking game state
+                game.updateBombs(); // Ensure bombs fall continuously
 
-                if(!game.updateGameState()){
-                    game.setTetris_block(null); //assim n dá para mexer mais no bloco quando jogo acaba
+                // Update game state for Tetris blocks
+                if (!game.updateGameState()) {
+                    game.setTetris_block(null); // Stop block manipulation after game ends
                     break;
                 }
-                Thread.sleep(initial_speed - (level * speed_per_level)); // Controla o intervalo de atualização
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
 
+                // Render the updated state
+                game.getGameView().render();
+
+                // Sleep based on game level speed
+                Thread.sleep(initial_speed - (level * speed_per_level));
+            } catch (InterruptedException | IOException e) {
+                Thread.currentThread().interrupt();
+                e.printStackTrace();
+            }
         }
     }
+
 
 }
 

@@ -39,16 +39,12 @@ public class Bomb {
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 int newRow = row + i;
-                int newCol = col + j * 2; // Adjust for double-width cells
+                int newCol = col + j; // Adjust for single-width columns
 
-                if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < columns * 2) {
-                    grid[newRow][newCol] = null; // Remove block
-                    if (newCol + 1 < columns * 2) {
-                        grid[newRow][newCol + 1] = null; // Remove the second half of the cell
-                    }
+                if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < columns) {
+                    grid[newRow][newCol] = null; // Clear the block
                 }
             }
         }
     }
-
 }

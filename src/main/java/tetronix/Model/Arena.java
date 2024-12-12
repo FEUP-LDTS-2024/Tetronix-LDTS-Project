@@ -163,12 +163,23 @@ public class Arena {
         int bombRow = bomb.getPosition().getRow_identifier();
         int bombColumn = bomb.getPosition().getColumn_identifier();
 
+        System.out.println("Checking if bomb can move down: Row " + bombRow + ", Column " + bombColumn);
+
         if (bombRow + 1 >= rows) {
+            System.out.println("Bomb cannot move down (at bottom).");
             return false;
         }
 
-        return background[bombRow + 1][bombColumn] == null;
+        if (background[bombRow + 1][bombColumn] == null) {
+            System.out.println("Bomb can move down.");
+            return true;
+        }
+
+        System.out.println("Bomb cannot move down (collision).");
+        return false;
     }
+
+
 
     public boolean canMoveLeft(Bomb bomb) {
         if (bomb == null) return false;

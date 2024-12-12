@@ -40,15 +40,23 @@ public class Game {
     private int score_per_level = 5;
     private int speed_per_level = 100;
     private int initial_speed = 600;
+    private long lastBombFallTime = 0;
+    private int bombFallSpeed = 600;
+
     // Add a list to store bombs
     private List<Bomb> bombs = new ArrayList<>();
 
-    // Add a method to spawn a bomb
+    // Bombas a cairem do topo da arena
     public void spawnBomb() {
         Bomb bomb = BombFactory.createBomb(columns, rows);
+        bomb.getPosition().setRow_identifier(0); // Start at the top
         bombs.add(bomb);
         System.out.println("Bomb spawned at: Row " + bomb.getPosition().getRow_identifier() + ", Column " + bomb.getPosition().getColumn_identifier());
     }
+
+    private boolean isBombFalling = false;
+
+
 
 
     public Game(Menu menu_) {
@@ -121,6 +129,10 @@ public class Game {
         return screenManager;
     }
 
+    public GameView getGameView() {
+        return gameView;
+    }
+
 
     public boolean can_level_up(){
         int can_up_level = score / score_per_level + 1;
@@ -158,6 +170,15 @@ public class Game {
     }
 
     public boolean updateGameState() {
+        if (isBombFalling) {
+            // Update bomb falling logic
+            updateBombs();
+            if (bombs.isEmpty()) {
+                isBombFalling = false; // No more bombs are falling
+            }
+            return true;
+        }
+
         if (arena.isBlockOutBounds(tetris_block)) {
             System.out.println("Game Stopped!: Row: " + tetris_block.getPosition().getRow_identifier() + " ------ " + "Column: " + tetris_block.getPosition().getColumn_identifier());
             arena.moveBlocktoBackground(tetris_block);
@@ -166,14 +187,18 @@ public class Game {
         }
 
         if (tetris_block == null || !continuousBlockFall(tetrisBlockController.moveDown())) {
-            tetris_block = TetrisBlockFactory.createBlock(columns, rows);
+            arena.moveBlocktoBackground(tetris_block);
+            score += arena.clearLines() * 5; // Clear lines and update score
+            tetris_block = null;
+
             // Randomly spawn a bomb
             if (new Random().nextInt(10) == 0) { // 10% chance to spawn a bomb
                 spawnBomb();
+                isBombFalling = true; // Set flag to prioritize bomb falling
+            } else {
+                tetris_block = TetrisBlockFactory.createBlock(columns, rows);
             }
         }
-
-        updateBombs();
 
         // Update rendering
         try {
@@ -184,6 +209,7 @@ public class Game {
 
         return true;
     }
+
 
     public List<Bomb> getBombs() {
         return bombs;
@@ -220,31 +246,53 @@ public class Game {
 
 
     public void run() throws IOException {
-        GameThread gameThread = new GameThread(this); // Passa a instância atual de tetronix.Game
-        gameThread.start(); // Inicia a thread
+        GameThread gameThread = new GameThread(this); // Start game thread
+        gameThread.start();
 
-        while(true){
-            handleInput();
-            gameView.render();
-            if(menu.getCurr_state() == GAME_OVER){
-                return; //prototype
+        while (true) {
+            handleInput(); // Process user input
+
+            if (!updateGameState()) {
+                break; // Exit if game over
             }
+
+            updateBombs(); // Bombs fall continuously
+            gameView.render(); // Update screen
         }
     }
 
+
+
+    //Bombs fall individually
     public void updateBombs() {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastBombFallTime < bombFallSpeed) {
+            return; // Skip if not enough time has passed
+        }
+        lastBombFallTime = currentTime;
+
         List<Bomb> bombsToRemove = new ArrayList<>();
         for (Bomb bomb : bombs) {
+            Position currentPosition = bomb.getPosition();
+
             if (arena.canMoveDown(bomb)) {
-                Position currentPosition = bomb.getPosition();
                 currentPosition.setRow_identifier(currentPosition.getRow_identifier() + 1);
             } else {
                 bomb.explode(arena.getBackground());
                 bombsToRemove.add(bomb);
+
+                // Check for any cleared lines after explosion
+                int linesCleared = arena.clearLines();
+                if (linesCleared > 0) {
+                    score += linesCleared * 5; // Increment score for cleared lines
+                }
             }
         }
         bombs.removeAll(bombsToRemove);
     }
+
+
+
 
 
 }
