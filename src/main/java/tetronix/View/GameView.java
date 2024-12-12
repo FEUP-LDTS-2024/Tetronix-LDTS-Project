@@ -52,7 +52,7 @@ public class GameView {
     private void renderBomb(Bomb bomb) {
         Position pos = bomb.getPosition();
         TextGraphics textGraphics = screenManager.getTextGraphics();
-        textGraphics.putString(pos.getColumn_identifier(), pos.getRow_identifier(), "*"); // Use 'B' to represent a bomb
+        textGraphics.putString(pos.getColumn_identifier(), pos.getRow_identifier(), "*"); // Use '*' to represent a bomb
     }
 
     private void clearChangedAreas(TextGraphics textGraphics) {
