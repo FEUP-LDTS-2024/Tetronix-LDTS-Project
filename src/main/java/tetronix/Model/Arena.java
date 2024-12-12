@@ -191,8 +191,6 @@ public class Arena {
     }
 
 
-
-
     public int clearLines(){
         int cleared_lines = 0;
 
