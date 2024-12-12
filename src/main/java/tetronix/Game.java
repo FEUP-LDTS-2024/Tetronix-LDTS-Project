@@ -23,6 +23,7 @@ public class Game {
 
     private Arena arena;
     private TetrisBlock tetris_block;
+    private Coins coins;
     private Position position;
 
     private InputHandler inputHandler;
@@ -34,11 +35,16 @@ public class Game {
     private int score = 0;
     private int level = 1;
     private int score_per_level = 5;
-    private int speed_per_level = 100;
+    private int speed_per_level = 50;
     private int initial_speed = 600;
 
 
     public Game(Menu menu_) {
+
+        /*Para protótipo*/
+        coins = new Coins(new Position(10,10),"yellow",20);
+        /*Para protótipo*/
+
 
         this.menu = menu_;
 
@@ -55,6 +61,8 @@ public class Game {
         tetrisBlockController = new TetrisBlockController(this);
 
     }
+
+    public Coins getCoins() {return coins;}
 
     public Menu getMenu() {return menu;}
 
@@ -146,7 +154,7 @@ public class Game {
 
     public boolean updateGameState() {
 
-            if(arena.isBlockOutBounds(tetris_block)){
+            if(arena.isBlockOutBounds()){
                 System.out.println("Game Stopped!: Row: " + tetris_block.getPosition().getRow_identifier() + " ------ " + "Column: " + tetris_block.getPosition().getColumn_identifier());
                 arena.moveBlocktoBackground(tetris_block);
                 menu.setCurr_state(GAME_OVER);

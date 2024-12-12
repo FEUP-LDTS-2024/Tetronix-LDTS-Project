@@ -240,7 +240,7 @@ public class Arena {
         return true;
     }
 
-    public boolean isBlockOutBounds(TetrisBlock block) {
+    public boolean isBlockOutBounds() {
         if(!isRowZeroEmpty()) {
             return true;
         }
