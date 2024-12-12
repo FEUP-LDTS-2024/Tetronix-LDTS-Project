@@ -240,6 +240,8 @@ public class Game {
                 bombPosition.setColumn_identifier(bombPosition.getColumn_identifier() + 1);
             } else if (key.getKeyType() == ArrowLeft && arena.canMoveLeft(lastBomb)) {
                 bombPosition.setColumn_identifier(bombPosition.getColumn_identifier() - 1);
+            } else if (key.getKeyType() == ArrowDown && arena.canMoveDown(lastBomb)) {
+                bombPosition.setRow_identifier(bombPosition.getRow_identifier() + 1);
             }
         }
     }
