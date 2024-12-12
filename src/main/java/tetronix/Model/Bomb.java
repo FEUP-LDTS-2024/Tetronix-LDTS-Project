@@ -31,6 +31,13 @@ public class Bomb {
         return this.color;
     }
 
+    public void updateBombPosition(Bomb bomb, int newRow, int newColumn) {
+        Position pos = bomb.getPosition();
+        pos.setRow_identifier(newRow);
+        pos.setColumn_identifier(newColumn);
+    }
+
+
     public void explode(String[][] grid) {
         int row = position.getRow_identifier();
         int col = position.getColumn_identifier();

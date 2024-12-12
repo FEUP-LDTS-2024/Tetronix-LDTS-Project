@@ -4,9 +4,14 @@ public class Position {
     private int row_identifier;
     private int column_identifier;
 
-    public Position(int column_identifier_,int row_identifier_){
+    private int previousRowIdentifier;
+    private int previousColumnIdentifier;
+
+    public Position(int column_identifier_, int row_identifier_) {
         this.column_identifier = column_identifier_;
         this.row_identifier = row_identifier_;
+        this.previousColumnIdentifier = column_identifier_;
+        this.previousRowIdentifier = row_identifier_;
     }
 
     public int getColumn_identifier(){
@@ -22,4 +27,12 @@ public class Position {
     }
 
     public void setRow_identifier(int row_identifier_){this.row_identifier = row_identifier_;}
+
+    public int getPreviousColumnIdentifier() {
+        return previousColumnIdentifier;
+    }
+
+    public int getPreviousRowIdentifier() {
+        return previousRowIdentifier;
+    }
 }

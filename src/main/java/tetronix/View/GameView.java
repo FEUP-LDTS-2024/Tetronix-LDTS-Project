@@ -29,9 +29,13 @@ public class GameView {
 
 
     public void render() throws IOException {
-        screenManager.clear();
+        TextGraphics textGraphics = screenManager.getTextGraphics();
 
-        for(ElementViewer element : elements){
+        // Clear only changed areas
+        clearChangedAreas(textGraphics);
+
+        // Draw all elements
+        for (ElementViewer element : elements) {
             element.draw();
         }
 
@@ -41,12 +45,28 @@ public class GameView {
             System.out.println("Rendering bomb at: Row " + bomb.getPosition().getRow_identifier() + ", Column " + bomb.getPosition().getColumn_identifier());
         }
 
-        screenManager.refresh();
+        screenManager.refresh(); // Refresh the screen
     }
+
 
     private void renderBomb(Bomb bomb) {
         Position pos = bomb.getPosition();
         TextGraphics textGraphics = screenManager.getTextGraphics();
         textGraphics.putString(pos.getColumn_identifier(), pos.getRow_identifier(), "*"); // Use 'B' to represent a bomb
     }
+
+    private void clearChangedAreas(TextGraphics textGraphics) {
+        // Clear Tetris block's previous position
+        if (game.getTetris_block() != null) {
+            Position prevPosition = game.getTetris_block().getPosition();
+            textGraphics.putString(prevPosition.getPreviousColumnIdentifier(), prevPosition.getPreviousRowIdentifier(), " ");
+        }
+
+        // Clear previous bomb positions
+        for (Bomb bomb : game.getBombs()) {
+            Position prevPosition = bomb.getPosition();
+            textGraphics.putString(prevPosition.getPreviousColumnIdentifier(), prevPosition.getPreviousRowIdentifier(), " ");
+        }
+    }
+
 }
