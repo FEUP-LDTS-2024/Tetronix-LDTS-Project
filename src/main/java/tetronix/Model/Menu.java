@@ -83,12 +83,14 @@ public class Menu {
                     menuGame_OverView.draw();
                     screenManager.refresh();
                     handleInput();
+                    screenManager.clear();
                     break;
                 case STATISTICS:
                     screenManager.clear();
                     menuStatisticsView.draw();
                     screenManager.refresh();
                     handleInput();
+                    screenManager.clear();
                     break;
             }
         }
