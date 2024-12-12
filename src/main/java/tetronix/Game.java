@@ -251,15 +251,12 @@ public class Game {
         GameThread gameThread = new GameThread(this); // Start game thread
         gameThread.start();
 
-        while (true) {
-            handleInput(); // Process user input
-
-            if (!updateGameState()) {
-                break; // Exit if game over
+        while(true){
+            handleInput();
+            gameView.render();
+            if(menu.getCurr_state() == GAME_OVER){
+                return; //prototype
             }
-
-            updateBombs(); // Bombs fall continuously
-            gameView.render(); // Update screen
         }
     }
 
