@@ -1,6 +1,8 @@
 package tetronix.View;
 
 
+import com.googlecode.lanterna.TextColor;
+import com.googlecode.lanterna.graphics.TextGraphics;
 import tetronix.Game;
 
 import java.io.IOException;
@@ -14,11 +16,17 @@ public class GameView {
     private final ScreenManager screenManager;
     private List<ElementViewer> elements = new ArrayList<>();
 
+    //ficar por causa do scor, secalhar mais tarde sai
+    private Game game;
+
     public GameView(Game game_) {
         this.arenaView = new ArenaView(game_);        // View da arena
         this.tetrisBlockView = new TetrisBlockView(game_); // View do bloco ativo
         this.coinView = new CoinView(game_);
         this.screenManager = game_.getScreenManager();
+
+        //talvez saia mais tarde
+        this.game = game_;
 
         elements.add(arenaView);
         elements.add(tetrisBlockView);
@@ -32,7 +40,20 @@ public class GameView {
         for(ElementViewer element : elements){
             element.draw();
         }
+        renderScore();
+
 
         screenManager.refresh();
+    }
+
+
+    public void renderScore(){
+        //Prototype for menu
+        TextGraphics graphics = screenManager.getTextGraphics();
+        graphics.setBackgroundColor(TextColor.Factory.fromString("white")); // Fundo branco
+        graphics.setForegroundColor(TextColor.Factory.fromString("black")); // Texto preto
+
+        graphics.putString(25, 4, "Level: " + game.getLevel());
+        graphics.putString(25, 6, "Score: " + (game.getScore() + game.get_Additional_Points()));
     }
 }

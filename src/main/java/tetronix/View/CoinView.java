@@ -5,10 +5,13 @@ import com.googlecode.lanterna.graphics.TextGraphics;
 import tetronix.Game;
 import tetronix.Model.Coins;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CoinView implements ElementViewer<Coins> {
-    private Coins coins;
     private Game game;
     private TextGraphics graphics;
+    private List<Coins> coins = new ArrayList<>();
 
     public CoinView(Game game_){
         this.coins = game_.getCoins();
@@ -18,9 +21,12 @@ public class CoinView implements ElementViewer<Coins> {
 
     @Override
     public void draw(){
-        System.out.println("Entrei no render da moeda...\n");
-        graphics.setForegroundColor(TextColor.ANSI.YELLOW); // Cor amarela para destacar a moeda
-        graphics.putString(coins.getPosition().getColumn_identifier(), coins.getPosition().getRow_identifier(), "$");
-        //  }
+        for(Coins coin_ : coins){
+            if(!coin_.isCollected()){
+                System.out.println("Entrei no render da moeda...\n");
+                graphics.setForegroundColor(TextColor.ANSI.YELLOW); // Cor amarela para destacar a moeda
+                graphics.putString(coin_.getPosition().getColumn_identifier(), coin_.getPosition().getRow_identifier(), "$");
+            }
+        }
     }
 }

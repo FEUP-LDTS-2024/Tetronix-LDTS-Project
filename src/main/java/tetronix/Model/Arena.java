@@ -1,17 +1,22 @@
 package tetronix.Model;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Arena {
     private int columns;
     private int rows;
     private String[][] background;
     private int gridCellsize;
+    private List<Coins> coins = new ArrayList<>();
 
-    public Arena(int columns_, int rows_){
+    public Arena(int columns_, int rows_,List<Coins> coins_){
         this.columns = columns_;
         this.rows = rows_;
         this.gridCellsize = rows_ / columns_;
         background = new String[rows_][columns_];
+        this.coins = coins_;
     }
 
     public String[][] getBackground(){
@@ -68,10 +73,12 @@ public class Arena {
                     if (blockRow < 0) {
                         break; // Ignorar se o bloco está acima da tela
                     }
+                    try_Collect_Coin(nextRow,realColumn);
+                    try_Collect_Coin(nextRow,realColumn + 1);
 
                     // Verifica colisão para ambas as colunas ocupadas pela célula lógica
                     if (/*nextRow >= background.length || realColumn + 1 >= background[0].length ||*/
-                            background[nextRow][realColumn] != null || background[nextRow][realColumn + 1] != null) {
+                            (background[nextRow][realColumn] != null) || (background[nextRow][realColumn + 1] != null )) {
                         // Colisão detectada
                         return false;
                     }
@@ -107,6 +114,9 @@ public class Arena {
                     if(blockRow < 0){
                         break;
                     }
+
+                    try_Collect_Coin(sameRow,leftColumn);
+
                     if (background[sameRow][leftColumn] != null) {
                         return false; // Movimento bloqueado
                     }
@@ -144,6 +154,7 @@ public class Arena {
                     if (blockRow < 0) {
                         break;
                     }
+                    try_Collect_Coin(sameRow,rightColumn);
 
 
                     if (/*rightColumn >= background[0].length ||*/ background[sameRow][rightColumn] != null) {
@@ -295,7 +306,16 @@ public class Arena {
         if(position.getRow_identifier() + height > rows){
             return true;
         }
-
         return false;
+    }
+
+    public void try_Collect_Coin(int row_, int col_){
+        if(!coins.isEmpty()){
+            for(Coins coin_ : coins){
+                if(coin_.getPosition().getRow_identifier() == row_ && coin_.getPosition().getColumn_identifier() == col_){
+                    coin_.collect();
+                }
+            }
+        }
     }
 }

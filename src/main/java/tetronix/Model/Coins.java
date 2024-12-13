@@ -24,12 +24,10 @@ public class Coins extends Element {
         return collected;
     }
 
-    public int collect() {
+    public void collect() {
         if (!collected) {
             collected = true;
-            return value;
         }
-        return 0;
     }
 
 

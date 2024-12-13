@@ -10,6 +10,8 @@ import tetronix.Model.*;
 import tetronix.View.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.googlecode.lanterna.input.KeyType.*;
 import static tetronix.Model.MenuState.GAME_OVER;
@@ -23,7 +25,8 @@ public class Game {
 
     private Arena arena;
     private TetrisBlock tetris_block;
-    private Coins coins;
+    private List<Coins> coins = new ArrayList<>();
+    int count_to_create_coins = 0;
     private Position position;
 
     private InputHandler inputHandler;
@@ -42,7 +45,7 @@ public class Game {
     public Game(Menu menu_) {
 
         /*Para protótipo*/
-        coins = new Coins(new Position(10,10),"yellow",20);
+        //coins = new Coins(new Position(10,10),"yellow",20);
         /*Para protótipo*/
 
 
@@ -52,7 +55,7 @@ public class Game {
 
         inputHandler = new InputHandlerForGame(this); // Gerencia entradas
 
-        arena = new Arena(columns, rows); // Inicializa a arena
+        arena = new Arena(columns, rows, coins); // Inicializa a arena
 
         tetris_block = TetrisBlockFactory.createBlock(columns,rows);
 
@@ -62,7 +65,17 @@ public class Game {
 
     }
 
-    public Coins getCoins() {return coins;}
+    public int get_Additional_Points(){
+        int points = 0;
+        for(Coins coin_ : coins){
+            if(coin_.isCollected()){
+                points += coin_.getValue();
+            }
+        }
+        return points;
+    }
+
+    public List<Coins> getCoins() {return coins;}
 
     public Menu getMenu() {return menu;}
 
@@ -165,6 +178,11 @@ public class Game {
 
         if (tetris_block == null || !continuousBlockFall(tetrisBlockController.moveDown())) {
             tetris_block = TetrisBlockFactory.createBlock(columns, rows);
+            count_to_create_coins++;
+            if(count_to_create_coins % 3 == 0){
+                System.out.println("Coin created!\n");
+                coins.add(CoinsFactory.createCoin(arena));
+            }
 
         }
 

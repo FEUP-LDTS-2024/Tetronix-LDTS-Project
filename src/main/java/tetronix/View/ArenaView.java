@@ -41,12 +41,5 @@ public class ArenaView<T extends Arena> implements ElementViewer<T> {
                 }
             }
         }
-
-        //Prototype for menu
-        graphics.setBackgroundColor(TextColor.Factory.fromString("white")); // Fundo branco
-        graphics.setForegroundColor(TextColor.Factory.fromString("black")); // Texto preto
-
-        graphics.putString(25, 4, "Level: " + game.getLevel());
-        graphics.putString(25, 6, "Score: " + game.getScore());
     }
 }
