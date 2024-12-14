@@ -76,7 +76,7 @@ public class Menu {
                 case PLAYING:
                     game = new Game(this);
                     game.run();
-                    Track_Scores.add(game.getScore());
+                    Track_Scores.add(game.getScore() + game.get_Additional_Points());
                     break;
                 case GAME_OVER:
                     menuGame_OverView.draw();

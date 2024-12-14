@@ -23,7 +23,7 @@ public class CoinView implements ElementViewer<Coins> {
     public void draw(){
         for(Coins coin_ : coins){
             if(!coin_.isCollected()){
-                System.out.println("Entrei no render da moeda...\n");
+                //System.out.println("Entrei no render da moeda...\n");
                 graphics.setForegroundColor(TextColor.ANSI.YELLOW); // Cor amarela para destacar a moeda
                 graphics.putString(coin_.getPosition().getColumn_identifier(), coin_.getPosition().getRow_identifier(), "$");
             }

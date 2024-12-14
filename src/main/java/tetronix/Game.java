@@ -55,7 +55,7 @@ public class Game {
 
         inputHandler = new InputHandlerForGame(this); // Gerencia entradas
 
-        arena = new Arena(columns, rows, coins); // Inicializa a arena
+        arena = new Arena(columns, rows); // Inicializa a arena
 
         tetris_block = TetrisBlockFactory.createBlock(columns,rows);
 
@@ -156,6 +156,11 @@ public class Game {
 
         if(arena.canMoveDown(tetris_block)){
             tetris_block.setPosition(position);
+
+            if(!coins.isEmpty()){
+                arena.try_Collect_Coin(coins,tetris_block);
+            }
+
             return true;
         } else {
 
@@ -206,6 +211,10 @@ public class Game {
         }
 
         tetris_block.setPosition(position);
+
+        if(!coins.isEmpty()){
+            arena.try_Collect_Coin(coins,tetris_block);
+        }
     }
 
 
@@ -221,11 +230,11 @@ public class Game {
         gameThread.start(); // Inicia a thread
 
         while(true){
-            handleInput();
-            gameView.render();
             if(menu.getCurr_state() == GAME_OVER){
                 return; //prototype
             }
+            handleInput();
+            gameView.render();
         }
     }
 

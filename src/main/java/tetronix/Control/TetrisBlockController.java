@@ -19,6 +19,7 @@ public class TetrisBlockController {
         while(arena.canMoveDown(block)){
 
             block.setPosition(moveDown());
+            arena.try_Collect_Coin(game.getCoins(),block);
         }
         // Após o bloco chegar ao fundo ou ser bloqueado, movê-lo para a arena
         arena.moveBlocktoBackground(block);

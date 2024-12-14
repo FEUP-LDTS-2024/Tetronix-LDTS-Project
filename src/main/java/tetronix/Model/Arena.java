@@ -9,14 +9,12 @@ public class Arena {
     private int rows;
     private String[][] background;
     private int gridCellsize;
-    private List<Coins> coins = new ArrayList<>();
 
-    public Arena(int columns_, int rows_,List<Coins> coins_){
+    public Arena(int columns_, int rows_){
         this.columns = columns_;
         this.rows = rows_;
         this.gridCellsize = rows_ / columns_;
         background = new String[rows_][columns_];
-        this.coins = coins_;
     }
 
     public String[][] getBackground(){
@@ -73,8 +71,8 @@ public class Arena {
                     if (blockRow < 0) {
                         break; // Ignorar se o bloco está acima da tela
                     }
-                    try_Collect_Coin(nextRow,realColumn);
-                    try_Collect_Coin(nextRow,realColumn + 1);
+
+
 
                     // Verifica colisão para ambas as colunas ocupadas pela célula lógica
                     if (/*nextRow >= background.length || realColumn + 1 >= background[0].length ||*/
@@ -115,7 +113,7 @@ public class Arena {
                         break;
                     }
 
-                    try_Collect_Coin(sameRow,leftColumn);
+
 
                     if (background[sameRow][leftColumn] != null) {
                         return false; // Movimento bloqueado
@@ -154,7 +152,7 @@ public class Arena {
                     if (blockRow < 0) {
                         break;
                     }
-                    try_Collect_Coin(sameRow,rightColumn);
+
 
 
                     if (/*rightColumn >= background[0].length ||*/ background[sameRow][rightColumn] != null) {
@@ -309,13 +307,47 @@ public class Arena {
         return false;
     }
 
-    public void try_Collect_Coin(int row_, int col_){
-        if(!coins.isEmpty()){
-            for(Coins coin_ : coins){
-                if(coin_.getPosition().getRow_identifier() == row_ && coin_.getPosition().getColumn_identifier() == col_){
-                    coin_.collect();
+    public void try_Collect_Coin(List<Coins> coins_, TetrisBlock block){
+
+            for(Coins coin : coins_){
+                if(!coin.isCollected()){
+                    if(check_BlockOnCoin(coin,block)){
+                        coin.collect();
+                    }
+
+                }
+            }
+    }
+
+
+    public boolean check_BlockOnCoin(Coins coin_, TetrisBlock block_) {
+
+        int[][] shape = block_.getShape();
+        int height = shape.length;
+        int width = shape[0].length;
+
+        // Posição atual do bloco
+        int blockRow = block_.getPosition().getRow_identifier();
+        int blockColumn = block_.getPosition().getColumn_identifier();
+
+        for (int r = 0; r < height; r++) {
+            for (int c = 0; c < width; c++) {
+                if (shape[r][c] == 1) {
+                    int arenaRow = blockRow + r;
+                    int arenaColumnStart = blockColumn + c * 2;  // Início da célula duplicada
+                    int arenaColumnEnd = arenaColumnStart + 1;  // Fim da célula duplicada
+
+                    int coinRow = coin_.getPosition().getRow_identifier();
+                    int coinColumn = coin_.getPosition().getColumn_identifier();
+
+                    // Verifica se a posição da moeda coincide com a célula duplicada do bloco
+                    if (arenaRow == coinRow && coinColumn >= arenaColumnStart && coinColumn <= arenaColumnEnd) {
+                        return true;
+                    }
                 }
             }
         }
+        return false;
     }
+
 }
