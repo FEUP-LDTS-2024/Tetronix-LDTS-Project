@@ -289,7 +289,53 @@ public class Arena {
 
         return true; // Nenhuma colisão e dentro dos limites
     }
+    //BOMB MOVEMENT
+    public boolean canMoveDown(Bomb bomb) {
+        if (bomb == null) return false;
+        int bombRow = bomb.getPosition().getRow_identifier();
+        int bombColumn = bomb.getPosition().getColumn_identifier();
 
+        System.out.println("Checking if bomb can move down: Row " + bombRow + ", Column " + bombColumn);
+
+        if (bombRow + 1 >= rows) {
+            System.out.println("Bomb cannot move down (at bottom).");
+            return false;
+        }
+
+        if (background[bombRow + 1][bombColumn] == null) {
+            System.out.println("Bomb can move down.");
+            return true;
+        }
+
+        System.out.println("Bomb cannot move down (collision).");
+        return false;
+    }
+
+
+
+    public boolean canMoveLeft(Bomb bomb) {
+        if (bomb == null) return false;
+        int bombRow = bomb.getPosition().getRow_identifier();
+        int bombColumn = bomb.getPosition().getColumn_identifier();
+
+        if (bombColumn == 0) {
+            return false;
+        }
+
+        return background[bombRow][bombColumn - 1] == null;
+    }
+
+    public boolean canMoveRight(Bomb bomb) {
+        if (bomb == null) return false;
+        int bombRow = bomb.getPosition().getRow_identifier();
+        int bombColumn = bomb.getPosition().getColumn_identifier();
+
+        if (bombColumn + 1 >= columns) {
+            return false;
+        }
+
+        return background[bombRow][bombColumn + 1] == null;
+    }
 
 
     public boolean isBlockOutBoundsAfterRotation(TetrisBlock block){
@@ -309,6 +355,7 @@ public class Arena {
         return false;
     }
 
+
     public void try_Collect_Coin(int row_, int col_){
         if(!coins.isEmpty()){
             for(Coins coin_ : coins){
@@ -318,4 +365,5 @@ public class Arena {
             }
         }
     }
+
 }

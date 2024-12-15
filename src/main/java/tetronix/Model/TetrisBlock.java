@@ -1,18 +1,18 @@
 package tetronix.Model;
 
-public class TetrisBlock extends Element {
+public class TetrisBlock {
     private int [][]shape;
     private int [][][] possible_shapes;
     private int current_rotation;
-    //private String color;
-    //private Position position;
+    private String color;
+    private Position position;
     private int rows;
     private int columns;
 
     public TetrisBlock(int [][] shape_, String color_,Position position_, int rotation_,int columns_,int rows_){
-
-        super(position_, color_);
         this.shape = shape_;
+        this.color = color_;
+        this.position = position_;
         initShapes();
         current_rotation = rotation_;
         this.columns = columns_;
@@ -40,7 +40,7 @@ public class TetrisBlock extends Element {
 
     public int[][] getShape() {return possible_shapes[current_rotation];}
 
-    /*public void setPosition(Position position) {
+    public void setPosition(Position position) {
         this.position = position;
     }
 
@@ -50,7 +50,7 @@ public class TetrisBlock extends Element {
 
     public String getColor(){
         return this.color;
-    }*/
+    }
 
     public void setCurrent_rotation(int current_rotation_) {this.current_rotation = current_rotation_;}
 
@@ -63,21 +63,20 @@ public class TetrisBlock extends Element {
     public void CorrectPositionAfterRotation(){
         //rightbound
 
-            while(this.getPosition().getColumn_identifier() + (getShape()[0].length * 2) > columns){
-                Position position1 = new Position(this.getPosition().getColumn_identifier() - 1,this.getPosition().getRow_identifier());
-                setPosition(position1);
-            }
+        while(position.getColumn_identifier() + (getShape()[0].length * 2) > columns){
+            Position position1 = new Position(position.getColumn_identifier() - 1,position.getRow_identifier());
+            setPosition(position1);
+        }
 
 
         //lowerbound
-        if(this.getPosition().getRow_identifier() + getShape().length > rows){
-            Position position1 = new Position(this.getPosition().getColumn_identifier(),rows - getShape().length);
+        if(position.getRow_identifier() + getShape().length > rows){
+            Position position1 = new Position(position.getColumn_identifier(),rows - getShape().length);
             setPosition(position1);
         }
 
     }
 }
-
 
 
 
