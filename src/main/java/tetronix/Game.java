@@ -180,7 +180,7 @@ public class Game {
 
         if (arena.canMoveDown(tetris_block)) {
             tetris_block.setPosition(position);
-
+            //checkBombCollisions();
             if (!coins.isEmpty()) {
                 arena.try_Collect_Coin(coins, tetris_block);
             }
@@ -204,7 +204,6 @@ public class Game {
         }
 
         manageBombs();
-        checkBombCollisions();
 
         if (tetris_block == null || !continuousBlockFall(tetrisBlockController.moveDown())) {
             tetris_block = TetrisBlockFactory.createBlock(columns, rows);
@@ -279,11 +278,16 @@ public class Game {
             return;
         }
 
-        tetris_block.setPosition(position);
+        if(key == ArrowDown && !arena.canMoveDown(tetris_block)){
+            return;
+        }
 
+        tetris_block.setPosition(position);
+        //checkBombCollisions();
         if(!coins.isEmpty()){
             arena.try_Collect_Coin(coins,tetris_block);
         }
+
     }
 
     public void handleInput() throws IOException {

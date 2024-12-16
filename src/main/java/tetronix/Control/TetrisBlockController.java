@@ -13,7 +13,7 @@ public class TetrisBlockController {
         this.game = game_;
     }
 
-    public void dropBlock(Arena arena) {
+    /*public void dropBlock(Arena arena) {
         block = game.getTetris_block();
         // Enquanto o bloco não atingir o fundo ou não houver espaço ocupado abaixo dele
         while(arena.canMoveDown(block)){
@@ -23,7 +23,7 @@ public class TetrisBlockController {
         }
         // Após o bloco chegar ao fundo ou ser bloqueado, movê-lo para a arena
         arena.moveBlocktoBackground(block);
-    }
+    }*/
 
 
     public Position moveDown() {

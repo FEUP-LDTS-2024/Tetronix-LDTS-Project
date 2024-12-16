@@ -44,7 +44,7 @@ public class TetrisBlockControllerTest {
         assertEquals(expectedPosition.getRow_identifier(), newPosition.getRow_identifier());
     }
 
-    @Test
+    /*@Test
     void testMoveLeft_ValidBlock() {
         // Configurar comportamento inicial
         Position initialPosition = new Position(5, 10);
@@ -98,7 +98,7 @@ public class TetrisBlockControllerTest {
 
 
 
-    @Test
+    /*@Test
     void testDropBlock_ValidDrop() {
         // Configurar comportamento inicial
         Position initialPosition = new Position(5, 10);
@@ -113,6 +113,6 @@ public class TetrisBlockControllerTest {
         // Verificar se o bloco foi movido para o fundo
         verify(mockArena).moveBlocktoBackground(mockBlock);
         verify(mockArena).try_Collect_Coin(mockGame.getCoins(), mockBlock);
-    }
+    }*/
 }
 

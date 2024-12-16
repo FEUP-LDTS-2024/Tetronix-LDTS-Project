@@ -1,13 +1,11 @@
 plugins {
     id 'java'
     id 'application'
-    id 'info.solidsoft.pitest' version '1.6.0'
+    id 'info.solidsoft.pitest' version '1.15.0'
 }
 
 pitest {
-    junit5PluginVersion = '0.12'
-    targetClasses = ['tetronix.*']
-    //jvmArgs = ['--release', '21']  // Força o PIT a usar o Java 21
+    junit5PluginVersion = '1.0.0'
 }
 
 application {

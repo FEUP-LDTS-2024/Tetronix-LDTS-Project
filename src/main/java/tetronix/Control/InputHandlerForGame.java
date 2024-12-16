@@ -26,7 +26,8 @@ public class InputHandlerForGame implements InputHandler {
                 break;
             case ArrowDown:
                 System.out.println("ArrowDown pressed!");
-                tetrisBlockController.dropBlock(game.getArena()); // passo aqui para fazer dependey injection
+                //tetrisBlockController.dropBlock(game.getArena()); // passo aqui para fazer dependey injection
+                game.moveBlock(tetrisBlockController.moveDown(), KeyType.ArrowDown);
                 break;
             case ArrowLeft:
                 System.out.println("ArrowLeft pressed!");
