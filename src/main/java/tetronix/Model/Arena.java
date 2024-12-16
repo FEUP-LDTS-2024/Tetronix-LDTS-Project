@@ -376,9 +376,6 @@ public class Arena {
         return false;
     }
 
-
-
-
     public void handleBombExplosion(Bomb bomb) {
         int bombRow = bomb.getPosition().getRow_identifier();
         int bombCol = bomb.getPosition().getColumn_identifier();
@@ -394,5 +391,17 @@ public class Arena {
             }
         }
     }
+
+    public int getHighestOccupiedRow() {
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < columns; c++) {
+                if (background[r][c] != null) {
+                    return r;
+                }
+            }
+        }
+        return rows - 1; // Return the bottom row if no blocks are present
+    }
+
 
 }
