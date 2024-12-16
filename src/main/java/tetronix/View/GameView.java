@@ -32,10 +32,9 @@ public class GameView {
         this.game = game;
 
         elements.add(arenaView);
+        elements.add(bombView);
         elements.add(tetrisBlockView);
         elements.add(coinView);
-        elements.add(bombView);
-
     }
 
 
