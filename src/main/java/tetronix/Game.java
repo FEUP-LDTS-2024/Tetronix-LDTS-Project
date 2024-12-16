@@ -197,9 +197,9 @@ public class Game {
     public boolean updateGameState() {
 
         if (arena.isBlockOutBounds()) {
+            gameOver();
             System.out.println("Game Stopped!: Row: " + tetris_block.getPosition().getRow_identifier() + " ------ " + "Column: " + tetris_block.getPosition().getColumn_identifier());
-            arena.moveBlocktoBackground(tetris_block);
-            menu.setCurr_state(GAME_OVER);
+
             return false;
         }
 
@@ -230,6 +230,20 @@ public class Game {
         }
 
         return true;
+    }
+
+    private void gameOver() {
+        System.out.println("Game Over!");
+        menu.setCurr_state(GAME_OVER);
+        MenuGame_OverView gameOverView = new MenuGame_OverView(screenManager);
+        try {
+            screenManager.clear();
+            gameOverView.draw();
+            screenManager.refresh();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Thread.currentThread().interrupt();
     }
 
 
@@ -271,9 +285,6 @@ public class Game {
             arena.try_Collect_Coin(coins,tetris_block);
         }
     }
-
-
-
 
     public void handleInput() throws IOException {
         KeyStroke key = screenManager.readInput();
