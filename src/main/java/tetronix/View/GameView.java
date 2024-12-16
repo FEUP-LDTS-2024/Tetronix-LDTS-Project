@@ -14,16 +14,19 @@ public class GameView {
     private final TetrisBlockView tetrisBlockView;
     private CoinView coinView;
     private final ScreenManager screenManager;
+    private BombView bombView;
     private List<ElementViewer> elements = new ArrayList<>();
+
 
     //ficar por causa do scor, secalhar mais tarde sai
     private Game game;
 
-    public GameView(Game game_) {
-        this.arenaView = new ArenaView(game_);        // View da arena
-        this.tetrisBlockView = new TetrisBlockView(game_); // View do bloco ativo
-        this.coinView = new CoinView(game_);
-        this.screenManager = game_.getScreenManager();
+    public GameView(Game game) {
+        this.arenaView = new ArenaView(game);        // View da arena
+        this.tetrisBlockView = new TetrisBlockView(game); // View do bloco ativo
+        this.coinView = new CoinView(game);
+        this.bombView = new BombView(game);
+        this.screenManager = game.getScreenManager();
 
         //talvez saia mais tarde
         this.game = game_;
