@@ -4,6 +4,8 @@ package tetronix.View;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import tetronix.Game;
+import tetronix.Model.Position;
+import tetronix.Model.TetrisBlock;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,8 +37,8 @@ public class GameView {
 
         elements.add(arenaView);
         elements.add(bombView);
-        elements.add(scoreView);
         elements.add(tetrisBlockView);
+        elements.add(scoreView);
         elements.add(coinView);
     }
 
@@ -47,8 +49,23 @@ public class GameView {
         for(ElementViewer element : elements){
             element.draw();
         }
+        renderNextBlock(game.getNextBlock());
 
         screenManager.refresh();
+    }
+
+    public void renderNextBlock(TetrisBlock nextBlock) {
+        if (nextBlock == null) return;
+        TextGraphics graphics = screenManager.getTextGraphics();
+
+        graphics.putString(25, 8, "NEXTBLOCK" );
+
+        // Define a posição onde o próximo bloco será desenhado
+        Position previewPosition = new Position(25, 10); // Ajuste os valores conforme necessário
+
+        // Usa o TetrisBlockView para desenhar o bloco na nova posição
+        TetrisBlockView blockView = new TetrisBlockView(game);
+        blockView.drawAtPosition(nextBlock, previewPosition);
     }
 
 }

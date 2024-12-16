@@ -44,6 +44,7 @@ public class Game {
     private int initial_speed = 600;
     private long lastBombFallTime = 0;
     private int bombFallSpeed = 600;
+    private TetrisBlock nextBlock; // Armazena o próximo bloco
 
     public List<Bomb> getBomb() {
         return bombs;
@@ -65,6 +66,8 @@ public class Game {
         arena = new Arena(columns, rows); // Inicializa a arena
 
         tetris_block = TetrisBlockFactory.createBlock(columns, rows);
+
+        nextBlock = TetrisBlockFactory.createBlock(columns, rows);
 
         gameView = new GameView(this);
 
@@ -154,6 +157,9 @@ public class Game {
         return screenManager;
     }
 
+    public TetrisBlock getNextBlock() {
+        return nextBlock;
+    }
 
     public boolean can_level_up() {
         int can_up_level = score / score_per_level + 1;
@@ -206,7 +212,8 @@ public class Game {
         manageBombs();
 
         if (tetris_block == null || !continuousBlockFall(tetrisBlockController.moveDown())) {
-            tetris_block = TetrisBlockFactory.createBlock(columns, rows);
+            tetris_block = nextBlock;
+            nextBlock = TetrisBlockFactory.createBlock(columns, rows);
             count_to_create_coins++;
             if (count_to_create_coins % 3 == 0) {
                 System.out.println("Coin created!\n");
@@ -218,7 +225,8 @@ public class Game {
         if (tetris_block == null || !continuousBlockFall(tetrisBlockController.moveDown())) {
             arena.moveBlocktoBackground(tetris_block);
             score += arena.clearLines() * 5; // Clear lines and update score
-            tetris_block = null;
+
+
         }
 
         // Atualizar a renderização
@@ -236,7 +244,7 @@ public class Game {
         menu.setCurr_state(GAME_OVER);
         MenuGame_OverView gameOverView = new MenuGame_OverView(screenManager);
         try {
-            screenManager.clear();
+
             gameOverView.draw();
             screenManager.refresh();
         } catch (IOException e) {
