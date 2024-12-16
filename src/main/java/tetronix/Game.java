@@ -75,6 +75,8 @@ public class Game {
         return points;
     }
 
+    public void setScore(int score) {this.score = score;}
+
     public List<Coins> getCoins() {return coins;}
 
     public Menu getMenu() {return menu;}

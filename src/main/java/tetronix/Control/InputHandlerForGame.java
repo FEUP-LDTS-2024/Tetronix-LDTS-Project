@@ -13,6 +13,7 @@ public class InputHandlerForGame implements InputHandler {
     public InputHandlerForGame(Game game_) {
         this.game = game_;
         tetrisBlockController = new TetrisBlockController(game_);
+        //this.tetrisBlockController = game_.getTetrisBlockController();
     }
 
     public void processInput(KeyStroke key){

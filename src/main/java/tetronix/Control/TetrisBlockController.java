@@ -28,7 +28,9 @@ public class TetrisBlockController {
 
     public Position moveDown() {
         block = game.getTetris_block();
-        if(block == null) return null;
+        if(block == null){
+            return null;
+        }
         Position current_position = block.getPosition();
 
         Position new_position = new Position(current_position.getColumn_identifier(),current_position.getRow_identifier() + 1);
