@@ -351,7 +351,7 @@ public class Arena {
     }
 
     public boolean isBombTouched(Bomb bomb, TetrisBlock block) {
-        if (bomb == null || block == null) return false;
+        if (bomb == null || block == null) return false; //only apply if bomb and block exist
 
         int[][] shape = block.getShape();
         int blockHeight = shape.length;
@@ -375,6 +375,7 @@ public class Arena {
         }
         return false;
     }
+
 
 
 

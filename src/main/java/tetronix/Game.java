@@ -250,13 +250,12 @@ public class Game {
                     bombsToRemove.add(bomb);
                     tetris_block = null; // Remove the block
                     break; // Exit the loop as the block is removed
-                } else if (bomb.isExpired()) {
-                    bombsToRemove.add(bomb);
                 }
             }
             bombs.removeAll(bombsToRemove);
         }
     }
+
 
 
 
