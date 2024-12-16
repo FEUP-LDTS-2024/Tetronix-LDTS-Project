@@ -351,17 +351,23 @@ public class Arena {
     }
 
     public boolean isBombTouched(Bomb bomb, TetrisBlock block) {
-        int bombRow = bomb.getPosition().getRow_identifier();
-        int bombCol = bomb.getPosition().getColumn_identifier();
-        int blockRow = block.getPosition().getRow_identifier();
-        int blockCol = block.getPosition().getColumn_identifier();
-        int[][] blockShape = block.getShape();
+        if (bomb == null || block == null) return false;
 
-        for (int r = 0; r < blockShape.length; r++) {
-            for (int c = 0; c < blockShape[r].length; c++) {
-                if (blockShape[r][c] == 1) {
-                    int realCol = blockCol + c * 2;
-                    if (blockRow + r == bombRow && (realCol == bombCol || realCol + 1 == bombCol)) {
+        int[][] shape = block.getShape();
+        int blockHeight = shape.length;
+        int blockWidth = shape[0].length;
+        int blockRow = block.getPosition().getRow_identifier();
+        int blockColumn = block.getPosition().getColumn_identifier();
+        int bombRow = bomb.getPosition().getRow_identifier();
+        int bombColumn = bomb.getPosition().getColumn_identifier();
+
+        for (int r = 0; r < blockHeight; r++) {
+            for (int c = 0; c < blockWidth; c++) {
+                if (shape[r][c] == 1) {
+                    int arenaRow = blockRow + r;
+                    int arenaColumnStart = blockColumn + c * 2;
+                    int arenaColumnEnd = arenaColumnStart + 1;
+                    if (arenaRow == bombRow && bombColumn >= arenaColumnStart && bombColumn <= arenaColumnEnd) {
                         return true;
                     }
                 }
@@ -369,6 +375,7 @@ public class Arena {
         }
         return false;
     }
+
 
 
     public void handleBombExplosion(Bomb bomb) {

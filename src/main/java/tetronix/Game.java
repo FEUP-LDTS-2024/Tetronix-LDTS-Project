@@ -243,14 +243,21 @@ public class Game {
 
     private void checkBombCollisions() {
         if (tetris_block != null) {
-            for (Bomb bomb : new ArrayList<>(bombs)) {
+            List<Bomb> bombsToRemove = new ArrayList<>();
+            for (Bomb bomb : bombs) {
                 if (arena.isBombTouched(bomb, tetris_block)) {
                     bomb.explode(arena.getBackground());
-                    bombs.remove(bomb);
+                    bombsToRemove.add(bomb);
+                    tetris_block = null; // Remove the block
+                    break; // Exit the loop as the block is removed
+                } else if (bomb.isExpired()) {
+                    bombsToRemove.add(bomb);
                 }
             }
+            bombs.removeAll(bombsToRemove);
         }
     }
+
 
 
 
