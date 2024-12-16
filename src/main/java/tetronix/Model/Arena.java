@@ -351,7 +351,7 @@ public class Arena {
     }
 
     public boolean isBombTouched(Bomb bomb, TetrisBlock block) {
-        if (bomb == null || block == null) return false; //only apply if bomb and block exist
+        if (bomb == null || block == null) return false;
 
         int[][] shape = block.getShape();
         int blockHeight = shape.length;
@@ -367,7 +367,12 @@ public class Arena {
                     int arenaRow = blockRow + r;
                     int arenaColumnStart = blockColumn + c * 2;
                     int arenaColumnEnd = arenaColumnStart + 1;
-                    if (arenaRow == bombRow && bombColumn >= arenaColumnStart && bombColumn <= arenaColumnEnd) {
+
+                    //check if there is no collision in any side of the bomb
+                    if (Math.abs(arenaRow - bombRow) <= 1 &&
+                            ((bombColumn >= arenaColumnStart && bombColumn <= arenaColumnEnd) ||
+                                    (bombColumn + 1 >= arenaColumnStart && bombColumn + 1 <= arenaColumnEnd) ||
+                                    (bombColumn - 1 >= arenaColumnStart && bombColumn - 1 <= arenaColumnEnd))) {
                         return true;
                     }
                 }
@@ -375,6 +380,7 @@ public class Arena {
         }
         return false;
     }
+
 
     public void handleBombExplosion(Bomb bomb) {
         int bombRow = bomb.getPosition().getRow_identifier();
