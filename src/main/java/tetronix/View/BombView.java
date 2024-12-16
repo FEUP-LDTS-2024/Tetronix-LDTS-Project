@@ -23,18 +23,17 @@ public class BombView implements ElementViewer<Bomb>{
     @Override
     public void draw() {
         graphics.setForegroundColor(TextColor.ANSI.RED);
-
         for (Bomb bomb : bombs) {
-
-            Position position = bomb.getPosition();
-
-
-            graphics.putString(
-                    position.getColumn_identifier(),
-                    position.getRow_identifier(),
-                    "B"
-            );
+            if (!bomb.isExpired()) {
+                Position position = bomb.getPosition();
+                graphics.putString(
+                        position.getColumn_identifier(),
+                        position.getRow_identifier(),
+                        "B"
+                );
+            }
         }
     }
+
 
 }

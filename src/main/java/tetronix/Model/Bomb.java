@@ -7,6 +7,8 @@ public class Bomb extends Element{
     private Position position;
     private int rows;
     private int columns;
+    private long creationTime;
+    private static final long LIFESPAN = 5000;
 
     public Bomb(String color, Position position, int columns, int rows)
     {
@@ -16,6 +18,12 @@ public class Bomb extends Element{
         this.position = position;
         this.columns = columns;
         this.rows = rows;
+        this.creationTime = System.currentTimeMillis();
+
+    }
+
+    public boolean isExpired() {
+        return System.currentTimeMillis() - creationTime > LIFESPAN;
     }
 
 

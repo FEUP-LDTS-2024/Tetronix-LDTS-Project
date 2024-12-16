@@ -350,4 +350,41 @@ public class Arena {
         return false;
     }
 
+    public boolean isBombTouched(Bomb bomb, TetrisBlock block) {
+        int bombRow = bomb.getPosition().getRow_identifier();
+        int bombCol = bomb.getPosition().getColumn_identifier();
+        int blockRow = block.getPosition().getRow_identifier();
+        int blockCol = block.getPosition().getColumn_identifier();
+        int[][] blockShape = block.getShape();
+
+        for (int r = 0; r < blockShape.length; r++) {
+            for (int c = 0; c < blockShape[r].length; c++) {
+                if (blockShape[r][c] == 1) {
+                    int realCol = blockCol + c * 2;
+                    if (blockRow + r == bombRow && (realCol == bombCol || realCol + 1 == bombCol)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+
+    public void handleBombExplosion(Bomb bomb) {
+        int bombRow = bomb.getPosition().getRow_identifier();
+        int bombCol = bomb.getPosition().getColumn_identifier();
+
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                int newRow = bombRow + i;
+                int newCol = bombCol + j;
+
+                if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < columns) {
+                    background[newRow][newCol] = null;
+                }
+            }
+        }
+    }
+
 }

@@ -8,7 +8,6 @@ import tetronix.Control.InputHandlerForGame;
 import tetronix.Control.TetrisBlockController;
 import tetronix.Model.*;
 import tetronix.View.*;
-import tetronix.Control.InputHandlerBomb;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -204,6 +203,8 @@ public class Game {
             return false;
         }
 
+        manageBombs();
+        checkBombCollisions();
 
         if (tetris_block == null || !continuousBlockFall(tetrisBlockController.moveDown())) {
             tetris_block = TetrisBlockFactory.createBlock(columns, rows);
@@ -214,26 +215,11 @@ public class Game {
             }
 
         }
-        if (isBombFalling) {
-            // Update bomb falling logic
-            updateBombs();
-            if (bombs.isEmpty()) {
-                isBombFalling = false; // No more bombs are falling
-            }
-            return true;
-        }
+
         if (tetris_block == null || !continuousBlockFall(tetrisBlockController.moveDown())) {
             arena.moveBlocktoBackground(tetris_block);
             score += arena.clearLines() * 5; // Clear lines and update score
             tetris_block = null;
-
-            // Randomly spawn a bomb
-            if (new Random().nextInt(3) == 0) { // 10% chance to spawn a bomb
-                spawnBomb();
-                isBombFalling = true; // Set flag to prioritize bomb falling
-            } else {
-                tetris_block = TetrisBlockFactory.createBlock(columns, rows);
-            }
         }
 
         // Atualizar a renderização
@@ -246,42 +232,27 @@ public class Game {
         return true;
     }
 
-    // Bombas a cairem do topo da arena
-    public void spawnBomb() {
-        Bomb bomb = BombFactory.createBomb(columns, rows);
-        bomb.getPosition().setRow_identifier(0); // Start at the top
-        bombs.add(bomb);
-        System.out.println("Bomb spawned at: Row " + bomb.getPosition().getRow_identifier() + ", Column " + bomb.getPosition().getColumn_identifier());
+
+    public void manageBombs() {
+        bombs.removeIf(Bomb::isExpired);
+        if (bombs.isEmpty() && new Random().nextInt(100) < 20) { // 20% chance to spawn a bomb
+            Bomb newBomb = BombFactory.createBomb(columns, rows);
+            bombs.add(newBomb);
+        }
     }
 
-    private boolean isBombFalling = false;
-
-    public void updateBombs() {
-        long currentTime = System.currentTimeMillis();
-        if (currentTime - lastBombFallTime < bombFallSpeed) {
-            return; // Skip if not enough time has passed
-        }
-        lastBombFallTime = currentTime;
-
-        List<Bomb> bombsToRemove = new ArrayList<>();
-        for (Bomb bomb : bombs) {
-            Position currentPosition = bomb.getPosition();
-
-            if (arena.canMoveDown(bomb)) {
-                currentPosition.setRow_identifier(currentPosition.getRow_identifier() + 1);
-            } else {
-                bomb.explode(arena.getBackground());
-                bombsToRemove.add(bomb);
-
-                // Check for any cleared lines after explosion
-                int linesCleared = arena.clearLines();
-                if (linesCleared > 0) {
-                    score += linesCleared * 5; // Increment score for cleared lines
+    private void checkBombCollisions() {
+        if (tetris_block != null) {
+            for (Bomb bomb : new ArrayList<>(bombs)) {
+                if (arena.isBombTouched(bomb, tetris_block)) {
+                    bomb.explode(arena.getBackground());
+                    bombs.remove(bomb);
                 }
             }
         }
-        bombs.removeAll(bombsToRemove);
     }
+
+
 
 
     public void moveBlock(Position position, KeyType key) {

@@ -29,11 +29,13 @@ public class GameView {
         this.screenManager = game.getScreenManager();
 
         //talvez saia mais tarde
-        this.game = game_;
+        this.game = game;
 
         elements.add(arenaView);
         elements.add(tetrisBlockView);
         elements.add(coinView);
+        elements.add(bombView);
+
     }
 
 
