@@ -257,11 +257,6 @@ public class Game {
         }
     }
 
-
-
-
-
-
     public void moveBlock(Position position, KeyType key) {
         if (key == ArrowRight && !arena.canMoveRight(tetris_block)) {
             return;
