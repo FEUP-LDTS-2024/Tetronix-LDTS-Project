@@ -391,6 +391,4 @@ public class Arena {
         }
         return rows - 1; // Bottom row if no blocks are present
     }
-
-
 }
