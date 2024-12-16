@@ -15,6 +15,7 @@ public class GameView {
     private CoinView coinView;
     private final ScreenManager screenManager;
     private BombView bombView;
+    private ScoreView scoreView;
     private List<ElementViewer> elements = new ArrayList<>();
 
 
@@ -26,6 +27,7 @@ public class GameView {
         this.tetrisBlockView = new TetrisBlockView(game); // View do bloco ativo
         this.coinView = new CoinView(game);
         this.bombView = new BombView(game);
+        this.scoreView = new ScoreView(game);
         this.screenManager = game.getScreenManager();
 
         //talvez saia mais tarde
@@ -33,6 +35,7 @@ public class GameView {
 
         elements.add(arenaView);
         elements.add(bombView);
+        elements.add(scoreView);
         elements.add(tetrisBlockView);
         elements.add(coinView);
     }
@@ -44,20 +47,8 @@ public class GameView {
         for(ElementViewer element : elements){
             element.draw();
         }
-        renderScore();
-
 
         screenManager.refresh();
     }
 
-
-    public void renderScore(){
-        //Prototype for menu
-        TextGraphics graphics = screenManager.getTextGraphics();
-        graphics.setBackgroundColor(TextColor.Factory.fromString("white")); // Fundo branco
-        graphics.setForegroundColor(TextColor.Factory.fromString("black")); // Texto preto
-
-        graphics.putString(25, 4, "Level: " + game.getLevel());
-        graphics.putString(25, 6, "Score: " + (game.getScore() + game.get_Additional_Points()));
-    }
 }
