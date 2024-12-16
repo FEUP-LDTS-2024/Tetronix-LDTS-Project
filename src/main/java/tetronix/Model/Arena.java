@@ -381,32 +381,15 @@ public class Arena {
         return false;
     }
 
-
-    public void handleBombExplosion(Bomb bomb) {
-        int bombRow = bomb.getPosition().getRow_identifier();
-        int bombCol = bomb.getPosition().getColumn_identifier();
-
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                int newRow = bombRow + i;
-                int newCol = bombCol + j;
-
-                if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < columns) {
-                    background[newRow][newCol] = null;
-                }
-            }
-        }
-    }
-
     public int getHighestOccupiedRow() {
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
                 if (background[r][c] != null) {
-                    return r;
+                    return r - 1; // Row above the highest occupied row
                 }
             }
         }
-        return rows - 1; // Return the bottom row if no blocks are present
+        return rows - 1; // Bottom row if no blocks are present
     }
 
 
