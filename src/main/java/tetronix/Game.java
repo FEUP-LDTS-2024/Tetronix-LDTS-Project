@@ -52,10 +52,6 @@ public class Game {
 
     public Game(Menu menu_) {
 
-        /*Para protótipo*/
-        //coins = new Coins(new Position(10,10),"yellow",20);
-        /*Para protótipo*/
-
 
         this.menu = menu_;
 
@@ -196,6 +192,7 @@ public class Game {
 
             arena.moveBlocktoBackground(tetris_block);
             score += arena.clearLines() * 5; //caso alguma linha esteja completa, é limpa
+            tetris_block = null;
             return false;
         }
     }
@@ -211,7 +208,7 @@ public class Game {
 
         manageBombs();
 
-        if (tetris_block == null || !continuousBlockFall(tetrisBlockController.moveDown())) {
+        if (tetris_block == null) {
             tetris_block = nextBlock;
             nextBlock = TetrisBlockFactory.createBlock(columns, rows);
             count_to_create_coins++;
