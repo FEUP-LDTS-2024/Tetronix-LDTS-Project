@@ -288,7 +288,7 @@ public class Arena {
                     int arenaRow = rotatedRowPosition + r;
                     int arenaColumn = rotatedColumnPosition + c * 2; // Considera duplicação horizontal
 
-                    if(arenaRow < rows && arenaRow > 0 && arenaColumn < columns && arenaColumn > 0){
+                    if(arenaRow < rows && arenaRow >= 0 && arenaColumn < columns && arenaColumn >= 0){
                         if (background[arenaRow][arenaColumn] != null) {
                             return false;
                         }

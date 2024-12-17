@@ -85,7 +85,7 @@ public class ArenaTest {
     void testCanMoveLeft_NoCollision() {
         when(mockBlock.getShape()).thenReturn(new int[][]{{1}});
         when(mockBlock.getPosition()).thenReturn(mockPosition);
-        when(mockPosition.getColumn_identifier()).thenReturn(1);
+        when(mockPosition.getColumn_identifier()).thenReturn(2);
 
         boolean result = arena.canMoveLeft(mockBlock);
 
@@ -96,7 +96,7 @@ public class ArenaTest {
     void testCanMoveLeft_WithCollision() {
         when(mockBlock.getShape()).thenReturn(new int[][]{{1}});
         when(mockBlock.getPosition()).thenReturn(mockPosition);
-        when(mockPosition.getColumn_identifier()).thenReturn(1);
+        when(mockPosition.getColumn_identifier()).thenReturn(2);
 
         arena.getBackground()[0][0] = "filled"; // Colisão à esquerda
 
@@ -125,10 +125,10 @@ public class ArenaTest {
         when(mockBlock.getPosition()).thenReturn(mockPosition);
         when(mockPosition.getRow_identifier()).thenReturn(0);
         when(mockPosition.getColumn_identifier()).thenReturn(0);
-        when(mockBlock.getPossible_shapes()).thenReturn(new int[][][]{{{1}}});
+        when(mockBlock.getPossible_shapes()).thenReturn(new int[][][]{{{1},{1}}});
+        when(mockBlock.getShape()).thenReturn(new int[][]{{1},{1}});
 
         boolean result = arena.canRotate(mockBlock, 0);
-
         assertTrue(result, "O bloco deveria poder rotacionar sem colisões.");
     }
 

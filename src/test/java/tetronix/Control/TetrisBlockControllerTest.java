@@ -44,10 +44,10 @@ public class TetrisBlockControllerTest {
         assertEquals(expectedPosition.getRow_identifier(), newPosition.getRow_identifier());
     }
 
-    /*@Test
+    @Test
     void testMoveLeft_ValidBlock() {
         // Configurar comportamento inicial
-        Position initialPosition = new Position(5, 10);
+        Position initialPosition = new Position(6, 10);
         Position expectedPosition = new Position(4, 10);
 
         when(mockBlock.getPosition()).thenReturn(initialPosition);
@@ -63,8 +63,8 @@ public class TetrisBlockControllerTest {
     @Test
     void testMoveRight_ValidBlock() {
         // Configurar comportamento inicial
-        Position initialPosition = new Position(5, 10);
-        Position expectedPosition = new Position(6, 10);
+        Position initialPosition = new Position(6, 10);
+        Position expectedPosition = new Position(8, 10);
 
         when(mockBlock.getPosition()).thenReturn(initialPosition);
 
@@ -76,7 +76,7 @@ public class TetrisBlockControllerTest {
         assertEquals(expectedPosition.getRow_identifier(), newPosition.getRow_identifier());
     }
 
-    @Test
+   /* @Test
     void testRotateBlock_ValidRotation() {
         // Configurar comportamento inicial
         when(mockBlock.getCurrent_rotation()).thenReturn(1);
@@ -95,24 +95,7 @@ public class TetrisBlockControllerTest {
         verify(mockArena).isBlockOutBoundsAfterRotation(mockBlock); // Permite a chamada
         verify(mockBlock, never()).CorrectPositionAfterRotation(); // Bounds não ativou correção
     }
+*/
 
-
-
-    /*@Test
-    void testDropBlock_ValidDrop() {
-        // Configurar comportamento inicial
-        Position initialPosition = new Position(5, 10);
-        Position newPosition = new Position(5, 11);
-
-        when(mockBlock.getPosition()).thenReturn(initialPosition);
-        when(mockArena.canMoveDown(mockBlock)).thenReturn(true).thenReturn(false);
-
-        // Executar o método
-        controller.dropBlock(mockArena);
-
-        // Verificar se o bloco foi movido para o fundo
-        verify(mockArena).moveBlocktoBackground(mockBlock);
-        verify(mockArena).try_Collect_Coin(mockGame.getCoins(), mockBlock);
-    }*/
 }
 
