@@ -10,7 +10,7 @@ public class ZBlock extends TetrisBlock {
     private static Position calculateSpawnPosition(int columns, int[][] shape) {
         Random random = new Random();
         int spawnRow = -shape.length; // Bloco nasce fora do ecrã, acima da arena
-        int spawnColumn = random.nextInt(columns - (shape[0].length * 2) - 2);
+        int spawnColumn = generateValidColumn(random , shape, columns);
         return new Position(spawnColumn, spawnRow);
     }
 

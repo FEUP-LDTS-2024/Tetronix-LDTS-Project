@@ -107,7 +107,7 @@ public class Arena {
             for (int c = 0; c < blockWidth; c++) { // Para cada coluna
                 if (shape[r][c] == 1) { // Encontrar uma célula ocupada
                     int sameRow = blockRow + r;
-                    int leftColumn = blockColumn + c - 1;
+                    int leftColumn = blockColumn + c - 2;
 
                     if(blockRow < 0){
                         break;

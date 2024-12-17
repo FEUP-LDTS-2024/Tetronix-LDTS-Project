@@ -13,19 +13,6 @@ public class TetrisBlockController {
         this.game = game_;
     }
 
-    /*public void dropBlock(Arena arena) {
-        block = game.getTetris_block();
-        // Enquanto o bloco não atingir o fundo ou não houver espaço ocupado abaixo dele
-        while(arena.canMoveDown(block)){
-
-            block.setPosition(moveDown());
-            arena.try_Collect_Coin(game.getCoins(),block);
-        }
-        // Após o bloco chegar ao fundo ou ser bloqueado, movê-lo para a arena
-        arena.moveBlocktoBackground(block);
-    }*/
-
-
     public Position moveDown() {
         block = game.getTetris_block();
         if(block == null){
@@ -42,7 +29,7 @@ public class TetrisBlockController {
         if(block == null) return null;
         Position current_position = block.getPosition();
 
-        Position new_position = new Position(current_position.getColumn_identifier() - 1,current_position.getRow_identifier());
+        Position new_position = new Position(current_position.getColumn_identifier() - 2,current_position.getRow_identifier());
         return new_position;
 
     }
@@ -52,7 +39,7 @@ public class TetrisBlockController {
         if(block == null) return null;
         Position current_position = block.getPosition();
 
-        Position new_position = new Position(current_position.getColumn_identifier() + 1,current_position.getRow_identifier());
+        Position new_position = new Position(current_position.getColumn_identifier() + 2,current_position.getRow_identifier());
         return new_position;
 
     }

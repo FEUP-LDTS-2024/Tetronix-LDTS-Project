@@ -1,5 +1,7 @@
 package tetronix.Model;
 
+import java.util.Random;
+
 public class TetrisBlock extends Element {
     private int [][]shape;
     private int [][][] possible_shapes;
@@ -75,6 +77,17 @@ public class TetrisBlock extends Element {
             setPosition(position1);
         }
 
+    }
+
+    public static int generateValidColumn(Random random,int [][] shape, int columns){
+        int spawnColumn;
+
+        while(true){
+            spawnColumn = random.nextInt(columns - (shape[0].length * 2) - 2);
+            if(spawnColumn % 2 == 0){
+                return spawnColumn;
+            }
+        }
     }
 }
 
