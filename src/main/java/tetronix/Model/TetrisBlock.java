@@ -70,6 +70,13 @@ public class TetrisBlock extends Element {
                 setPosition(position1);
             }
 
+        //leftbound
+
+        while(this.getPosition().getColumn_identifier() < 0 ){
+            Position position1 = new Position(this.getPosition().getColumn_identifier() + 1,this.getPosition().getRow_identifier());
+            setPosition(position1);
+        }
+
 
         //lowerbound
         if(this.getPosition().getRow_identifier() + getShape().length > rows){

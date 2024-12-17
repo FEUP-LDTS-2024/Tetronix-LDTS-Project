@@ -1,7 +1,6 @@
 package tetronix.Model;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Arena {
@@ -263,19 +262,33 @@ public class Arena {
         int rotatedHeight = rotatedShape.length;
         int rotatedWidth = rotatedShape[0].length;
 
-        // Posição atual do bloco
-        int blockRow = block.getPosition().getRow_identifier();
-        int blockColumn = block.getPosition().getColumn_identifier();
+
+        int rotatedRowPosition = block.getPosition().getRow_identifier();
+        int rotatedColumnPosition = block.getPosition().getColumn_identifier();
+
+
+        if(block.getShape().length == 1){
+            rotatedRowPosition = block.getPosition().getRow_identifier() - 1;
+            rotatedColumnPosition = block.getPosition().getColumn_identifier() + 2;
+        }
+
+        if(block.getShape().length == 4){
+            rotatedRowPosition = block.getPosition().getRow_identifier() + 1;
+            rotatedColumnPosition = block.getPosition().getColumn_identifier() - 2;
+        }
+
+
+
 
 
         // Verificar colisões com o background
         for (int r = 0; r < rotatedHeight; r++) {
             for (int c = 0; c < rotatedWidth; c++) {
                 if (rotatedShape[r][c] == 1) { // Apenas células ocupadas no bloco rotacionado
-                    int arenaRow = blockRow + r;
-                    int arenaColumn = blockColumn + c * 2; // Considera duplicação horizontal
+                    int arenaRow = rotatedRowPosition + r;
+                    int arenaColumn = rotatedColumnPosition + c * 2; // Considera duplicação horizontal
 
-                    if(arenaRow < rows && arenaRow > 0 && arenaColumn < columns){
+                    if(arenaRow < rows && arenaRow > 0 && arenaColumn < columns && arenaColumn > 0){
                         if (background[arenaRow][arenaColumn] != null) {
                             return false;
                         }
@@ -297,6 +310,10 @@ public class Arena {
 
         // Verificar limites à direita (considera duplicação horizontal)
         if (position.getColumn_identifier() + (widht * 2) > columns) {
+            return true;
+        }
+
+        if(position.getColumn_identifier() < 0){
             return true;
         }
 
