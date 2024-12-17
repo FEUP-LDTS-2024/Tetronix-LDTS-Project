@@ -182,7 +182,6 @@ public class Game {
 
         if (arena.canMoveDown(tetris_block)) {
             tetris_block.setPosition(position);
-            //checkBombCollisions();
             if (!coins.isEmpty()) {
                 arena.try_Collect_Coin(coins, tetris_block);
             }
@@ -207,6 +206,7 @@ public class Game {
         }
 
         manageBombs();
+        checkBombCollisions();
 
         if (tetris_block == null) {
             tetris_block = nextBlock;
@@ -288,7 +288,6 @@ public class Game {
         }
 
         tetris_block.setPosition(position);
-        //checkBombCollisions();
         if(!coins.isEmpty()){
             arena.try_Collect_Coin(coins,tetris_block);
         }
