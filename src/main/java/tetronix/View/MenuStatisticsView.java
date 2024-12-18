@@ -33,14 +33,9 @@ public class MenuStatisticsView implements ElementViewer<Menu>{
 
         graphics.setForegroundColor(TextColor.Factory.fromString("black"));
 
-        int y = (screenWidth - text.length()) / 2;
-        int x = 2;
-        graphics.putString(y, x, text);
 
-        int y_instr1 = screenWidth - instructions1.length();
-        int y_instr2 = screenWidth - instructions2.length();
-        graphics.putString(y_instr1, 4, instructions1);
-        graphics.putString(y_instr2, 5, instructions2);
+        graphics.putString(6, 4, instructions1);
+        graphics.putString(6, 5, instructions2);
 
 
         int row_ = 3;

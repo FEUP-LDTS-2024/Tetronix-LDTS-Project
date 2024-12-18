@@ -17,7 +17,7 @@ public class MenuGame_OverView implements ElementViewer<Menu> {
     @Override
     public void draw() {
         // Configurações do texto
-        String gameOverText = "     GAME OVER      ";
+        //String gameOverText = "     GAME OVER      ";
         String instructions1 = "Press 'N' for a new game";
         String instructions2 = "Press 'S' for statistics";
         String instructions3 = "Press 'ESC' to exit";
@@ -28,12 +28,12 @@ public class MenuGame_OverView implements ElementViewer<Menu> {
         graphics.setBackgroundColor(TextColor.Factory.fromString("black"));
         graphics.fillRectangle(new TerminalPosition(2, 5), new TerminalSize(30, 10), ' ');
 
-        // Define o texto com cor preta
+        // Define o texto com cor pretaf
         graphics.setForegroundColor(TextColor.Factory.fromString("white"));
         graphics.enableModifiers(SGR.BOLD); // Opcional: torna o texto em negrito
 
         // Escreve os textos dentro do retângulo
-        graphics.putString(5, 6, gameOverText);
+        //graphics.putString(5, 6, gameOverText);
         graphics.putString(5, 8, instructions1);
         graphics.putString(5, 9, instructions2);
         graphics.putString(5, 10, instructions3);

@@ -200,8 +200,6 @@ public class Game {
 
         if (arena.isBlockOutBounds()) {
             gameOver();
-            System.out.println("Game Stopped!: Row: " + tetris_block.getPosition().getRow_identifier() + " ------ " + "Column: " + tetris_block.getPosition().getColumn_identifier());
-
             return false;
         }
 
@@ -239,7 +237,7 @@ public class Game {
     private void gameOver() {
         System.out.println("Game Over!");
         menu.setCurr_state(GAME_OVER);
-        MenuGame_OverView gameOverView = new MenuGame_OverView(screenManager);
+        GameOverView gameOverView = new GameOverView(screenManager);
         try {
 
             gameOverView.draw();
