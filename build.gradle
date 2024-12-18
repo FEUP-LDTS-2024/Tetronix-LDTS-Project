@@ -10,7 +10,7 @@ pitest {
 }
 
 application {
-    mainClass.set("Application")
+    mainClass.set("tetronix.Application")
 }
 
 group = 'tetronix'
