@@ -21,10 +21,15 @@ public class CoinView implements ElementViewer<Coins> {
 
     @Override
     public void draw(){
+        graphics.setBackgroundColor(TextColor.ANSI.WHITE); // Define o fundo como a cor padrão (sem borda preta)
         for(Coins coin_ : coins){
             if(!coin_.isCollected()){
-                //System.out.println("Entrei no render da moeda...\n");
-                graphics.setForegroundColor(TextColor.ANSI.YELLOW); // Cor amarela para destacar a moeda
+                if(coin_.getValue() == 4){
+                    graphics.setForegroundColor(TextColor.ANSI.YELLOW); // Cor amarela para destacar a moeda
+                } else {
+                    graphics.setForegroundColor(TextColor.ANSI.BLUE); // Cor amarela para destacar a moeda
+
+                }
                 graphics.putString(coin_.getPosition().getColumn_identifier(), coin_.getPosition().getRow_identifier(), "$");
             }
         }

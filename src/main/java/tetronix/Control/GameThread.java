@@ -18,6 +18,7 @@ public class GameThread extends Thread {
     private int speed_per_level;
     private int initial_speed;
     private int level;
+    private int current_speed;
 
     public GameThread(Game game_) {
         this.game = game_;
@@ -40,7 +41,14 @@ public class GameThread extends Thread {
                     game.setTetris_block(null); //assim n dá para mexer mais no bloco quando jogo acaba
                     break;
                 }
-                Thread.sleep(initial_speed - (level * speed_per_level)); // Controla o intervalo de atualização
+                current_speed = initial_speed - (level * speed_per_level);
+
+                if(current_speed <= 50){
+                    Thread.sleep(50);
+                } else {
+                    Thread.sleep(current_speed); // Controla o intervalo de atualização
+                }
+
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }

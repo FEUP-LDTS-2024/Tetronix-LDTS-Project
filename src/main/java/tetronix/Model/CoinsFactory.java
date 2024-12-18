@@ -7,7 +7,7 @@ public class CoinsFactory {
     private static final Random random = new Random();
 
     public static Coins createCoin(Arena arena) {
-        int [] possible_values = {1 , 2 , 3 , 4};
+        int [] possible_values = {1 , 1 , 2 , 3 , 4};
         int rows = arena.getRows();
         int cols = arena.getColumns();
         String[][] background = arena.getBackground();
