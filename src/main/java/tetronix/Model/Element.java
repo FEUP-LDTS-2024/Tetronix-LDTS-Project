@@ -15,6 +15,4 @@ public abstract class Element {
     public void setPosition(Position position) {this.position = position;}
 
     public String getColor() {return color;}
-
-    public void setColor(String color) {this.color = color;}
 }

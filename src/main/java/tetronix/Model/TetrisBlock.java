@@ -42,25 +42,12 @@ public class TetrisBlock extends Element {
 
     public int[][] getShape() {return possible_shapes[current_rotation];}
 
-    /*public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public String getColor(){
-        return this.color;
-    }*/
 
     public void setCurrent_rotation(int current_rotation_) {this.current_rotation = current_rotation_;}
 
     public int getCurrent_rotation() {return current_rotation;}
 
     public int[][][] getPossible_shapes() {return possible_shapes;}
-
-    public void setShape(int[][] shape) {this.shape = shape;}
 
     public void CorrectPositionAfterRotation(){
         //rightbound

@@ -1,10 +1,5 @@
 package tetronix.Model;
 
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.graphics.TextGraphics;
-import com.googlecode.lanterna.terminal.Terminal;
-
-import java.io.IOException;
 
 public class Coins extends Element {
     private int value;
@@ -29,6 +24,4 @@ public class Coins extends Element {
             collected = true;
         }
     }
-
-
 }
