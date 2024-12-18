@@ -1,43 +1,43 @@
 package tetronix.View;
 
 import com.googlecode.lanterna.SGR;
-import com.googlecode.lanterna.TerminalPosition;
-import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import tetronix.Model.Menu;
 
 public class MenuGame_OverView implements ElementViewer<Menu> {
-    private ScreenManager screenManager;
+    private final Menu menu;
+    private final ScreenManager screenManager;
 
-    public MenuGame_OverView(ScreenManager screenManager_) {
-        this.screenManager = screenManager_;
+    public MenuGame_OverView(Menu menu) {
+        this.menu = menu;
+        this.screenManager = menu.getScreenManager();
     }
 
     @Override
     public void draw() {
-        // Configurações do texto
-        //String gameOverText = "     GAME OVER      ";
-        String instructions1 = "Press 'N' for a new game";
-        String instructions2 = "Press 'S' for statistics";
-        String instructions3 = "Press 'ESC' to exit";
-
         TextGraphics graphics = screenManager.getTextGraphics();
 
-        // Desenha o retângulo vermelho
+        // Limpa a tela com fundo preto
         graphics.setBackgroundColor(TextColor.Factory.fromString("black"));
-        graphics.fillRectangle(new TerminalPosition(2, 5), new TerminalSize(30, 10), ' ');
+        graphics.fill(' ');
 
-        // Define o texto com cor pretaf
-        graphics.setForegroundColor(TextColor.Factory.fromString("white"));
-        graphics.enableModifiers(SGR.BOLD); // Opcional: torna o texto em negrito
+        // Título do menu
+        graphics.setForegroundColor(TextColor.ANSI.WHITE);
+        graphics.enableModifiers(SGR.BOLD);
+        graphics.putString(10, 2, "===== GAME OVER =====");
 
-        // Escreve os textos dentro do retângulo
-        //graphics.putString(5, 6, gameOverText);
-        graphics.putString(5, 8, instructions1);
-        graphics.putString(5, 9, instructions2);
-        graphics.putString(5, 10, instructions3);
+        // Exibe as opções do menu de Game Over
+        for (int i = 0; i < menu.getOptionsGameOver().size(); i++) {
+            if (i == menu.getSelectedOption()) {
+                // Destaca a opção selecionada em amarelo
+                graphics.setForegroundColor(TextColor.ANSI.YELLOW);
+                graphics.putString(10, 4 + i, "> " + menu.getOptionsGameOver().get(i));
+            } else {
+                // Exibe as demais opções em branco
+                graphics.setForegroundColor(TextColor.ANSI.WHITE);
+                graphics.putString(10, 4 + i, "  " + menu.getOptionsGameOver().get(i));
+            }
+        }
     }
 }
-
-

@@ -57,6 +57,4 @@ public class GameView {
         screenManager.refresh();
     }
 
-
-
 }

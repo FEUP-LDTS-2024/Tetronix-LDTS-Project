@@ -21,8 +21,8 @@ public class ScoreView implements ElementViewer<Game>{
     public void draw(){
         //Prototype for menu
         TextGraphics graphics = screenManager.getTextGraphics();
-        graphics.setBackgroundColor(TextColor.Factory.fromString("white")); // Fundo branco
-        graphics.setForegroundColor(TextColor.Factory.fromString("black")); // Texto preto
+
+        graphics.setForegroundColor(TextColor.Factory.fromString("white")); // Texto preto
 
         graphics.putString(25, 4, "Level: " + game.getLevel());
         graphics.putString(25, 6, "Score: " + (game.getScore() + game.get_Additional_Points()));

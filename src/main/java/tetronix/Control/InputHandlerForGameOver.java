@@ -7,10 +7,10 @@ import tetronix.Model.Menu;
 import static tetronix.Model.MenuState.PLAYING;
 import static tetronix.Model.MenuState.STATISTICS;
 
-public class InputHandlerForMenu implements InputHandler {
+public class InputHandlerForGameOver implements InputHandler {
     private final Menu menu;
 
-    public InputHandlerForMenu(Menu menu_) {
+    public InputHandlerForGameOver(Menu menu_) {
         this.menu = menu_;
     }
 
@@ -20,41 +20,48 @@ public class InputHandlerForMenu implements InputHandler {
             case ArrowUp:
                 menu.setSelectedOption((menu.getSelectedOption() > 0)
                         ? menu.getSelectedOption() - 1
-                        : menu.getOptions().size() - 1);
+                        : menu.getOptionsGameOver().size() - 1);
                 break;
-            case ArrowDown:
 
-                menu.setSelectedOption((menu.getSelectedOption() < menu.getOptions().size() - 1)
+            case ArrowDown:
+                menu.setSelectedOption((menu.getSelectedOption() < menu.getOptionsGameOver().size() - 1)
                         ? menu.getSelectedOption() + 1
                         : 0);
                 break;
-            case Enter:
 
+            case Enter:
+                // Executar a opção selecionada no menu de Game Over
                 handleSelection();
                 break;
+
             case Escape:
+                // Sair do jogo
                 System.exit(0);
                 break;
+
+            default:
+                System.out.println("Key not recognized!");
         }
     }
 
     private void handleSelection() {
-        String selectedOption = menu.getOptions().get(menu.getSelectedOption());
+        String selectedOption = menu.getOptionsGameOver().get(menu.getSelectedOption());
+
         switch (selectedOption) {
             case "Start Game":
-                menu.setCurr_state(PLAYING);
+                menu.setCurr_state(PLAYING); // Reinicia o jogo
                 break;
+
             case "Statistics":
-                menu.setCurr_state(STATISTICS);
+                menu.setCurr_state(STATISTICS); // Mostra as estatísticas
                 break;
 
             case "Exit":
-                System.exit(0);
+                System.exit(0); // Sai do jogo
                 break;
+
             default:
-                System.out.println("Unknown option!");
+                System.out.println("Unknown option selected: " + selectedOption);
         }
-
     }
-
 }
