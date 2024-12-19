@@ -20,43 +20,34 @@ public class GameView {
     private final ScreenManager screenManager;
     private BombView bombView;
     private ScoreView scoreView;
+    private NextBlockView nextBlockView;
+
     private List<ElementViewer> elements = new ArrayList<>();
 
 
-    //ficar por causa do scor, secalhar mais tarde sai
-    private Game game;
-
     public GameView(Game game) {
-        this.arenaView = new ArenaView(game);        // View da arena
-        this.tetrisBlockView = new TetrisBlockView(game); // View do bloco ativo
-        this.coinView = new CoinView(game);
-        this.bombView = new BombView(game);
-        this.scoreView = new ScoreView(game);
+        this.arenaView = new ArenaView(game,this);
+        this.tetrisBlockView = new TetrisBlockView(game,this);
+        this.coinView = new CoinView(game,this);
+        this.bombView = new BombView(game,this);
+        this.scoreView = new ScoreView(game,this);
+        this.nextBlockView = new NextBlockView(game,this);
         this.screenManager = game.getScreenManager();
-
-        //talvez saia mais tarde
-        this.game = game;
-
-        elements.add(arenaView);
-        elements.add(bombView);
-        elements.add(tetrisBlockView);
-        elements.add(scoreView);
-        elements.add(coinView);
     }
 
 
+    public void addElementToList(ElementViewer elementViewer){
+        elements.add(elementViewer);
+    }
+
     public void render() throws IOException {
         screenManager.clear();
-        NextBlockView nextBlockView = new NextBlockView(game);
 
         for(ElementViewer element : elements){
             element.draw();
         }
-        nextBlockView.renderNextBlock(game.getNextBlock());
 
         screenManager.refresh();
     }
-
-
 
 }

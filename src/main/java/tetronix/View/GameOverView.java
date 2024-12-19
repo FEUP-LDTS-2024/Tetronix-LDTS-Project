@@ -15,6 +15,7 @@ public class GameOverView implements ElementViewer{
     public GameOverView(ScreenManager screenManager){
         this.screenManager= screenManager;
     }
+
     @Override
     public void draw(){
         TextGraphics graphics = screenManager.getTextGraphics();

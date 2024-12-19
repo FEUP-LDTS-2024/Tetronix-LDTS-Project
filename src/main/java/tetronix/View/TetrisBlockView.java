@@ -14,9 +14,10 @@ public class TetrisBlockView implements ElementViewer<TetrisBlock> {
     private final ScreenManager screenManager;
     private TetrisBlock block;
 
-    public TetrisBlockView(Game game_){
+    public TetrisBlockView(Game game_ , GameView gameView){
         this.game = game_;
         this.screenManager = game_.getScreenManager();
+        gameView.addElementToList(this);
     }
 
 
@@ -34,26 +35,6 @@ public class TetrisBlockView implements ElementViewer<TetrisBlock> {
         graphics.setBackgroundColor(TextColor.Factory.fromString(color));
 
         // Renderiza cada célula do bloco
-        for (int r = 0; r < shape.length; r++) {
-            for (int c = 0; c < shape[0].length; c++) {
-                if (shape[r][c] == 1) {
-                    int x = position.getColumn_identifier() + c * 2;
-                    int y = position.getRow_identifier() + r;
-                    graphics.fillRectangle(new TerminalPosition(x, y), new TerminalSize(2, 1), ' ');
-                }
-            }
-        }
-    }
-    public void drawAtPosition(TetrisBlock block, Position position) {
-        if (block == null) return;
-
-        TextGraphics graphics = screenManager.getTextGraphics();
-        int[][] shape = block.getShape();
-        String color = block.getColor();
-
-        graphics.setBackgroundColor(TextColor.Factory.fromString(color));
-
-        // Renderiza o bloco usando a posição fornecida
         for (int r = 0; r < shape.length; r++) {
             for (int c = 0; c < shape[0].length; c++) {
                 if (shape[r][c] == 1) {

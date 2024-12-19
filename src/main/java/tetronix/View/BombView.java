@@ -14,10 +14,11 @@ public class BombView implements ElementViewer<Bomb>{
     private TextGraphics graphics;
     private List<Bomb> bombs = new ArrayList<>();
 
-    public BombView(Game game){
+    public BombView(Game game, GameView gameView){
         this.bombs=game.getBomb();
         this.game=game;
         this.graphics= game.getScreenManager().getTextGraphics();
+        gameView.addElementToList(this);
     }
 
     @Override
