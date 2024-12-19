@@ -20,17 +20,27 @@ public class MenuView implements ElementViewer<Menu> {
 
 
         graphics.setForegroundColor(TextColor.ANSI.WHITE);
-        graphics.putString(10, 2, "===== MAIN MENU =====");
+        graphics.putString(2, 2, "============= MAIN MENU =============");
 
-        // Exibe as opções do menu
+
         for (int i = 0; i < menu.getOptions().size(); i++) {
             if (i == menu.getSelectedOption()) {
-                graphics.setForegroundColor(TextColor.ANSI.YELLOW); // Destaque para a opção selecionada
-                graphics.putString(10, 4 + i, "> " + menu.getOptions().get(i));
+                graphics.setForegroundColor(TextColor.ANSI.YELLOW);
+                graphics.putString(10, 6 + i, "> " + menu.getOptions().get(i));
             } else {
                 graphics.setForegroundColor(TextColor.ANSI.WHITE);
-                graphics.putString(10, 4 + i, "  " + menu.getOptions().get(i));
+                graphics.putString(10, 6 + i, "  " + menu.getOptions().get(i));
             }
         }
+
+
+        graphics.setForegroundColor(TextColor.ANSI.CYAN);
+        graphics.putString(2, 13,  " ######      /\\    |\\    /| ########  ");
+        graphics.putString(2, 14,  " ##         /  \\   | \\  / | ##        ");
+        graphics.putString(2, 15,  " ##  ###   /----\\  |  \\/  | #######  ");
+        graphics.putString(2, 16,  " ##   ##  /      \\ |      | ##      ");
+        graphics.putString(2, 17,  " ######  /        \\|      | ########  ");
+
+
     }
 }

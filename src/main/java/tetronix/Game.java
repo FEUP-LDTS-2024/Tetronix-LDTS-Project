@@ -236,7 +236,7 @@ public class Game {
     private void gameOver() {
         System.out.println("Game Over!");
         menu.setCurr_state(GAME_OVER);
-        GameOverView gameOverView = new GameOverView(screenManager);
+        GameOverView gameOverView = new GameOverView(screenManager, this);
         try {
 
             gameOverView.draw();

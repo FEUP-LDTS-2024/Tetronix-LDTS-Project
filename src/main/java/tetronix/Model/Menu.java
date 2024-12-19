@@ -1,6 +1,7 @@
 package tetronix.Model;
 
 import com.googlecode.lanterna.input.KeyStroke;
+import tetronix.Control.InputHandlerForGameOver;
 import tetronix.Control.InputHandlerForMenu;
 import tetronix.Control.InputHandler;
 import tetronix.Game;
@@ -20,8 +21,11 @@ public class Menu {
     private ElementViewer<Menu> menuGame_OverView;
     private ElementViewer<Menu> menuStatisticsView;
     private InputHandler menuController;
+    private InputHandlerForGameOver menuControllerGameOver;
 
     private final List<String> options = List.of("Start Game", "Exit");
+    private final List<String> optionsGameOver = List.of("Start Game", "Statistics", "Exit");
+
     private int selectedOption = 0;
 
     List<Integer> Track_Scores = new ArrayList<>();
@@ -31,10 +35,11 @@ public class Menu {
     public Menu() throws IOException {
         screenManager = new ScreenManager(rows, columns);
         menuView = new MenuView(this);
-        menuGame_OverView = new MenuGame_OverView(screenManager);
+        menuGame_OverView = new MenuGame_OverView(this);
         menuStatisticsView = new MenuStatisticsView(this);
         menuController = new InputHandlerForMenu(this);
         curr_state = INITIAL_MENU;
+        menuControllerGameOver = new InputHandlerForGameOver(this);
     }
 
     public List<Integer> getTrack_Scores() {
@@ -56,10 +61,12 @@ public class Menu {
     public List<String> getOptions() {
         return options;
     }
+    public List<String> getOptionsGameOver(){return optionsGameOver;}
 
     public int getSelectedOption() {
         return selectedOption;
     }
+
 
     public void setSelectedOption(int selectedOption) {
         this.selectedOption = selectedOption;
@@ -95,6 +102,12 @@ public class Menu {
 
     public void handleInput() throws IOException {
         KeyStroke key = screenManager.readInput();
-        menuController.processInput(key);
+
+        if (curr_state == GAME_OVER) {
+            menuControllerGameOver.processInput(key);
+        } else {
+            menuController.processInput(key);
+        }
     }
+
 }
