@@ -25,9 +25,9 @@ public class GameOverView implements ElementViewer{
         graphics.setBackgroundColor(TextColor.Factory.fromString("black"));
         graphics.fillRectangle(new TerminalPosition(2, 5), new TerminalSize(30, 10), ' ');
         graphics.enableModifiers(SGR.BOLD); // Opcional: torna o texto em negrito
-        graphics.putString(4, 6, "       GAME OVER");
-        graphics.putString(4, 10, "YOUR SCORE IS "+game.get_Additional_Points());
-        graphics.putString(4, 12, "PRESS ANY KEY FOR CONTINUE");
+        graphics.putString(5, 6, "========GAME OVER========");
+        graphics.putString(5, 8, "YOUR SCORE IS "+game.get_Additional_Points());
+        graphics.putString(5, 9, "PRESS ANY KEY FOR CONTINUE");
 
     }
 }

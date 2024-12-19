@@ -25,16 +25,13 @@ public class NextBlockView {
 
         graphics.putString(25, 8, "NEXTBLOCK");
 
-        // Define a posição onde o próximo bloco será desenhado
-        graphics.setBackgroundColor(TextColor.ANSI.WHITE_BRIGHT);
+        //onde o próximo bloco será desenhado
+        graphics.setBackgroundColor(TextColor.ANSI.WHITE);
 
         graphics.fillRectangle(new TerminalPosition(24, 10), new TerminalSize(10, 6), ' ');
 
-        Position previewPosition = new Position(25, 11); // Ajuste os valores conforme necessário
+        Position previewPosition = new Position(25, 11);
 
-
-
-        // Usa o TetrisBlockView para desenhar o bloco na nova posição
         TetrisBlockView blockView = new TetrisBlockView(game);
         blockView.drawAtPosition(nextBlock, previewPosition);
     }

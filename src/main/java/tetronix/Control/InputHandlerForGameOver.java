@@ -28,19 +28,12 @@ public class InputHandlerForGameOver implements InputHandler {
                         ? menu.getSelectedOption() + 1
                         : 0);
                 break;
-
             case Enter:
-                // Executar a opção selecionada no menu de Game Over
                 handleSelection();
                 break;
-
             case Escape:
-                // Sair do jogo
                 System.exit(0);
                 break;
-
-            default:
-                System.out.println("Key not recognized!");
         }
     }
 

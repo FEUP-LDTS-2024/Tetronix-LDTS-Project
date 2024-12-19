@@ -30,7 +30,7 @@ public class ScreenManager {
     }
 
     public int getColumns() {return columns;}
-
+    public int getRows(){return rows;}
     public void clear() {
         screen.clear();
     }

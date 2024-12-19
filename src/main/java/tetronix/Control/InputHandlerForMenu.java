@@ -18,6 +18,7 @@ public class InputHandlerForMenu implements InputHandler {
     public void processInput(KeyStroke key) {
         switch (key.getKeyType()) {
             case ArrowUp:
+
                 menu.setSelectedOption((menu.getSelectedOption() > 0)
                         ? menu.getSelectedOption() - 1
                         : menu.getOptions().size() - 1);
@@ -34,6 +35,14 @@ public class InputHandlerForMenu implements InputHandler {
                 break;
             case Escape:
                 System.exit(0);
+                break;
+            case Character:
+                char c = key.getCharacter();
+                if (c == 'n' || c == 'N') {
+                    menu.setCurr_state(PLAYING);
+                } else if (c == 's' || c == 'S') {
+                    menu.setCurr_state(STATISTICS);
+                }
                 break;
         }
     }
@@ -56,5 +65,4 @@ public class InputHandlerForMenu implements InputHandler {
         }
 
     }
-
 }
