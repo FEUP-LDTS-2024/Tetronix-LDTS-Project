@@ -40,7 +40,7 @@ public class Bomb extends Element{
 
         // Clear surrounding blocks in a 3x3 area
         for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
+            for (int j = -2; j <= 2; j+=2) {
                 int newRow = row + i;
                 int newCol = col + j; // Adjust for single-width columns
 

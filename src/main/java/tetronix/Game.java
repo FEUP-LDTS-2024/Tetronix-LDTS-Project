@@ -203,7 +203,7 @@ public class Game {
             return false;
         }
 
-        manageBombs();
+
         checkBombCollisions();
 
         if (tetris_block == null) {
@@ -211,17 +211,16 @@ public class Game {
             nextBlock = TetrisBlockFactory.createBlock(columns, rows);
             count_to_create_coins++;
             if (count_to_create_coins % 3 == 0) {
+                manageBombs();
                 System.out.println("Coin created!\n");
                 coins.add(CoinsFactory.createCoin(arena));
             }
 
         }
 
-        if (tetris_block == null || !continuousBlockFall(tetrisBlockController.moveDown())) {
-            arena.moveBlocktoBackground(tetris_block);
+        if (!continuousBlockFall(tetrisBlockController.moveDown())) {
+            //arena.moveBlocktoBackground(tetris_block);
             score += arena.clearLines() * 5; // Clear lines and update score
-
-
         }
 
         // Atualizar a renderização
@@ -251,7 +250,7 @@ public class Game {
 
     public void manageBombs() {
         bombs.removeIf(Bomb::isExpired);
-        if (bombs.isEmpty() && new Random().nextInt(100) < 5) { // 20% chance to spawn a bomb
+        if (bombs.isEmpty() && new Random().nextInt(100) < 50) { // 20% chance to spawn a bomb
             Bomb newBomb = BombFactory.createBomb(arena);
             bombs.add(newBomb);
 
@@ -286,9 +285,11 @@ public class Game {
         }
 
         tetris_block.setPosition(position);
+
         if(!coins.isEmpty()){
             arena.try_Collect_Coin(coins,tetris_block);
         }
+        checkBombCollisions();
 
     }
 

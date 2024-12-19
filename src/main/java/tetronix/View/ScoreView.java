@@ -13,9 +13,10 @@ public class ScoreView implements ElementViewer<Game>{
     private ScreenManager screenManager;
 
 
-    public ScoreView(Game game_){
+    public ScoreView(Game game_, GameView gameView){
         this.game = game_;
         this.screenManager = game_.getScreenManager();
+        gameView.addElementToList(this);
     }
 
     public void draw(){

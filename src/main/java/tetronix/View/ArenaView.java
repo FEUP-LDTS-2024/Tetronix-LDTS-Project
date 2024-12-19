@@ -7,7 +7,7 @@ import com.googlecode.lanterna.graphics.TextGraphics;
 import tetronix.Game;
 import tetronix.Model.Arena;
 
-public class ArenaView<T extends Arena> implements ElementViewer<T> {
+public class ArenaView implements ElementViewer<Arena> {
 
 
     private Game game;
@@ -15,10 +15,11 @@ public class ArenaView<T extends Arena> implements ElementViewer<T> {
     private final ScreenManager screenManager;
 
 
-    public ArenaView(Game game_){
+    public ArenaView(Game game_, GameView gameView){
         this.game = game_;
         this.arena = game.getArena();
         this.screenManager = game.getScreenManager();
+        gameView.addElementToList(this);
     }
 
     @Override
