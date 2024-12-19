@@ -8,11 +8,12 @@ public class CoinsFactory {
 
     public static Coins createCoin(Arena arena) {
         int [] possible_values = {1 , 1 , 2 , 3 , 4};
+        int highestRow = arena.getHighestOccupiedRow();
         int rows = arena.getRows();
         int cols = arena.getColumns();
         String[][] background = arena.getBackground();
 
-        Position coinPosition = generateValidPosition(background, rows, cols);
+        Position coinPosition = generateValidPosition(background, rows, cols, highestRow);
         String coinColor = colors[random.nextInt(colors.length)];
         int value = possible_values[random.nextInt(possible_values.length)];
 
@@ -21,18 +22,17 @@ public class CoinsFactory {
 
 
 
-    private static Position generateValidPosition(String[][] background, int rows, int cols) {
+    private static Position generateValidPosition(String[][] background, int rows, int cols, int highestRow) {
         int row, col;
 
         while(true){
-            row = random.nextInt(rows);  // Gera uma linha aleatória
+            row = random.nextInt(highestRow + 1);  // Gera uma linha aleatória
             col = random.nextInt(cols); // Gera uma coluna aleatória
 
-            if(background[row][col] == null && row > 2){
+            if (background[row][col] == null) {
                 break;
             }
         }
-
 
         return new Position(col, row);
     }
