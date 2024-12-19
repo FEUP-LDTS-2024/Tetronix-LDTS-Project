@@ -35,11 +35,13 @@ public class MenuView implements ElementViewer<Menu> {
 
 
         graphics.setForegroundColor(TextColor.ANSI.CYAN);
-        graphics.putString(2, 13,  " ######      /\\    |\\    /| ########  ");
-        graphics.putString(2, 14,  " ##         /  \\   | \\  / | ##        ");
-        graphics.putString(2, 15,  " ##  ###   /----\\  |  \\/  | #######  ");
-        graphics.putString(2, 16,  " ##   ##  /      \\ |      | ##      ");
-        graphics.putString(2, 17,  " ######  /        \\|      | ########  ");
+        graphics.putString(0, 13, " ### #### ### ###    #   #  # ### #   #");
+        graphics.putString(0, 14, "  #  #     #  #  # #  #  ## #  #   # #");
+        graphics.putString(0, 15, "  #  ###   #  ###  #   # ####  #    #");
+        graphics.putString(0, 16, "  #  #     #  # #  #   # # ##  #   # #");
+        graphics.putString(0, 17, "  #  ####  #  #  #  ##   #  # ### #   #");
+
+
 
 
     }
