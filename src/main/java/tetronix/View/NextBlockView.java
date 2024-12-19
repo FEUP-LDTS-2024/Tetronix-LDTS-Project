@@ -29,7 +29,7 @@ public class NextBlockView implements ElementViewer<TetrisBlock> {
 
         TextGraphics graphics = screenManager.getTextGraphics();
 
-        graphics.putString(25, 8, "NEXTBLOCK" );
+        graphics.putString(24, 8, "NEXT BLOCK" );
 
         graphics.setBackgroundColor(TextColor.Factory.fromString("white"));
 
