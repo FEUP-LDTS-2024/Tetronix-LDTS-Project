@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class BombFactory {
     private static Random random = new Random();
-    private static String[] colors = {"yellow", "orange", "purple", "white"};
+    private static String[] colors = {"red"};
 
     public static Bomb createBomb(Arena arena) {
         String random_color = colors[random.nextInt(colors.length)];
