@@ -29,7 +29,7 @@ public class GameOverView implements ElementViewer{
         graphics.putString(5, 6, "========GAME OVER========");
         graphics.setForegroundColor(TextColor.ANSI.RED);
         graphics.putString(3, 10, "YOUR SCORE: "+game.get_Additional_Points());
-        graphics.putString(3, 11, "PRESS ANY KEY FOR CONTINUE");
+        graphics.putString(3, 11, "PRESS ANY KEY TO CONTINUE");
 
     }
 }
