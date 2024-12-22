@@ -250,7 +250,7 @@ public class Game {
 
     public void manageBombs() {
         bombs.removeIf(Bomb::isExpired);
-        if (bombs.isEmpty() && new Random().nextInt(100) < 50) { // 20% chance to spawn a bomb
+        if (bombs.isEmpty() && new Random().nextInt(100) < 50) {
             Bomb newBomb = BombFactory.createBomb(arena);
             bombs.add(newBomb);
 

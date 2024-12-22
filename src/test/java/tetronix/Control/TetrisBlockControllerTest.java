@@ -76,8 +76,10 @@ public class TetrisBlockControllerTest {
         assertEquals(expectedPosition.getRow_identifier(), newPosition.getRow_identifier());
     }
 
-   /* @Test
+    @Test
     void testRotateBlock_ValidRotation() {
+        int [][] shape = {{1,0},
+                {1,0}};
         // Configurar comportamento inicial
         when(mockBlock.getCurrent_rotation()).thenReturn(1);
         when(mockArena.canRotate(mockBlock, 2)).thenReturn(true);
@@ -86,6 +88,7 @@ public class TetrisBlockControllerTest {
         // Configurar o mock do game
         when(mockGame.getArena()).thenReturn(mockArena);
         when(mockGame.getTetris_block()).thenReturn(mockBlock);
+        when(mockBlock.getShape()).thenReturn(shape);
 
         // Executar o método
         controller.rotateBlock();
@@ -95,7 +98,7 @@ public class TetrisBlockControllerTest {
         verify(mockArena).isBlockOutBoundsAfterRotation(mockBlock); // Permite a chamada
         verify(mockBlock, never()).CorrectPositionAfterRotation(); // Bounds não ativou correção
     }
-*/
+
 
 }
 

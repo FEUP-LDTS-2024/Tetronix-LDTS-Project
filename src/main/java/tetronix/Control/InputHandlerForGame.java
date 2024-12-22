@@ -12,12 +12,12 @@ public class InputHandlerForGame implements InputHandler {
 
     public InputHandlerForGame(Game game_) {
         this.game = game_;
-        tetrisBlockController = new TetrisBlockController(game_);
-        //this.tetrisBlockController = game_.getTetrisBlockController();
     }
 
     public void processInput(KeyStroke key){
         if(game.getTetris_block() == null) return;
+
+        this.tetrisBlockController = game.getTetrisBlockController();
 
         switch (key.getKeyType()) {
             case ArrowUp:
@@ -36,11 +36,6 @@ public class InputHandlerForGame implements InputHandler {
             case ArrowRight:
                 System.out.println("ArrowRight pressed!");
                 game.moveBlock(tetrisBlockController.moveRight(), KeyType.ArrowRight);
-                break;
-            case Character:
-                if (key.getCharacter() == 'q') {
-                    System.exit(0);
-                }
                 break;
             default:
                 break;

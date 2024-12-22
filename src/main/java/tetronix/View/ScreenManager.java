@@ -15,6 +15,7 @@ public class ScreenManager {
     private Screen screen;
     private int rows;
     private int columns;
+
     public ScreenManager(int rows_, int columns_ ) throws IOException {
         // Criação do terminal
         this.columns = columns_;

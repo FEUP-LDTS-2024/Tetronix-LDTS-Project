@@ -21,6 +21,7 @@ public class BombView implements ElementViewer<Bomb>{
         gameView.addElementToList(this);
     }
 
+
     @Override
     public void draw() {
         graphics.setBackgroundColor(TextColor.ANSI.WHITE); // Set background to default arena color
@@ -36,7 +37,4 @@ public class BombView implements ElementViewer<Bomb>{
             }
         }
     }
-
-
-
 }

@@ -1,21 +1,14 @@
 package tetronix.View;
-
-
-import com.googlecode.lanterna.TerminalPosition;
-import com.googlecode.lanterna.TerminalSize;
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.graphics.TextGraphics;
 import tetronix.Game;
-import tetronix.Model.Position;
-import tetronix.Model.TetrisBlock;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameView {
-    private final ArenaView arenaView;
-    private final TetrisBlockView tetrisBlockView;
+    private ArenaView arenaView;
+    private TetrisBlockView tetrisBlockView;
     private CoinView coinView;
     private final ScreenManager screenManager;
     private BombView bombView;
@@ -35,6 +28,9 @@ public class GameView {
         this.screenManager = game.getScreenManager();
     }
 
+    public void removeAllElements(){
+       elements.clear();
+    }
 
     public void addElementToList(ElementViewer elementViewer){
         elements.add(elementViewer);
