@@ -2,7 +2,7 @@
 
 ## Game Description
 
-Tetronix é um jogo inspirado no clássico Tetris. O objetivo é mover peças de diferentes formas que descem no campo de jogo para completar linhas. Linhas completas desaparecem e concedem pontos ao jogador, enquanto o jogo termina quando as linhas incompletas alcançam o topo da arena. Quanto mais tempo o jogador evitar esse desfecho, maior será a sua pontuação. O jogo conta com moedas que ao serem capturadas aumentar a pontuação do jogador e bombas que devem ser evitadas pois eliminam o bloco quando há contacto entre os mesmos. Quanto mais linhas o jogador completa, mais rápido se torna o jogo.
+Tetronix é um jogo inspirado no clássico Tetris. O objetivo é mover peças de diferentes formas que descem no campo de jogo para completar linhas. Linhas completas desaparecem e dão pontos ao jogador, enquanto o jogo termina quando as linhas incompletas alcançam o topo da arena. Quanto mais tempo o jogador evitar esse desfecho, maior será a sua pontuação. O jogo conta com moedas que ao serem capturadas aumentam a pontuação do jogador e bombas que devem ser evitadas pois eliminam o bloco quando há contacto entre os mesmos. Quanto mais linhas o jogador completa, mais rápido se torna o jogo.
 
 Este projeto foi desenvolvido por Artur Moreira (up202208189@edu.fe.up.pt), Daunísia Jone (up202109246@edu.fe.up.pt) e Flávio Magalhães (up202309694@edu.fe.up.pt) para LDTS 2024-25.
 
@@ -10,13 +10,13 @@ Este projeto foi desenvolvido por Artur Moreira (up202208189@edu.fe.up.pt), Daun
 
 - **Movimento contínuo dos blocos** - Os blocos descem automaticamente ao longo do tempo.
 - **Interação com blocos** - O jogador pode mover os blocos lateralmente (setas esquerda e direita), rotacioná-los (seta para cima) e movê-los para baixo (seta para baixo.
-- **Detecção de colisões** - Colisões entre os blocos e as bombas, as moedas, assim como as bordas da arena são verificadas.
-- **Limpeza de linhas completas** - Linhas completas desaparecem, concedendo pontos ao jogador.
+- **Deteção de colisões** - Colisões entre os blocos e as bombas, as moedas, assim como as bordas da arena são verificadas.
+- **Limpeza de linhas completas** - Linhas completas desaparecem, acrescentando pontos ao jogador.
 - **Menu inicial** - Inclui as opções para iniciar o jogo e sair do jogo.
 - **Menu de Game Over** - Inclui as opções para iniciar um novo jogo e visualizar as estatísticas e sair do jogo.
-- **Exibição de pontuação** - A pontuação atual do jogador é exibida durante o jogo.
-- **Nível** - O nível atual do jogador é exibido durante o jogo e o mesmo aumenta a cada linha completa.
-- **Statistics** - Armazena e exibe as classificações finais de diferentes partidas.
+- **Pontuação** - A pontuação atual do jogador é visível durante o jogo.
+- **Nível** - O nível atual do jogador é visível durante o jogo e o mesmo aumenta a cada linha completa.
+- **Statistics** - Armazena e exibe as classificações finais de diferentes jogos.
 
 ![imageinitial](report_images/initialscreen.png)
 ![imagearena](report_images/arena.png)
@@ -26,7 +26,7 @@ Este projeto foi desenvolvido por Artur Moreira (up202208189@edu.fe.up.pt), Daun
 
 ## Planned Features
 
-Todas as funcionalidades planejadas foram implementadas com sucesso.
+Todas as funcionalidades planeadas foram implementadas com sucesso.
 
 ## DESIGN
 
