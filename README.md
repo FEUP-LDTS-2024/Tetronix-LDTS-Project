@@ -49,7 +49,9 @@ Na implementação:
 - Cada estado foi representado como uma classe que herda de `MenuState`, encapsulando comportamentos específicos como `PlayingState` e `GameOverState`.
 - A transição entre estados ocorre dinamicamente com base nas ações do jogador ou no fluxo do jogo.
 
-**UML State Pattern**  ######################
+**UML State Pattern** 
+![image](https://github.com/user-attachments/assets/a9958716-474c-4375-8734-70c992ca00bf)
+
 
 Os arquivos relevantes são:
 - [`Menu`](../src/main/java/tetronix/Model/Menu.java)
@@ -82,7 +84,9 @@ Na implementação:
 - `TetrisBlockFactory` é a fábrica responsável por criar blocos Tetris. Cada bloco é inicializado com uma forma, cor e rotações predefinidas.
 - `TetrisBlock` contém os dados do bloco (como a posição e a forma atual) e as possíveis rotações.
 
-**UML Factory Method** #################
+**UML Factory Method** 
+![image](https://github.com/user-attachments/assets/8c8a2002-f584-4d8e-a5b2-61c37b967ed0)
+
 
 
 Os ficheiros relevantes são:
@@ -114,7 +118,9 @@ Na implementação:
 - `ElementViewer` é a interface que define o método `draw`, compartilhado por todas as classes que representam elementos visuais (e.g., `BombView`, `ArenaView`).
 - Cada classe concreta implementa `ElementViewer` e fornece a lógica específica para desenhar seu respectivo elemento.
 
-**UML Composite Pattern** ################
+**UML Composite Pattern** 
+![image](https://github.com/user-attachments/assets/44f21780-4ac2-41bc-85a8-046ce37ad44d)
+
 
 
 Os ficheiros relevantes são:
@@ -152,7 +158,9 @@ Na implementação:
 Exemplo:
 - Quando o estado muda para `GAME_OVER`, o controlador ajusta as interações do jogador e a view exibe o ecrã correspondente.
 
-**UML Observer Pattern** ##################
+**UML Observer Pattern** 
+![image](https://github.com/user-attachments/assets/3e55f5ad-d8aa-48fb-90e0-7fc4a62cd56e)
+
 
 Os ficheiros relevantes são:
 - [`Menu`](../src/main/java/tetronix/Model/Menu.java)
