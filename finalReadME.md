@@ -175,6 +175,7 @@ Não foram identificados problemas significativos no código. O projeto segue bo
 ![image1](report_images/covtest1.png)
 ![image2](report_images/covtest2.png)
 ![image3](report_images/covtest3.png)
+![image3](report_images/pitest.png)
 
 
 ## Self-evaluation
