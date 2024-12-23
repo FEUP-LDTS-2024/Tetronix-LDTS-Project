@@ -41,8 +41,5 @@ public class MenuView implements ElementViewer<Menu> {
         graphics.putString(0, 16, "  #  #     #  # #  #   # # ##  #   # #");
         graphics.putString(0, 17, "  #  ####  #  #  #  ##   #  # ### #   #");
 
-
-
-
     }
 }

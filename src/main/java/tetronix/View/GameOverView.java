@@ -13,7 +13,6 @@ import tetronix.Model.Menu;
 public class GameOverView implements ElementViewer{
     private Game game;
     private ScreenManager screenManager;
-    private Menu menu;
     public GameOverView(ScreenManager screenManager, Game game_){
         this.screenManager=screenManager;
         this.game = game_;

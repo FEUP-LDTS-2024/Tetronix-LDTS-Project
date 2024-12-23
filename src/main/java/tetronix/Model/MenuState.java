@@ -5,5 +5,4 @@ public enum MenuState {
     PLAYING,
     GAME_OVER, //
     STATISTICS,
-    DISPLAY_SCORES
 }

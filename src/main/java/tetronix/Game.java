@@ -16,7 +16,6 @@ import java.util.Random;
 
 import static com.googlecode.lanterna.input.KeyType.*;
 import static tetronix.Model.MenuState.GAME_OVER;
-import static tetronix.Model.MenuState.INITIAL_MENU;
 
 public class Game {
     private int rows = 20;
@@ -28,7 +27,6 @@ public class Game {
     private TetrisBlock tetris_block;
     private List<Coins> coins = new ArrayList<>();
     int count_to_create_coins = 0;
-    private Position position;
     private List<Bomb> bombs = new ArrayList<>();
 
     private InputHandler inputHandler;
@@ -42,8 +40,6 @@ public class Game {
     private int score_per_level = 5;
     private int speed_per_level = 50;
     private int initial_speed = 600;
-    private long lastBombFallTime = 0;
-    private int bombFallSpeed = 600;
     private TetrisBlock nextBlock; // Armazena o próximo bloco
 
     public List<Bomb> getBomb() {
@@ -172,16 +168,6 @@ public class Game {
     }
 
 
-        /*current_score = game.getScore();
-            int can_up_level = current_score / score_per_level + 1;
-
-            if(can_up_level > level){
-                System.out.println("Level Up!,increasing speed...\n");
-                level = can_up_level;
-                pause -= speed_per_level;
-            }*/
-
-
     public boolean continuousBlockFall(Position position) { //(para a thread)
 
         if (arena.canMoveDown(tetris_block)) {
@@ -241,13 +227,15 @@ public class Game {
         System.out.println("Game Over!");
         menu.setCurr_state(GAME_OVER);
         GameOverView gameOverView = new GameOverView(screenManager, this);
-        try {
 
             gameOverView.draw();
+
+        try {
             screenManager.refresh();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
+
         Thread.currentThread().interrupt();
     }
 

@@ -26,8 +26,8 @@ public class ScreenManager {
 
         // Criação da tela
         screen = new TerminalScreen(terminal);
-        screen.setCursorPosition(null); // Desabilitar o cursor
-        screen.startScreen(); // Iniciar a tela
+        screen.setCursorPosition(null);
+        screen.startScreen();
     }
 
     public int getColumns() {return columns;}
@@ -44,9 +44,6 @@ public class ScreenManager {
         return screen.newTextGraphics();
     }
 
-    public void close() throws IOException {
-        screen.close();
-    }
 
     public KeyStroke readInput() throws IOException {
         return screen.readInput();

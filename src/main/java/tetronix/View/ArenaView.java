@@ -23,7 +23,7 @@ public class ArenaView implements ElementViewer<Arena> {
     }
 
     @Override
-    public void draw(){//T arena, ScreenManager screenManager) {
+    public void draw(){
         TextGraphics graphics = screenManager.getTextGraphics(); // Obtenção do TextGraphics do GUI
         int rows = arena.getRows();
         int columns = arena.getColumns();

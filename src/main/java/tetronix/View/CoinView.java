@@ -9,13 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CoinView implements ElementViewer<Coins> {
-    private Game game;
     private TextGraphics graphics;
     private List<Coins> coins = new ArrayList<>();
 
     public CoinView(Game game_, GameView gameView){
         this.coins = game_.getCoins();
-        this.game = game_;
         this.graphics = game_.getScreenManager().getTextGraphics();
         gameView.addElementToList(this);
     }

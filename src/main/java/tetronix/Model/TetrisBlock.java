@@ -6,8 +6,6 @@ public class TetrisBlock extends Element {
     private int [][]shape;
     private int [][][] possible_shapes;
     private int current_rotation;
-    //private String color;
-    //private Position position;
     private int rows;
     private int columns;
 

@@ -19,6 +19,7 @@ public class ScoreView implements ElementViewer<Game>{
         gameView.addElementToList(this);
     }
 
+    @Override
     public void draw(){
         //Prototype for menu
         TextGraphics graphics = screenManager.getTextGraphics();

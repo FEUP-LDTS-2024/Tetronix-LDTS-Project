@@ -7,12 +7,10 @@ public class Arena {
     private int columns;
     private int rows;
     private String[][] background;
-    private int gridCellsize;
 
     public Arena(int columns_, int rows_){
         this.columns = columns_;
         this.rows = rows_;
-        this.gridCellsize = rows_ / columns_;
         background = new String[rows_][columns_];
     }
 
@@ -29,7 +27,7 @@ public class Arena {
         Position position = block.getPosition();
         int[][] shape = block.getShape();
 
-        return ((position.getColumn_identifier() + (shape[0].length)*2) == (columns)); //*2 porque a largura foi duplicada para ter um formato de quadrado
+        return ((position.getColumn_identifier() + (shape[0].length)*2) == (columns));
     }
 
     public boolean isAtLeftEdge(TetrisBlock block){
@@ -42,7 +40,7 @@ public class Arena {
         Position position = block.getPosition();
         int[][] shape = block.getShape();
 
-        return ((shape.length + position.getRow_identifier()) >= rows); //função para verificar se o bloco pode continuar a descer
+        return ((shape.length + position.getRow_identifier()) >= rows);
     }
 
 
@@ -62,20 +60,19 @@ public class Arena {
 
         // Verificar todas as células do bloco
         for (int c = 0; c < blockWidth; c++) {
-            for (int r = blockHeight - 1; r >= 0; r--) { // Começa da parte inferior do bloco
-                if (shape[r][c] == 1) { // Apenas verifica células ocupadas
+            for (int r = blockHeight - 1; r >= 0; r--) {
+                if (shape[r][c] == 1) {
                     int nextRow = blockRow + r + 1;
-                    int realColumn = blockColumn + c * 2; // Considera a duplicação de largura
+                    int realColumn = blockColumn + c * 2;
 
                     if (blockRow < 0) {
-                        break; // Ignorar se o bloco está acima da tela
+                        break;
                     }
 
 
 
-                    // Verifica colisão para ambas as colunas ocupadas pela célula lógica
-                    if (/*nextRow >= background.length || realColumn + 1 >= background[0].length ||*/
-                            (background[nextRow][realColumn] != null) || (background[nextRow][realColumn + 1] != null )) {
+
+                    if ((background[nextRow][realColumn] != null) || (background[nextRow][realColumn + 1] != null )) {
                         // Colisão detectada
                         return false;
                     }
@@ -96,9 +93,9 @@ public class Arena {
         int blockRow = block.getPosition().getRow_identifier();
         int blockColumn = block.getPosition().getColumn_identifier();
 
-        // Verificar se o bloco inteiro está na borda esquerda
+
         if (isAtLeftEdge(block)) {
-            return false; // Não pode se mover para a esquerda
+            return false;
         }
 
         // Verificar todas as células do bloco para colisões
@@ -154,7 +151,7 @@ public class Arena {
 
 
 
-                    if (/*rightColumn >= background[0].length ||*/ background[sameRow][rightColumn] != null) {
+                    if (background[sameRow][rightColumn] != null) {
                         return false; // Colisão detectada
                     }
                     break;
@@ -173,14 +170,14 @@ public class Arena {
         for(int r = rows - 1; r >= 0; r--){ //pesquisa de baixo para cima
             boolean complete_line = true;
 
-            for(int c = 0; c < columns; c++){ //percorrer todas as colunas de uma linha
-                if(background[r][c] == null){ // se houver uma célula que n esteja preenchida, passara para next Row
+            for(int c = 0; c < columns; c++){
+                if(background[r][c] == null){
                     complete_line = false;
                     break;
                 }
             }
 
-            if(complete_line){ //se a linha estiver completa, meter todas as células a null
+            if(complete_line){
                 cleared_lines++;
                 clearCompleteLine(r);
                 shiftDown(r);
@@ -220,7 +217,7 @@ public class Arena {
         String color = block.getColor();
 
         while(row_pos < 0){
-            row_pos++; //para mover o último bloco para arena, caso contrário, se o jogo acabar e carregar arrowRight,o bloco desaparece todo
+            row_pos++;
         }
 
         for (int r = 0; r < number_of_rows; r++) {
@@ -325,7 +322,6 @@ public class Arena {
     }
 
     public void try_Collect_Coin(List<Coins> coins_, TetrisBlock block){
-
             for(Coins coin : coins_){
                 if(!coin.isCollected()){
                     if(check_BlockOnCoin(coin,block)){

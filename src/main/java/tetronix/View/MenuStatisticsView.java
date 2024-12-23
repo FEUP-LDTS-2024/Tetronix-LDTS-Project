@@ -25,7 +25,6 @@ public class MenuStatisticsView implements ElementViewer<Menu> {
         String instructions1 = "Press 'N' for a new game";
         String instructions2 = "Press 'ESC' to exit";
 
-        int screenWidth = screenManager.getColumns();
         TextGraphics graphics = screenManager.getTextGraphics();
 
         graphics.setBackgroundColor(TextColor.Factory.fromString("black"));

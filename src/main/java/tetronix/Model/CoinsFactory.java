@@ -13,7 +13,7 @@ public class CoinsFactory {
         int cols = arena.getColumns();
         String[][] background = arena.getBackground();
 
-        Position coinPosition = generateValidPosition(background, rows, cols, highestRow);
+        Position coinPosition = generateValidPosition(background,cols, highestRow);
         String coinColor = colors[random.nextInt(colors.length)];
         int value = possible_values[random.nextInt(possible_values.length)];
 
@@ -22,7 +22,7 @@ public class CoinsFactory {
 
 
 
-    private static Position generateValidPosition(String[][] background, int rows, int cols, int highestRow) {
+    private static Position generateValidPosition(String[][] background, int cols, int highestRow) {
         int row, col;
 
         while(true){
