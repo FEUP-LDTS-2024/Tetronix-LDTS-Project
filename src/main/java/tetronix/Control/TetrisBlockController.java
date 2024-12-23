@@ -55,20 +55,21 @@ public class TetrisBlockController {
         }
 
         //solução para o blocoI
-        if(block.getShape().length == 1){
-            Position position1 = new Position(block.getPosition().getColumn_identifier() + 2,block.getPosition().getRow_identifier() - 1);
-            block.setPosition(position1);
-        }
-
-        if(block.getShape().length == 4){
-            Position position1 = new Position(block.getPosition().getColumn_identifier() - 2,block.getPosition().getRow_identifier() + 1);
-            block.setPosition(position1);
-        }
+        adjustForSpecialBlockShapes();
         block.setCurrent_rotation(new_rotation);
 
 
         if(game.getArena().isBlockOutBoundsAfterRotation(block)){
             block.CorrectPositionAfterRotation();
+        }
+    }
+
+
+    private void adjustForSpecialBlockShapes() {
+        if (block.getShape().length == 1) {
+            block.setPosition(new Position(block.getPosition().getColumn_identifier() + 2, block.getPosition().getRow_identifier() - 1));
+        } else if (block.getShape().length == 4) {
+            block.setPosition(new Position(block.getPosition().getColumn_identifier() - 2, block.getPosition().getRow_identifier() + 1));
         }
     }
 }
