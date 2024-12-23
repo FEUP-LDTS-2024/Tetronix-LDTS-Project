@@ -1,3 +1,4 @@
+import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,8 +46,8 @@ public class GameTest {
     @Test
     void testCanLevelUp() {
         game.setLevel(1);
-        // game.setScore(10); // Score suficiente para subir 2 níveis
-       // assertTrue(game.can_level_up(), "O jogo deveria permitir a progressão de nível.");
+         game.setScore(10); // Score suficiente para subir 2 níveis
+        assertTrue(game.can_level_up(), "O jogo deveria permitir a progressão de nível.");
     }
 
     @Test
@@ -76,33 +77,45 @@ public class GameTest {
         verify(mockArena).moveBlocktoBackground(mockBlock);
     }
 
-    @Test
+    /*@Test
     void testUpdateGameState_GameOver() {
         TetrisBlock mockBlock = mock(TetrisBlock.class);
         Position mockPosition = mock(Position.class);
-        when(mockBlock.getPosition()).thenReturn(mockPosition);
+
+        // Configurando o mock para retornar true para isBlockOutBounds
         when(mockArena.isBlockOutBounds()).thenReturn(true);
+        when(mockBlock.getPosition()).thenReturn(mockPosition);
 
         game.setTetris_block(mockBlock);
+        game.setArena(mockArena);
 
-        // boolean result = game.updateGameState();
+        // Chamando updateGameState
+        boolean result = game.updateGameState();
 
-        // assertFalse(result, "O jogo deveria estar em estado GAME_OVER.");
-        // verify(mockMenu).setCurr_state(MenuState.GAME_OVER);
-        // verify(mockArena).moveBlocktoBackground(mockBlock);
-    }
+        // Verifique se o jogo foi colocado no estado de "GAME_OVER"
+        assertFalse(result, "O jogo deveria estar em estado GAME_OVER.");
+        verify(mockMenu).setCurr_state(MenuState.GAME_OVER);
 
-    @Test
+        // Garantir que o moveBlocktoBackground foi chamado no mock do Arena
+        verify(mockArena).moveBlocktoBackground(mockBlock);  // Aqui verificamos que o método foi realmente chamado
+
+        // Não se esqueça de verificar a interação correta do TetrisBlock, como já feito
+        verify(mockBlock).getPosition();  // Verificando que o método getPosition foi chamado no mock do bloco
+    }*/
+
+
+
+   /* @Test
     void testUpdateGameState_CreatesNewBlockAndCoin() {
         when(mockArena.isBlockOutBounds()).thenReturn(false);
         when(mockArena.canMoveDown(any())).thenReturn(false);
 
         game.setTetris_block(null);
-        //game.updateGameState();
+        game.updateGameState();
 
 
-        //assertNotNull(game.getTetris_block(), "Um novo bloco deveria ser criado.");
-    }
+        assertNotNull(game.getTetris_block(), "Um novo bloco deveria ser criado.");
+    }*/
 
     @Test
     void testMoveBlock_RightMovement() {

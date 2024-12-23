@@ -22,6 +22,7 @@ public class Menu {
     private ElementViewer<Menu> menuStatisticsView;
     private InputHandler menuController;
     private InputHandlerForGameOver menuControllerGameOver;
+    private boolean isRunning = true;
 
     private final List<String> options = List.of("Start Game", "Exit");
     private final List<String> optionsGameOver = List.of("Start Game", "Statistics", "Exit");
@@ -41,14 +42,30 @@ public class Menu {
         curr_state = INITIAL_MENU;
         menuControllerGameOver = new InputHandlerForGameOver(this);
     }
+    public void setCurr_state(MenuState curr_state_) {
+        this.curr_state = curr_state_;
+    }
+
+    public void setMenuGame_OverView(ElementViewer<Menu> menuGame_OverView) {this.menuGame_OverView = menuGame_OverView;}
+
+    public void setScreenManager(ScreenManager screenManager) {this.screenManager = screenManager;}
+
+    public void setMenuView(ElementViewer<Menu> menuView) {this.menuView = menuView;}
+
+    public void setMenuStatisticsView(ElementViewer<Menu> menuStatisticsView) {this.menuStatisticsView = menuStatisticsView;}
+
+    public void setMenuController(InputHandler menuController) {this.menuController = menuController;}
+
+    public void setMenuControllerGameOver(InputHandlerForGameOver menuControllerGameOver) {this.menuControllerGameOver = menuControllerGameOver;}
+
+    public void setIsRunning(boolean value){
+        isRunning = value;
+    }
 
     public List<Integer> getTrack_Scores() {
         return Track_Scores;
     }
 
-    public void setCurr_state(MenuState curr_state_) {
-        this.curr_state = curr_state_;
-    }
 
     public MenuState getCurr_state() {
         return curr_state;
@@ -73,7 +90,7 @@ public class Menu {
     }
 
     public void run() throws IOException {
-        while (true) {
+        while (isRunning) {
             switch (curr_state) {
                 case INITIAL_MENU:
                     menuView.draw();

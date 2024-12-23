@@ -106,6 +106,55 @@ public class ArenaTest {
     }
 
     @Test
+    void testCanMoveRight_AtRightEdge() {
+        when(mockBlock.getPosition()).thenReturn(mockPosition);
+        when(mockPosition.getColumn_identifier()).thenReturn(6); // Última coluna
+        when(mockBlock.getShape()).thenReturn(new int[][]{{1, 1}});
+
+        boolean result = arena.canMoveRight(mockBlock);
+
+        assertFalse(result, "Bloco na borda direita não deve poder mover para a direita.");
+    }
+
+    @Test
+    void testCanMoveRight_NoCollision() {
+        when(mockBlock.getPosition()).thenReturn(mockPosition);
+        when(mockPosition.getRow_identifier()).thenReturn(5);
+        when(mockPosition.getColumn_identifier()).thenReturn(2);
+        when(mockBlock.getShape()).thenReturn(new int[][]{
+                {1, 0},
+                {1, 1}
+        });
+
+        // Garantir que as células à direita estão livres
+        arena.getBackground()[5][4] = null;
+        arena.getBackground()[6][6] = null;
+
+        boolean result = arena.canMoveRight(mockBlock);
+
+        assertTrue(result, "Bloco deve poder mover para a direita sem colisões.");
+    }
+
+    @Test
+    void testCanMoveRight_WithCollision() {
+        when(mockBlock.getPosition()).thenReturn(mockPosition);
+        when(mockPosition.getRow_identifier()).thenReturn(5);
+        when(mockPosition.getColumn_identifier()).thenReturn(2);
+        when(mockBlock.getShape()).thenReturn(new int[][]{
+                {1, 0},
+                {1, 1}
+        });
+
+        // Configurar uma colisão à direita
+        arena.getBackground()[5][4] = "filled";
+        arena.getBackground()[6][6] = null;
+
+        boolean result = arena.canMoveRight(mockBlock);
+
+        assertFalse(result, "Bloco não deve poder mover para a direita devido a colisão.");
+    }
+
+    @Test
     void testClearLines() {
         // Preencher uma linha inteira
         for (int c = 0; c < 10; c++) {

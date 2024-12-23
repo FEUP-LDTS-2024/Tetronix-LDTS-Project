@@ -8,6 +8,8 @@ public class TetrisBlockFactory {
     private static Random random = new Random();
     private static String [] colors = {"green","red","blue"};
 
+    public static void setRandom(Random random) {TetrisBlockFactory.random = random;}
+
     public static TetrisBlock createBlock(int columns, int rows) {
         int randomIndex = random.nextInt(6); // Número de tipos de blocos disponíveis
 
@@ -32,7 +34,4 @@ public class TetrisBlockFactory {
                 throw new IllegalArgumentException("Bloco inválido");
         }
     }
-
-
-
 }

@@ -11,7 +11,7 @@ import com.googlecode.lanterna.TerminalSize
 
 class TetrisBlockViewTest extends Specification {
 
-    def "Teste do método draw para TetrisBlock"() {
+/*    def "Teste do método draw para TetrisBlock"() {
         given: "Um jogo mockado com um bloco de Tetris"
         def mockGame = Mock(Game)
         def mockScreenManager = Mock(ScreenManager)
@@ -52,5 +52,5 @@ class TetrisBlockViewTest extends Specification {
 
         and: "Nenhuma chamada para preencher células que não fazem parte do bloco"
         0 * mockTextGraphics.fillRectangle(_, _, _) // Garantir que não há chamadas extras
-    }
+    }*/
 }

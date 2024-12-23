@@ -81,6 +81,10 @@ public class Game {
         return points;
     }
 
+    public void setScreenManager(ScreenManager screenManager) {this.screenManager = screenManager;}
+
+    public void setScore(int score) {this.score = score;}
+
     public List<Coins> getCoins() {
         return coins;
     }
