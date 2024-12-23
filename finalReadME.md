@@ -18,6 +18,12 @@ Este projeto foi desenvolvido por Artur Moreira (up202208189@edu.fe.up.pt), Daun
 - **Nível** - O nível atual do jogador é exibido durante o jogo e o mesmo aumenta a cada linha completa.
 - **Statistics** - Armazena e exibe as classificações finais de diferentes partidas.
 
+![imageinitial](report_images/initialscreen.png)
+![imagearena](report_images/arena.png)
+![imageover](report_images/gameover.png)
+![imagestatistics](report_images/statistics.png)
+
+
 ## Planned Features
 
 Todas as funcionalidades planejadas foram implementadas com sucesso.
