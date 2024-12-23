@@ -146,7 +146,7 @@ O padrão **Observer** foi aplicado implicitamente, onde o método `setState` da
 **Implementação**
 
 Na implementação:
-- A classe `Menu` funciona como o **subject**, contendo o método `setState`. Quando o estado é alterado, componentes como o controlador (`InputHandler`) e as views reagem a esta mudança.
+- A classe `Menu` funciona como o **subject**, contendo o método `setCurr_state`. Quando o estado é alterado, componentes como o controlador (`InputHandler`) e as views reagem a esta mudança.
 - As classes interessadas (como views e controladores) agem como **observers**, reagindo ao novo estado e atualizando os seus comportamentos.
 
 Exemplo:
@@ -162,7 +162,7 @@ Os ficheiros relevantes são:
 **Consequências**
 
 A aplicação do padrão **Observer** trouxe os seguintes benefícios:
-- **Redução de acoplamento**: A lógica de notificação está centralizada no método `setState`, enquanto os observers estão desacoplados.
+- **Redução de acoplamento**: A lógica de notificação está centralizada no método `setCurr_state`, enquanto os observers estão desacoplados.
 - **Atualização automática**: As mudanças de estado refletem automaticamente nos componentes relevantes, melhorando a consistência do sistema.
 
 
