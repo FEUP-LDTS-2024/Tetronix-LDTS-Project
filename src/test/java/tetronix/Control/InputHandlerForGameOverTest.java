@@ -87,44 +87,4 @@ public class InputHandlerForGameOverTest {
         verify(mockMenu).setCurr_state(tetronix.Model.MenuState.STATISTICS);
     }
 
-   /* @Test
-    void testProcessInput_Enter_Exit() {
-        // Simula a situação em que a opção selecionada é "Exit"
-        when(mockMenu.getSelectedOption()).thenReturn(2); // "Exit" é a terceira opção
-        when(mockMenu.getOptionsGameOver()).thenReturn(java.util.List.of("Start Game", "Statistics", "Exit"));
-
-        // Cria um mock para o KeyStroke de Enter
-        KeyStroke keyStroke = mock(KeyStroke.class);
-        when(keyStroke.getKeyType()).thenReturn(KeyType.Enter);
-
-        // Chama o método processInput
-        inputHandler.processInput(keyStroke);
-
-        // Verifica se o System.exit() foi chamado
-        // Isto pode ser feito por meio de uma captura de exceção ou usando uma abordagem de mocking para o System.exit()
-        try {
-            inputHandler.processInput(keyStroke);
-        } catch (SecurityException e) {
-            // Captura a chamada a System.exit()
-            assertTrue(true); // Se o código caiu aqui, o comportamento é esperado
-        }
-    }
-
-    @Test
-    void testProcessInput_Escape() {
-        // Cria um mock para o KeyStroke de Escape
-        KeyStroke keyStroke = mock(KeyStroke.class);
-        when(keyStroke.getKeyType()).thenReturn(KeyType.Escape);
-
-        // Chama o método processInput
-        inputHandler.processInput(keyStroke);
-
-        // Verifica se o System.exit() foi chamado
-        try {
-            inputHandler.processInput(keyStroke);
-        } catch (SecurityException e) {
-            // Captura a chamada a System.exit()
-            assertTrue(true); // Se o código caiu aqui, o comportamento é esperado
-        }
-    }*/
 }

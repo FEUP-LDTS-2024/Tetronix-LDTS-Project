@@ -56,28 +56,6 @@ class BombTest {
         assertEquals(7, bomb.getPosition().getColumn_identifier());
     }
 
-   /* @Test
-    void testBombExplode() {
-        // Set up some blocks around the bomb
-        for (int i = 4; i <= 6; i++) {
-            for (int j = 8; j <= 12; j++) {
-                grid[i][j] = "block";
-            }
-        }
-
-        bomb.explode(grid);
-
-        // Check if surrounding blocks are cleared
-        for (int i = 4; i <= 6; i++) {
-            for (int j = 8; j <= 12; j++) {
-                assertNull(grid[i][j]);
-            }
-        }
-
-        // Check if blocks outside explosion radius are untouched
-        assertNotNull(grid[3][7]);
-        assertNotNull(grid[7][13]);
-    }*/
 
     @Test
     void testBombFactoryCreateBomb() {
