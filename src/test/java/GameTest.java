@@ -77,45 +77,6 @@ public class GameTest {
         verify(mockArena).moveBlocktoBackground(mockBlock);
     }
 
-    /*@Test
-    void testUpdateGameState_GameOver() {
-        TetrisBlock mockBlock = mock(TetrisBlock.class);
-        Position mockPosition = mock(Position.class);
-
-        // Configurando o mock para retornar true para isBlockOutBounds
-        when(mockArena.isBlockOutBounds()).thenReturn(true);
-        when(mockBlock.getPosition()).thenReturn(mockPosition);
-
-        game.setTetris_block(mockBlock);
-        game.setArena(mockArena);
-
-        // Chamando updateGameState
-        boolean result = game.updateGameState();
-
-        // Verifique se o jogo foi colocado no estado de "GAME_OVER"
-        assertFalse(result, "O jogo deveria estar em estado GAME_OVER.");
-        verify(mockMenu).setCurr_state(MenuState.GAME_OVER);
-
-        // Garantir que o moveBlocktoBackground foi chamado no mock do Arena
-        verify(mockArena).moveBlocktoBackground(mockBlock);  // Aqui verificamos que o método foi realmente chamado
-
-        // Não se esqueça de verificar a interação correta do TetrisBlock, como já feito
-        verify(mockBlock).getPosition();  // Verificando que o método getPosition foi chamado no mock do bloco
-    }*/
-
-
-
-   /* @Test
-    void testUpdateGameState_CreatesNewBlockAndCoin() {
-        when(mockArena.isBlockOutBounds()).thenReturn(false);
-        when(mockArena.canMoveDown(any())).thenReturn(false);
-
-        game.setTetris_block(null);
-        game.updateGameState();
-
-
-        assertNotNull(game.getTetris_block(), "Um novo bloco deveria ser criado.");
-    }*/
 
     @Test
     void testMoveBlock_RightMovement() {

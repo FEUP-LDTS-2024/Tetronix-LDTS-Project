@@ -36,7 +36,7 @@ public class TetrisBlockView implements ElementViewer<TetrisBlock> {
 
         // Renderiza cada célula do bloco
         for (int r = 0; r < shape.length; r++) {
-            for (int c = 0; c < shape[0].length; c++) {
+            for (int c = 0; c < shape[0].length; c++) { //[[1, 0], [1, 1]]   5 - 10
                 if (shape[r][c] == 1) {
                     int x = position.getColumn_identifier() + c * 2;
                     int y = position.getRow_identifier() + r;

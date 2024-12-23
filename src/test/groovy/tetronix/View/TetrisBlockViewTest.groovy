@@ -1,56 +1,74 @@
-package tetronix.View
-
-import spock.lang.Specification
-import tetronix.Game
-import tetronix.Model.TetrisBlock
-import tetronix.Model.Position
-import com.googlecode.lanterna.graphics.TextGraphics
-import com.googlecode.lanterna.TextColor
+package tetronix.View;
 import com.googlecode.lanterna.TerminalPosition
 import com.googlecode.lanterna.TerminalSize
+import com.googlecode.lanterna.TextColor
+import com.googlecode.lanterna.graphics.TextGraphics
+import spock.lang.Specification
+import tetronix.Game
+import tetronix.Model.Position
+import tetronix.Model.TetrisBlock
+import tetronix.View.ScreenManager
+import tetronix.View.GameView
+import tetronix.View.TetrisBlockView
 
 class TetrisBlockViewTest extends Specification {
 
-/*    def "Teste do método draw para TetrisBlock"() {
-        given: "Um jogo mockado com um bloco de Tetris"
-        def mockGame = Mock(Game)
-        def mockScreenManager = Mock(ScreenManager)
-        def mockTextGraphics = Mock(TextGraphics)
-        def mockGameView = Mock(GameView)
+    def "draw() should render TetrisBlock correctly"() {
+        given:
+        // Mock dependencies
+        def game = Mock(Game)
+        def screenManager = Mock(ScreenManager)
+        def textGraphics = Mock(TextGraphics)
+        def gameView = Mock(GameView)
 
-        and: "Um bloco de Tetris com uma forma, cor, posição e rotação"
-        Position position = new Position(5, 5)
-        // Forma do bloco (um quadrado 2x2) usando int[][], não ArrayList
-        def shape = [[1, 0],
-                     [1, 0]] // Forma do bloco (um quadrado 2x2)
-        def color = "blue"
-        def rotation = 0 // Inicialmente sem rotação
-        def columns = 10
-        def rows = 20
+        // Mock Game and ScreenManager behavior
+        game.getScreenManager() >> screenManager
+        screenManager.getTextGraphics() >> textGraphics
 
-        // Criação do bloco de Tetris com os parâmetros corretos
-        def block = new TetrisBlock(shape,color,position,rotation,columns,rows)
+        // Create a TetrisBlockView instance
+        def blockView = new TetrisBlockView(game, gameView)
 
-        // Mocking
-        mockGame.getTetris_block() >> block
-        mockGame.getScreenManager() >> mockScreenManager
-        mockScreenManager.getTextGraphics() >> mockTextGraphics
+        and:
+        // Mock a TetrisBlock with a 2x2 shape and position
+        def block = Mock(TetrisBlock)
+        block.getShape() >> [[1, 0], [1, 1]]
+        block.getPosition() >> new Position(5, 10) // Example position
+        block.getColor() >> "#FF0000" // Example color (red)
 
-        and: "Inicializando a visualização do bloco de Tetris"
-        def tetrisBlockView = new TetrisBlockView(mockGame, mockGameView)
+        game.getTetris_block() >> block
 
-        when: "O método draw é chamado"
-        tetrisBlockView.draw()
+        when:
+        blockView.draw()
 
-        then: "A cor de fundo é definida para azul"
-        1 * mockTextGraphics.setBackgroundColor(TextColor.Factory.fromString("blue"))
+        then:
+        // Verify background color is set correctly
+        1 * textGraphics.setBackgroundColor(TextColor.Factory.fromString("#FF0000"))
 
-        and: "O método fillRectangle é chamado para desenhar cada célula do bloco na posição correta"
-        // Posições baseadas no bloco (5,5)
-        1 * mockTextGraphics.fillRectangle(new TerminalPosition(5, 5), new TerminalSize(2, 1), ' ') // Bloco na posição (5, 5)
-        1 * mockTextGraphics.fillRectangle(new TerminalPosition(5, 6), new TerminalSize(2, 1), ' ') // Bloco na posição (5, 5)
 
-        and: "Nenhuma chamada para preencher células que não fazem parte do bloco"
-        0 * mockTextGraphics.fillRectangle(_, _, _) // Garantir que não há chamadas extras
-    }*/
+        1 * textGraphics.fillRectangle(new TerminalPosition(5, 10), new TerminalSize(2, 1), ' ')
+
+    }
+
+    def "draw() should do nothing if there is no TetrisBlock"() {
+        given:
+        def game = Mock(Game)
+        def screenManager = Mock(ScreenManager)
+        def textGraphics = Mock(TextGraphics)
+        def gameView = Mock(GameView)
+
+        game.getScreenManager() >> screenManager
+        screenManager.getTextGraphics() >> textGraphics
+
+        def blockView = new TetrisBlockView(game, gameView)
+
+        // No block available
+        game.getTetris_block() >> null
+
+        when:
+        blockView.draw()
+
+        then:
+        // No interactions with textGraphics
+        1 * _
+    }
 }

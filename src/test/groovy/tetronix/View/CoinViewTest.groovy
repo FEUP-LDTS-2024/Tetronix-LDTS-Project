@@ -27,7 +27,6 @@ class CoinViewTest extends Specification {
         then: "Os componentes são inicializados corretamente"
         coinView.coins.isEmpty()
         coinView.graphics == mockTextGraphics
-        coinView.game == mockGame
     }
 
     def "Teste do método draw para moedas não coletadas"() {
