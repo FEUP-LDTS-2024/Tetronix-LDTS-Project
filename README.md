@@ -1,4 +1,4 @@
-# LDTS_T13_G04 - TETRONIX
+# TETRONIX
 
 ## Game Description
 
